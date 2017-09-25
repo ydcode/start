@@ -19,7 +19,7 @@ Install_Shadowsocks()
 		if grep -q "ssserver" "/etc/profile"; then #条目已存在
 			Echo_Green "/etc/profile  Shadowsocks Exist."
 		else
-			echo "ssserver -s ${IP} -k ${ShadowsocksPassword} -d restart" >> /etc/profile
+			echo "sudo ssserver -p 8388 -k ${ShadowsocksPassword} -m rc4-md5 --user nobody -d start" >> /etc/profile
 			source /etc/profile
 		fi
 		Echo_Green "New Install_____Shadowsocks Server IP: ${IP}   Password: ${ShadowsocksPassword}"
