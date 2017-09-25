@@ -8,6 +8,7 @@ Install_Shadowsocks()
 	else
 
       Echo_Yellow "Shadowsocks Installing....."
+      
         yum install -y epel-release
         yum install -y python-pip
         pip install --upgrade pip
