@@ -10,6 +10,7 @@ Install_JDK()
     cd ${CurrentDir}
     pwd
     if [ ! -d "/usr/java/" ]; then
+    	source /etc/profile
         if [ ! -e "${JDK_FILE}" ]; then
             wget --continue --no-check-certificate --header "Cookie: oraclelicense=a" ${JDK_URL}
 #            'http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz'
