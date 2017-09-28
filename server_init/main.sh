@@ -9,6 +9,6 @@ if [ $(id -u) != "0" ]; then
 fi
 . include/A_Begin.sh
 . include/B_Soft_JDK_MVN.sh
-. include/B_Soft_Nginx.sh
+#. include/B_Soft_Nginx.sh
 
 #安装Jemollo
