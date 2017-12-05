@@ -24,7 +24,7 @@ Install_JDK()
             echo "export JAVA_HOME=/usr/java/${JDK_NAME}" >> /etc/profile
             echo "export JRE_HOME=/usr/java/${JDK_NAME}/jre" >> /etc/profile
             echo "export MAVEN_HOME=/usr/maven/${MAVEN_NAME}" >> /etc/profile
-            echo 'export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$JRE_HOME/include:$MAVEN_HOME/bin' >>  /etc/profile
+            echo 'export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$JRE_HOME/include:$MAVEN_HOME/bin:/usr/local/bin' >>  /etc/profile
             source /etc/profile
 
             Echo_Yellow "Open new Terminal and once again './main.sh' and "
