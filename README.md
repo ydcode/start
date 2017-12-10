@@ -1,3 +1,2 @@
-```
-yum install git wget -y && git clone https://github.com/ydcode/start.git && cd start/server_init && ./main.sh
-```
+
+直接在线编辑即可
