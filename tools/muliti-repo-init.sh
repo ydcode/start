@@ -90,7 +90,7 @@ Add_Git_Key()
     cat $HOME/.ssh/config
 
     Echo_Green "-----------------------------------------------------------"
-    cat /root/.ssh/id_rsa_${shortRepoName}.pub
+    cat $HOME/.ssh/id_rsa_${shortRepoName}.pub
     Echo_Green "-----------------------------------------------------------"
 
     Echo_Yellow " 1.Add Above to repo: ${repoName}"
