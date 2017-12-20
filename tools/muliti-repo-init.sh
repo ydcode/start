@@ -87,6 +87,9 @@ Add_Git_Key()
         echo " " >> $HOME/.ssh/config
     fi
 
+	chown $USER ~/.ssh/config
+	chmod 644 ~/.ssh/config
+
     cat $HOME/.ssh/config
 
     Echo_Green "-----------------------------------------------------------"
