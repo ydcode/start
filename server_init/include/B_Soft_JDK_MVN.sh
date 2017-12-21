@@ -23,7 +23,7 @@ Install_JDK()
         else
             echo "export JAVA_HOME=/usr/java/${JDK_NAME}" >> /etc/profile
             echo "export JRE_HOME=/usr/java/${JDK_NAME}/jre" >> /etc/profile
-            echo "export MAVEN_HOME=/usr/maven/${MAVEN_NAME}" >> /etc/profile
+            echo "export MAVEN_HOME=/usr/bin/maven/${MAVEN_NAME}" >> /etc/profile
             echo 'export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$JRE_HOME/include:$MAVEN_HOME/bin:/usr/local/bin' >>  /etc/profile
             source /etc/profile
 
@@ -39,10 +39,10 @@ Install_JDK()
 }
 
 Install_MVN(){
-        if [ ! -d "/usr/maven/" ]; then
+        if [ ! -d "/usr/bin/maven/" ]; then
             cd ${CurrentDir}
             wget ${MAVEN_URL}
-            mkdir /usr/maven && tar xzvf apache-maven*.tar.gz  -C /usr/maven/
+            mkdir /usr/bin/maven && tar xzvf apache-maven*.tar.gz  -C /usr/bin/maven/
         fi
 }
 
