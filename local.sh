@@ -25,6 +25,10 @@ sudo apt-get update
  
  sudo apt-get install openjdk-8-jdk
 
+sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
+sudo apt-get update
+sudo apt-get install indicator-sysmonitor
+
 # ubuntu auto start guake ss-qt5    
 # sougou https://jingyan.baidu.com/article/a3aad71aa1abe7b1fa009641.html
 # 云音乐
