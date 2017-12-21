@@ -4,6 +4,9 @@ add-apt-repository ppa:hzwhuang/ss-qt5
 apt-get update
 apt-get install shadowsocks-qt5
 
+/usr/bin/guake &
+/usr/bin/ss-qt5 &
+
 if grep -q "nohup /usr/bin/guake &" "$HOME/.bashrc"; then #条目已存在
   Echo_Green "$HOME/.bashrc  nohup /usr/bin/guake --- auto start Exist."
 else
