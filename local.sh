@@ -3,7 +3,7 @@ apt upgrade -y
 add-apt-repository ppa:hzwhuang/ss-qt5
 apt-get update
 apt-get install shadowsocks-qt5
-
+apt install -y proxychains
 
 sudo apt-get remove docker docker-engine docker.io
 
