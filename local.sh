@@ -29,6 +29,10 @@ sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
 sudo apt-get update
 sudo apt-get install indicator-sysmonitor
 
+#indicator-sysmonitor &
+#然后Ctrl+C实现后台运行indicator-sysmonitor
+#设置开机启动：鼠标右键点击标题栏上图标，弹出菜单，选择Run on startup
+
 # ubuntu auto start guake ss-qt5    
 # sougou https://jingyan.baidu.com/article/a3aad71aa1abe7b1fa009641.html
 # 云音乐
