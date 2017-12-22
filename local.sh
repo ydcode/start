@@ -1,11 +1,23 @@
-apt install -y gdebi shutter guake git
-apt upgrade -y
-add-apt-repository ppa:hzwhuang/ss-qt5
-apt-get update
-apt-get install shadowsocks-qt5
-apt install -y proxychains
+apt remove vim-common
+apt install -y gdebi git openjdk-8-jdk vim
+# install sougou  fcitx 配置 重启
+# sougou https://jingyan.baidu.com/article/a3aad71aa1abe7b1fa009641.html
 
-sudo apt-get remove docker docker-engine docker.io
+
+# proxy
+add-apt-repository ppa:hzwhuang/ss-qt5
+apt update
+apt install shadowsocks-qt5
+# auto start  /usr/bin/ss-qt5 
+apt install -y proxychains
+# edit   vi /etc/proxychains.conf   127.0.0.1 7070
+#proxychains + app
+# chrome
+
+# shutter guake
+
+# docker
+sudo apt remove docker docker-engine docker.io
 
 sudo apt-get install -y \
   apt-transport-https \
@@ -20,20 +32,4 @@ sudo add-apt-repository \
  $(lsb_release -cs) \
  stable"
 sudo apt-get update 
-   
- sudo apt-get install -y docker-ce
- 
- sudo apt-get install openjdk-8-jdk
-
-sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
-sudo apt-get update
-sudo apt-get install indicator-sysmonitor
-
-#indicator-sysmonitor &
-#然后Ctrl+C实现后台运行indicator-sysmonitor
-#设置开机启动：鼠标右键点击标题栏上图标，弹出菜单，选择Run on startup
-
-# ubuntu auto start guake ss-qt5    
-# sougou https://jingyan.baidu.com/article/a3aad71aa1abe7b1fa009641.html
-# 云音乐
-# chrome
+sudo apt-get install -y docker-ce
