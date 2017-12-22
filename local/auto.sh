@@ -12,7 +12,7 @@ Install_JDK()
 	if [ -z "$files" ]; then
 		rm -rf /usr/java
 	fi
-		cd $HOME
+		cd /root
 		pwd
 	if [ ! -d "/usr/java/" ]; then
 		source /etc/profile
@@ -35,7 +35,7 @@ Install_JDK()
 		    echo "Open new Terminal and once again './main.sh' and "
 		fi
 
-		cd $HOME
+		cd /root
 	else
 		echo "JDK already installed."
 	fi
