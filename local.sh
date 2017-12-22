@@ -3,7 +3,7 @@
 xhost +
 apt remove -y vim-common
 apt update
-apt install -y gdebi git openjdk-8-jdk vim
+apt install -y gdebi git vim
 
 #download sougou deb
 #gdebi sougou.deb
