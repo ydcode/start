@@ -36,3 +36,5 @@ Comment=ss
 #download docker deb
 sudo gdebi docker.deb
 # shutter guake
+idea without jdk
+init repo
