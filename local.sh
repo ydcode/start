@@ -1,3 +1,4 @@
+!!! 为尽量避免权限问题，要直接切换到Root
 #解除限制
 xhost +
 apt remove -y vim-common
