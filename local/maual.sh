@@ -37,5 +37,8 @@ Comment=ss
 sudo gdebi docker.deb
 # shutter guake
 idea without jdk
+使用前请将“0.0.0.0 account.jetbrains.com”添加到hosts文件中
+
+
 init repo
 apt upgrade -y
