@@ -38,3 +38,4 @@ sudo gdebi docker.deb
 # shutter guake
 idea without jdk
 init repo
+apt upgrade -y
