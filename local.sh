@@ -40,7 +40,6 @@ apt install -y proxychains
 
 
 # docker
-sudo apt remove docker docker-engine docker.io
-
-
+#download docker deb
+sudo gdebi docker.deb
 # shutter guake
