@@ -1,9 +1,7 @@
 !!! 为尽量避免权限问题，要直接切换到Root
 #解除限制
 xhost +
-apt remove -y vim-common
-apt update
-apt install -y gdebi git vim
+
 
 #download sougou deb
 #gdebi sougou.deb
@@ -11,10 +9,6 @@ apt install -y gdebi git vim
 
 
 # proxy
-add-apt-repository -y ppa:hzwhuang/ss-qt5
-apt update
-apt install -y shadowsocks-qt5
-
 # auto start  /usr/bin/ss-qt5 
 touch /home/allen/.config/autostart/ss-qt5.desktop
 
@@ -30,14 +24,12 @@ Name=ss
 Comment[en_US]=ss
 Comment=ss
 
-apt install -y proxychains
 # edit   vi /etc/proxychains.conf   127.0.0.1 7070
 
 #proxychains + app
 
 #proxychains firefox to down load chrome deb --- gdebi google_chrome.deb
 #first open chrome by click icon, after setting done. proxychains google-chrome to login   auto load bookmark and extension
-
 
 
 # docker
