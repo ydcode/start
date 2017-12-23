@@ -10,6 +10,14 @@ apt install -y shadowsocks-qt5
 
 apt install -y proxychains
 
+#sumlime
+wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+sudo apt-get install apt-transport-https
+echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+sudo apt-get update
+sudo apt-get install sublime-text
+
+
 
 JDK_URL="http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz"
 JDK_FILE="jdk-8u131-linux-x64.tar.gz"
