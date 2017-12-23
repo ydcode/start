@@ -47,3 +47,16 @@ apt upgrade -y
 http://www.omgubuntu.co.uk/2017/09/enable-fractional-scaling-gnome-linux
 
 
+## 安装 SecureCRT 
+
+如果有libpng12错误，则下方可以解决
+wget -q -O /tmp/libpng12.deb http://mirrors.kernel.org/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1_amd64.deb \
+  && dpkg -i /tmp/libpng12.deb \
+  && rm /tmp/libpng12.deb
+  
+rm -f ~/.vandyke
+wget http://download.boll.me/securecrt_linux_crack.pl
+sudo perl securecrt_linux_crack.pl /usr/bin/SecureCRT
+Manuel Enter Key
+
+
