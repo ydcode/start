@@ -77,4 +77,8 @@ wget http://download.boll.me/securecrt_linux_crack.pl
 sudo perl securecrt_linux_crack.pl /usr/bin/SecureCRT
 Manuel Enter Key
 
+#gec ssh
+ssh-keygen -t rsa -f /root/.ssh/id_rsa.gce -C "gce"
+copy pub to gce ssh key
+
 
