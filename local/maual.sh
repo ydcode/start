@@ -24,6 +24,24 @@ Name=ss
 Comment[en_US]=ss
 Comment=ss
 
+# guake
+# auto start  /usr/bin/guake
+touch /home/allen/.config/autostart/guake.desktop
+
+#将下方内容写入到该文件
+[Desktop Entry]
+Type=Application
+Exec=/usr/bin/guake
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=guake
+Name=guake
+Comment[en_US]=guake
+Comment=guake
+
+
+
 # edit   vi /etc/proxychains.conf   127.0.0.1 7070
 
 #proxychains + app
