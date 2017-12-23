@@ -1,7 +1,7 @@
-!!! 为尽量避免权限问题，要直接切换到Root
-#解除限制
-xhost +
+### 关闭 access controll并清屏  normal user
+echo "clear && printf '\e[3J'" >> $HOME/.bashrc
 
+!!! 为尽量避免权限问题，要直接切换到Root
 
 #download sougou deb
 #gdebi sougou.deb
@@ -45,3 +45,5 @@ apt upgrade -y
 
 ### 设置分辨率
 http://www.omgubuntu.co.uk/2017/09/enable-fractional-scaling-gnome-linux
+
+
