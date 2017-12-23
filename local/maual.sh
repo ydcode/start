@@ -42,3 +42,6 @@ idea without jdk   ---- sudo idea by normal user
 
 init repo
 apt upgrade -y
+
+### 设置分辨率
+http://www.omgubuntu.co.uk/2017/09/enable-fractional-scaling-gnome-linux
