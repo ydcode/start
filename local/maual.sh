@@ -1,7 +1,7 @@
 ### 关闭 access controll并清屏  normal user
 echo "xhost + && clear && printf '\e[3J'" >> $HOME/.bashrc
 
-!!! 为尽量避免权限问题，要直接切换到Root
+##normal user + sudo
 
 #download sougou deb
 #gdebi sougou.deb
