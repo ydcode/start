@@ -56,7 +56,7 @@ sudo gdebi docker.deb
 # shutter guake
 idea without jdk   ---- sudo idea by normal user
 使用前请将“0.0.0.0 account.jetbrains.com”添加到hosts文件中
-安装 plugin: lombok gitignore
+安装 plugin: lombok gitignore jrebel + 激活码即可
 
 init repo
 apt upgrade -y
