@@ -15,6 +15,7 @@ https://draculatheme.com/terminal/
 使用前请将“0.0.0.0 account.jetbrains.com”添加到hosts文件中
 安装 plugin: lombok gitignore jrebel + 激活码即可
 Shift+Ctrl+Alt+/ --- 选择Registry --- compiler.automake.allow.when.app.running enable
+https://my.jrebel.com
 setting --- comipile --- Build Project Automatically
 restart idea
 
