@@ -1,10 +1,10 @@
 alfred
 beyond compare
-
 trello
 slack
 shadowsocksX
 sumlime
+jdk
 
 https://draculatheme.com/terminal/
 点击打开，并在.bash_profile 追加 export CLICOLOR=1
