@@ -1,20 +1,6 @@
 #!/bin/bash
 
-Echo_Yellow()
-{
-  echo $(Color_Text "$1" "33")
-}
 
-Echo_Green()
-{
-  echo $(Color_Text "$1" "32")
-}
-
-
-Color_Text()
-{
-  echo -e " \e[0;$2m$1\e[0m"
-}
 
 Input_Repo_Name()
 {
@@ -52,7 +38,7 @@ Check_Repo_Name_Right()
     esac
 
     if [ "${repoNameRight}" = "y" ]; then
-       Echo_Green "Right"
+       echo "Right"
     else
         Input_Repo
     fi
@@ -80,7 +66,7 @@ Add_Git_Key()
     ssh-keygen -t rsa -P "" -C "abcdefghijklmnopqrstuvwxyz" -f $SSH_DIR/.ssh/id_rsa_${shortRepoName}
 
     if grep -q "com${shortRepoName}" "$SSH_DIR/.ssh/config"; then #条目已存在
-        Echo_Green "Git config Item exists"
+        echo "Git config Item exists"
     else
         echo "Host github.com${shortRepoName}" >> $SSH_DIR/.ssh/config
         echo "User git" >> $SSH_DIR/.ssh/config
@@ -94,13 +80,13 @@ Add_Git_Key()
 
     cat $SSH_DIR/.ssh/config
 
-    Echo_Green "-----------------------------------------------------------"
+    echo "-----------------------------------------------------------"
     cat $SSH_DIR/.ssh/id_rsa_${shortRepoName}.pub
-    Echo_Green "-----------------------------------------------------------"
+    echo "-----------------------------------------------------------"
 
-    Echo_Yellow " 1.Add Above to repo: ${repoName}"
-    Echo_Yellow " 2.git clone git@github.com${shortRepoName}:${username}/${repoName}.git"
-    Echo_Green "-----------------------------------------------------------"
+    echo " 1.Add Above to repo: ${repoName}"
+    echo " 2.git clone git@github.com${shortRepoName}:${username}/${repoName}.git"
+    echo "-----------------------------------------------------------"
 }
 
 
