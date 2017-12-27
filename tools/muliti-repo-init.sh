@@ -1,5 +1,6 @@
 #!/bin/bash
 
+DISTRO="CentOS";
 
 Get_Dist_Name()
 {
@@ -54,7 +55,7 @@ Input_Repo_Name()
 }
 
 
-echo Get_Dist_Name;
+echo ${DISTRO};
 
 
 
