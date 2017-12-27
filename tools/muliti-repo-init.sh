@@ -29,7 +29,7 @@ Input_Repo_Name()
 }
 
 
-SSH_DIR="$HOME/"
+SSH_DIR="$HOME"
 
 
 Check_Repo_Name_Right()
