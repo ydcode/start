@@ -29,6 +29,8 @@ Input_Repo_Name()
 }
 
 
+SSH_DIR="$HOME/"
+
 
 Check_Repo_Name_Right()
 {
@@ -59,12 +61,12 @@ Check_Repo_Name_Right()
 
 Init_Git_Config()
 {
-	if [ ! -d "$HOME/.ssh" ]; then
-	  mkdir "$HOME/.ssh"
+	if [ ! -d "$SSH_DIR/.ssh" ]; then
+	  mkdir "$SSH_DIR/.ssh"
 	fi
 
-	if [ ! -e "$HOME/.ssh/config" ]; then
-		touch $HOME/.ssh/config
+	if [ ! -e "$SSH_DIR/.ssh/config" ]; then
+		touch $SSH_DIR/.ssh/config
 	fi
 }
 
@@ -72,28 +74,28 @@ Add_Git_Key()
 {
     Init_Git_Config
 
-    if [ -e "$HOME/.ssh/id_rsa_${shortRepoName}" ]; then
-        rm -rf $HOME/.ssh/id_rsa_${shortRepoName}*
+    if [ -e "$SSH_DIR/.ssh/id_rsa_${shortRepoName}" ]; then
+        rm -rf $SSH_DIR/.ssh/id_rsa_${shortRepoName}*
     fi
-    ssh-keygen -t rsa -P "" -C "abcdefghijklmnopqrstuvwxyz" -f $HOME/.ssh/id_rsa_${shortRepoName}
+    ssh-keygen -t rsa -P "" -C "abcdefghijklmnopqrstuvwxyz" -f $SSH_DIR/.ssh/id_rsa_${shortRepoName}
 
-    if grep -q "com${shortRepoName}" "$HOME/.ssh/config"; then #条目已存在
+    if grep -q "com${shortRepoName}" "$SSH_DIR/.ssh/config"; then #条目已存在
         Echo_Green "Git config Item exists"
     else
-        echo "Host github.com${shortRepoName}" >> $HOME/.ssh/config
-        echo "User git" >> $HOME/.ssh/config
-        echo "HostName github.com" >> $HOME/.ssh/config
-        echo "IdentityFile $HOME/.ssh/id_rsa_${shortRepoName}" >> $HOME/.ssh/config
-        echo " " >> $HOME/.ssh/config
+        echo "Host github.com${shortRepoName}" >> $SSH_DIR/.ssh/config
+        echo "User git" >> $SSH_DIR/.ssh/config
+        echo "HostName github.com" >> $SSH_DIR/.ssh/config
+        echo "IdentityFile $SSH_DIR/.ssh/id_rsa_${shortRepoName}" >> $SSH_DIR/.ssh/config
+        echo " " >> $SSH_DIR/.ssh/config
     fi
 
 	chown $USER ~/.ssh/config
 	chmod 644 ~/.ssh/config
 
-    cat $HOME/.ssh/config
+    cat $SSH_DIR/.ssh/config
 
     Echo_Green "-----------------------------------------------------------"
-    cat $HOME/.ssh/id_rsa_${shortRepoName}.pub
+    cat $SSH_DIR/.ssh/id_rsa_${shortRepoName}.pub
     Echo_Green "-----------------------------------------------------------"
 
     Echo_Yellow " 1.Add Above to repo: ${repoName}"
