@@ -20,12 +20,12 @@ SSH_DIR="$HOME"
 
 Check_Repo_Name_Right()
 {
-	Echo_Yellow "${repoName}  Right ?"
+	echo "${repoName}  Right ?"
 	read -p "[Y/n]: Y " repoNameRight
 
     case "${repoNameRight}" in
     [yY][eE][sS]|[yY])
-        Echo_Green "You will Add Repo:: ${repoName} "
+        echo "You will Add Repo:: ${repoName} "
         repoNameRight="y"
         ;;
     [nN][oO]|[nN])
