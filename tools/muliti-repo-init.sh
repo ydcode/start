@@ -1,21 +1,5 @@
 #!/bin/bash
 
-DISTRO="CentOS";
-
-Get_Dist_Name()
-{
-    if grep -Eqi "CentOS" /etc/issue || grep -Eq "CentOS" /etc/*-release; then
-        DISTRO='CentOS'
-    elif grep -Eqi "Red Hat Enterprise Linux Server" /etc/issue || grep -Eq "Red Hat Enterprise Linux Server" /etc/*-release; then
-        DISTRO='RHEL'
-    elif grep -Eqi "Mac OS X" sw_vers ; then
-        DISTRO='RHEL'
-    else
-        DISTRO='unknow'
-    fi
-}
-
-
 
 Input_Repo_Name()
 {
@@ -30,11 +14,18 @@ Input_Repo_Name()
 }
 
 
-echo ${DISTRO};
 
 
 
-SSH_DIR="$HOME"
+SSH_DIR="/root"
+
+if [ -e "/usr/bin/sw_vers" ]; then #mac os
+	SSH_DIR="/root"
+else
+	SSH_DIR="/private/var/root"
+fi
+
+    
 
 
 Check_Repo_Name_Right()
