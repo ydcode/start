@@ -1,3 +1,15 @@
+alfred
+beyond compare
+
+trello
+slack
+shadowsocksX
+sumlime
+
+https://draculatheme.com/terminal/
+点击打开，并在.bash_profile 追加 export CLICOLOR=1
+
+
 
 #idea without jdk   ---- sudo idea by normal user
 使用前请将“0.0.0.0 account.jetbrains.com”添加到hosts文件中
