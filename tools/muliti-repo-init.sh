@@ -20,9 +20,9 @@ Input_Repo_Name()
 SSH_DIR="/root"
 
 if [ -e "/usr/bin/sw_vers" ]; then #mac os
-	SSH_DIR="/root"
-else
 	SSH_DIR="/private/var/root"
+else
+	SSH_DIR="/root"
 fi
 
     
