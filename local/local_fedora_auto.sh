@@ -33,6 +33,9 @@ Install_JDK()
 			echo 'export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$JRE_HOME/include:/usr/maven/bin:/usr/local/bin' >>  ~/.bashrc
 			source ~/.bashrc
 
+			echo 'export registry=registry.cn-hangzhou.aliyuncs.com' >> ~/.bashrc
+			source ~/.bashrc
+
 		    echo "Open new Terminal and once again './main.sh' and "
 		fi
 
