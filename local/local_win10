@@ -1,7 +1,11 @@
 #!/bin/bash
 
 # 安装 wsl ubuntu
-# 安装docker listary idea xshell 网易邮箱大师 360 有道笔记 chrome  jdk
+# 安装docker 
+# 开启 daemon 设置变量 http://www.linuxidc.com/Linux/2017-11/148438.htm
+
+
+# listary idea xshell 网易邮箱大师 360 有道笔记 chrome  jdk
 
 
 # idea
