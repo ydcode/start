@@ -16,21 +16,21 @@ Install_JDK()
 		cd ~
 		pwd
 	if [ ! -d "/usr/java/" ]; then
-		source /etc/profile
+		source ~/.bashrc
 		if [ ! -e "${JDK_FILE}" ]; then
 		    wget --continue --no-check-certificate --header "Cookie: oraclelicense=a" ${JDK_URL}
 		fi
 		mkdir /usr/java && tar zxvf jdk*.tar.gz -C /usr/java/
 		ln -s /usr/java/${JDK_NAME}/bin/java /usr/local/bin/java #必要
 
-		if grep -q "/usr/java/jdk" "/etc/profile"; then #条目已存在
+		if grep -q "/usr/java/jdk" "~/.bashrc"; then #条目已存在
 		    echo "JDK Item Exist."
 		else
 		    echo "export JAVA_HOME=/usr/java/${JDK_NAME}" >> ~/.bashrc
 		    echo "export JRE_HOME=/usr/java/${JDK_NAME}/jre" >> ~/.bashrc
-		    echo "export MAVEN_HOME=/usr/maven" >> /etc/profile
+		    echo "export MAVEN_HOME=/usr/maven" >> ~/.bashrc
 		    echo 'export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$JRE_HOME/include:$MAVEN_HOME/bin:/usr/local/bin' >>  ~/.bashrc
-		    source /etc/profile
+		    source ~/.bashrc
 
 		    echo "Open new Terminal and once again './main.sh' and "
 		fi
