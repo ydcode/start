@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# 安装 wsl ubuntu
+# 安装docker listary idea xshell 网易邮箱大师 360 有道笔记 chrome  jdk
+
+
+# idea
+# 使用前请将“0.0.0.0 account.jetbrains.com”添加到hosts文件中
+# 安装 plugin: lombok gitignore jrebel + 激活码即可
+# Shift+Ctrl+Alt+/ --- 选择Registry --- compiler.automake.allow.when.app.running enable
+# https://my.jrebel.com
+# setting --- comipile --- Build Project Automatically
+# restart idea
+
+# gce ssh
+# ssh-keygen -t rsa -f $HOME/.ssh/id_rsa.gce -C "gce"
+# copy pub to gce ssh key
+
+
