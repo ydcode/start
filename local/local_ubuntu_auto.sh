@@ -38,7 +38,7 @@ Install_JDK()
 			
 			echo 'export PATH=$HOME/bin:$HOME/.local/bin:$PATH' >> ~/.bashrc
 			echo 'export PATH=$PATH:/mnt/c/Program\ Files/Docker/Docker/resources/bin' >> ~/.bashrc
-			echo "export DOCKER_HOST='tcp://0.0.0.0:2375'" >> ~/.bashrc
+			echo "export DOCKER_HOST=tcp://localhost:2375" >> ~/.bashrc
 			source ~/.bashrc
 
 		    echo "Open new Terminal and once again './main.sh' and "
