@@ -1,4 +1,4 @@
-apt install -y proxychains wget curl git
+yum install -y proxychains wget curl git
 # 修改 /etc/proxchains.conf
 
 #JAVA_HOME 添加 _UBUNTU后缀是为了和其他变量（未知，导致mvn识别jdk未知错误）混淆
@@ -28,17 +28,9 @@ Install_JDK()
 		if grep -q "/usr/java/jdk" "~/.bashrc"; then #条目已存在
 		    echo "JDK Item Exist."
 		else
-	
-		
-
-			echo 'export JAVA_HOME_UBUNTU=/usr/java/${JDK_NAME}' >> ~/.bashrc
-			echo 'export JRE_HOME_UBUNTU=/usr/java/${JDK_NAME}/jre' >> ~/.bashrc
-			echo 'export PATH=$PATH:$JAVA_HOME_UBUNTU/bin:$JRE_HOME_UBUNTU/bin:$JRE_HOME_UBUNTU/include:/usr/maven/bin:/usr/local/bin' >>  ~/.bashrc
-			source ~/.bashrc
-			
-			echo 'export PATH=$HOME/bin:$HOME/.local/bin:$PATH' >> ~/.bashrc
-			echo 'export PATH=$PATH:/mnt/c/Program\ Files/Docker/Docker/resources/bin' >> ~/.bashrc
-			echo "export DOCKER_HOST=tcp://localhost:2375" >> ~/.bashrc
+			echo 'export JAVA_HOME=/usr/java/${JDK_NAME}' >> ~/.bashrc
+			echo 'export JRE_HOME=/usr/java/${JDK_NAME}/jre' >> ~/.bashrc
+			echo 'export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$JRE_HOME/include:/usr/maven/bin:/usr/local/bin' >>  ~/.bashrc
 			source ~/.bashrc
 
 		    echo "Open new Terminal and once again './main.sh' and "
