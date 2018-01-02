@@ -29,9 +29,9 @@ Install_JDK()
 	
 		
 
-			echo 'export JAVA_HOME=/usr/java/${JDK_NAME}' >> ~/.bashrc
-			echo 'export JRE_HOME=/usr/java/${JDK_NAME}/jre' >> ~/.bashrc
-			echo 'export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$JRE_HOME/include:/usr/maven/bin:/usr/local/bin' >>  ~/.bashrc
+			echo 'export JAVA_HOME_UBUNTU=/usr/java/${JDK_NAME}' >> ~/.bashrc
+			echo 'export JRE_HOME_UBUNTU=/usr/java/${JDK_NAME}/jre' >> ~/.bashrc
+			echo 'export PATH=$PATH:$JAVA_HOME_UBUNTU/bin:$JRE_HOME_UBUNTU/bin:$JRE_HOME_UBUNTU/include:/usr/maven/bin:/usr/local/bin' >>  ~/.bashrc
 			source ~/.bashrc
 			
 			echo 'export PATH=$HOME/bin:$HOME/.local/bin:$PATH' >> ~/.bashrc
