@@ -1,4 +1,4 @@
-apt install -y proxychains wget curl
+apt install -y proxychains wget curl git
 # 修改 /etc/proxchains.conf
 
 
