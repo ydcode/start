@@ -54,13 +54,16 @@ Install_JDK
 
 MAVEN_URL="http://apache.mirror.colo-serv.net/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz"
 MAVEN_NAME="apache-maven-3.5.2"
+MAVEN_FILE="apache-maven-3.5.2-bin.tar.gz"
 
 
 Install_MVN(){
         if [ ! -d "/usr/maven/" ]; then
-            cd ${CurrentDir}
-            wget ${MAVEN_URL}
-	    mkdir /usr/maven && tar xzvf apache-maven*.tar.gz --strip-components 1  -C /usr/maven/
+		cd ${CurrentDir}
+		if [ ! -e "${MAVEN_FILE}" ]; then
+			wget ${MAVEN_URL}
+		fi
+		mkdir /usr/maven && tar xzvf apache-maven*.tar.gz --strip-components 1  -C /usr/maven/
         fi
 }
 
