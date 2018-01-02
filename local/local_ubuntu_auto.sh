@@ -26,14 +26,15 @@ Install_JDK()
 		if grep -q "/usr/java/jdk" "~/.bashrc"; then #条目已存在
 		    echo "JDK Item Exist."
 		else
-			echo 'export JAVA_HOME_U=/usr/java/${JDK_NAME}' >> ~/.bashrc
-			echo 'export JRE_HOME_U=/usr/java/${JDK_NAME}/jre' >> ~/.bashrc
-			echo 'export PATH=$PATH:$JAVA_HOME_U/bin:$JRE_HOME_U/bin:$JRE_HOME_U/include:/usr/maven/bin:/usr/local/bin' >>  ~/.bashrc
-			source ~/.bashrc
-
+	
 			echo 'export PATH=$HOME_U/bin:$HOME_U/.local/bin:$PATH' >> ~/.bashrc
 			echo 'export PATH=$PATH:/mnt/c/Program\ Files/Docker/Docker/resources/bin' >> ~/.bashrc
 			echo "export DOCKER_HOST='tcp://0.0.0.0:2375'" >> ~/.bashrc
+			source ~/.bashrc
+
+			echo 'export JAVA_HOME_U=/usr/java/${JDK_NAME}' >> ~/.bashrc
+			echo 'export JRE_HOME_U=/usr/java/${JDK_NAME}/jre' >> ~/.bashrc
+			echo 'export PATH=$PATH:$JAVA_HOME_U/bin:$JRE_HOME_U/bin:$JRE_HOME_U/include:/usr/maven/bin:/usr/local/bin' >>  ~/.bashrc
 			source ~/.bashrc
 
 		    echo "Open new Terminal and once again './main.sh' and "
