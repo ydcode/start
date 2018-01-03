@@ -1,13 +1,7 @@
 #!/bin/bash
 
-# 安装 wsl ubuntu https://docs.microsoft.com/en-us/windows/wsl/install-win10
-# 安装 docker https://store.docker.com/editions/community/docker-ce-desktop-windows
-# setting expose port 2375 http://www.linuxidc.com/Linux/2017-11/148438.htm
-# auto.sh 会自动追加变量
-
 # listary xshell 网易邮箱大师 360 有道笔记 chrome  jdk beyond RedisDesktopManager visual studio code 
 
-wsl terminal
 
 # idea
 # 使用前请将“0.0.0.0 account.jetbrains.com”添加到hosts文件中
