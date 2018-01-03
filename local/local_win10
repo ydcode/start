@@ -21,4 +21,26 @@ wsl terminal
 # ssh-keygen -t rsa -f $HOME/.ssh/id_rsa.gce -C "gce"
 # copy pub to gce ssh key
 
+虚拟机设置
+V8 NAT  192.168.168.0 
+
+TYPE="Ethernet"
+PROXY_METHOD="none"
+BROWSER_ONLY="no"
+BOOTPROTO="static"
+IPADDR=192.168.168.192
+NETMASK=255.255.255.0
+GATEWAY=192.168.168.2
+DNS1=192.168.168.2
+DEFROUTE="yes"
+IPV4_FAILURE_FATAL="no"
+IPV6INIT="yes"
+IPV6_AUTOCONF="yes"
+IPV6_DEFROUTE="yes"
+IPV6_FAILURE_FATAL="no"
+IPV6_ADDR_GEN_MODE="stable-privacy"
+NAME="ens33"
+UUID="543a6b46-3144-4e7b-905f-934b4f745fbe"
+DEVICE="ens33"
+ONBOOT="yes"
 
