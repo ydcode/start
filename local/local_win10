@@ -44,3 +44,5 @@ UUID="543a6b46-3144-4e7b-905f-934b4f745fbe"
 DEVICE="ens33"
 ONBOOT="yes"
 
+启动container 连接数据库
+
