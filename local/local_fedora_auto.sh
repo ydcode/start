@@ -34,6 +34,11 @@ Install_JDK()
 			source ~/.bashrc
 
 			echo 'export registry=registry.cn-hangzhou.aliyuncs.com' >> ~/.bashrc
+			
+			echo "alias 'dp'='mvn deploy -Ddocker.registry=registry.cn-hangzhou.aliyuncs.com'" >> ~/.bashrc
+
+			
+
 			source ~/.bashrc
 
 		    echo "Open new Terminal and once again './main.sh' and "
