@@ -1,11 +1,5 @@
-sudo add-apt-repository ppa:hzwhuang/ss-qt5
-sudo apt-get update
-sudo apt-get install shadowsocks-qt5
 
-apt remove vim-common
-apt install -y proxychains wget curl git vim
 
-# 修改 /etc/proxchains.conf
 
 #JAVA_HOME 添加 _UBUNTU后缀是为了和其他变量（未知，导致mvn识别jdk未知错误）混淆
 #安装后要重启terminal
