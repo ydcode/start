@@ -71,6 +71,24 @@ Install_MVN
 
 
 
+NODEJS_URL="https://nodejs.org/dist/v8.9.4/node-v8.9.4-linux-x64.tar.xz"
+NODEJS_NAME="node-v8.9.4-linux-x64"
+NODEJS_FILE="node-v8.9.4-linux-x64.tar.xz"
+
+Install_NODEJS(){
+        if [ ! -d "/usr/nodejs/" ]; then
+		cd ${CurrentDir}
+		if [ ! -e "${NODEJS_FILE}" ]; then
+			wget ${NODEJS_URL}
+		fi
+		mkdir /usr/nodejs && tar xzvf node-*.tar.xz --strip-components 1  -C /usr/nodejs/
+        fi
+}
+
+Install_NODEJS
+
+
+
 sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
