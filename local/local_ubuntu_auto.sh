@@ -28,9 +28,9 @@ Install_JDK()
 		if grep -q "/usr/java/jdk" "~/.bashrc"; then #条目已存在
 		    echo "JDK Item Exist."
 		else
-			echo 'export JAVA_HOME=/usr/java/${JDK_NAME}' >> ~/.bashrc
-			echo 'export JRE_HOME=/usr/java/${JDK_NAME}/jre' >> ~/.bashrc
-			echo 'export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$JRE_HOME/include:/usr/maven/bin:/usr/local/bin' >>  ~/.bashrc
+			echo 'export JAVA_PATH=/usr/java/${JDK_NAME}' >> ~/.bashrc
+			echo 'export JRE_PATH=/usr/java/${JDK_NAME}/jre' >> ~/.bashrc
+			echo 'export PATH=$PATH:$JAVA_PATH/bin:$JRE_PATH/bin:$JRE_PATH/include:/usr/maven/bin:/usr/local/bin' >>  ~/.bashrc
 			source ~/.bashrc
 
 			echo 'export registry=registry.cn-hangzhou.aliyuncs.com' >> ~/.bashrc
