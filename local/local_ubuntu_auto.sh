@@ -29,7 +29,7 @@ Install_JDK()
 		else
 			echo 'export JAVA_PATH=/usr/java/${JDK_NAME}' >> ~/.bashrc
 			echo 'export JRE_PATH=/usr/java/${JDK_NAME}/jre' >> ~/.bashrc
-			echo 'export PATH=$PATH:$JAVA_PATH/bin:$JRE_PATH/bin:$JRE_PATH/include:/usr/maven/bin:/usr/local/bin' >>  ~/.bashrc
+			echo 'export PATH=$PATH:$JAVA_PATH/bin:$JRE_PATH/bin:$JRE_PATH/include:/usr/maven/bin:/usr/nodejs/bin:/usr/local/bin' >>  ~/.bashrc
 			source ~/.bashrc
 
 			echo 'export registry=registry.cn-hangzhou.aliyuncs.com' >> ~/.bashrc
@@ -81,7 +81,7 @@ Install_NODEJS(){
 		if [ ! -e "${NODEJS_FILE}" ]; then
 			wget ${NODEJS_URL}
 		fi
-		mkdir /usr/nodejs && tar xzvf node-*.tar.xz --strip-components 1  -C /usr/nodejs/
+		mkdir /usr/nodejs && tar -Jxv -f node-*.tar.xz --strip-components 1  -C /usr/nodejs/
         fi
 }
 
