@@ -16,6 +16,9 @@ gdebi 安装　 sogou
 # 修改 /etc/proxchains.conf
 
 
+vi /lib/systemd/system/docker.service 添加mirror  第一种方式会导致docker无法启动，所以用这种方法
+ExecStart=/usr/bin/dockerd -H fd:// --registry-mirror=https://vdcatpux.mirror.aliyuncs.com
+
 
 # listary xshell 网易邮箱大师 360 有道笔记 chrome  jdk beyond RedisDesktopManager visual studio code 
 
