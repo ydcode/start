@@ -5,7 +5,9 @@ sudo apt-get update
 sudo apt-get install shadowsocks-qt5
 
 apt remove vim-common
-apt install -y proxychains wget curl git vim
+apt install -y proxychains wget curl git vim gdebi
+
+sougou
 
 
 # 修改 /etc/proxchains.conf
