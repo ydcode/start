@@ -1,5 +1,17 @@
 #!/bin/bash
 
+sudo add-apt-repository ppa:hzwhuang/ss-qt5
+sudo apt-get update
+sudo apt-get install shadowsocks-qt5
+
+apt remove vim-common
+apt install -y proxychains wget curl git vim
+
+
+# 修改 /etc/proxchains.conf
+
+
+
 # listary xshell 网易邮箱大师 360 有道笔记 chrome  jdk beyond RedisDesktopManager visual studio code 
 
 
