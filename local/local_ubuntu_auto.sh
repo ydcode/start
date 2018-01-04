@@ -1,7 +1,6 @@
 
 
 
-#JAVA_HOME 添加 _UBUNTU后缀是为了和其他变量（未知，导致mvn识别jdk未知错误）混淆
 #安装后要重启terminal
 
 JDK_URL="http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/jdk-8u152-linux-x64.tar.gz"
