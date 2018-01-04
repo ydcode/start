@@ -7,8 +7,11 @@ sudo apt-get install shadowsocks-qt5
 apt remove vim-common
 apt install -y proxychains wget curl git vim gdebi
 
-sougou
-
+＃sougou
+apt remove fcitx*
+apt autoremove
+gdebi 安装　 sogou
+然后重启
 
 # 修改 /etc/proxchains.conf
 
