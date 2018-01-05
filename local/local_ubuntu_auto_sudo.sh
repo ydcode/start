@@ -92,10 +92,19 @@ Install_NODEJS(){
 Install_NODEJS
 
 
+Install_Docker_Compose(){
+        if [ ! -f "/usr/local/bin/docker-compose" ]; then
+		cd ~
+		sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+		sudo chmod +x /usr/local/bin/docker-compose
+		docker-compose --version
+        fi
+}
 
-sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-docker-compose --version
+Install_Docker_Compose
+
+
+
 
 
 
