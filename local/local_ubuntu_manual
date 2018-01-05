@@ -35,6 +35,9 @@ ExecStart=/usr/bin/dockerd -H fd:// --registry-mirror=https://vdcatpux.mirror.al
 echo '0.0.0.0 account.jetbrains.com' >> /etc/hosts
 
 # 安装 plugin: lombok gitignore jrebel + 激活码即可
+Jrebel激活码
+EJEl4s+yMGbAvlPw9SChMRJk/j/w41VWeVW6nLhCP0Y6Uz1JWYTqMKuhF9K3LGh1h90xzUWsFsvcRgCsmp796FzUpS/9GWjhI2ok0GMCZ/Yq2jJEfNz+MP2x086z0Q1+bpjkCw==
+
 # Shift+Ctrl+Alt+/ --- 选择Registry --- compiler.automake.allow.when.app.running enable
 # https://my.jrebel.com
 # setting --- comipile --- Build Project Automatically
