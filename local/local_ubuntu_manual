@@ -43,6 +43,7 @@ echo '0.0.0.0 account.jetbrains.com' >> /etc/hosts
 # gce ssh
 # ssh-keygen -t rsa -f $HOME/.ssh/id_rsa.gce -C "gce"
 # copy pub to gce ssh key
+ln -s ~/.ssh/ /root/
 
 虚拟机设置
 V8 NAT  192.168.168.0 
