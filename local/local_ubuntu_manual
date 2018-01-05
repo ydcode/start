@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# SS
 sudo add-apt-repository ppa:hzwhuang/ss-qt5
 sudo apt-get update
 sudo apt-get install shadowsocks-qt5
@@ -15,6 +16,11 @@ gdebi 安装　 sogou
 
 # 修改 /etc/proxchains.conf
 
+# TimeShift
+sudo apt-add-repository -y ppa:teejee2008/ppa
+sudo apt-get update
+sudo apt-get install timeshif
+
 
 vi /lib/systemd/system/docker.service 添加mirror  第一种方式会导致docker无法启动，所以用这种方法
 ExecStart=/usr/bin/dockerd -H fd:// --registry-mirror=https://vdcatpux.mirror.aliyuncs.com
@@ -25,6 +31,9 @@ ExecStart=/usr/bin/dockerd -H fd:// --registry-mirror=https://vdcatpux.mirror.al
 
 # idea
 # 使用前请将“0.0.0.0 account.jetbrains.com”添加到hosts文件中
+#
+echo '0.0.0.0 account.jetbrains.com' >> /etc/hosts
+
 # 安装 plugin: lombok gitignore jrebel + 激活码即可
 # Shift+Ctrl+Alt+/ --- 选择Registry --- compiler.automake.allow.when.app.running enable
 # https://my.jrebel.com
