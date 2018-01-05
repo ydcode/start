@@ -38,6 +38,10 @@ Install_JDK()
 		
 
 			source ~/.bashrc
+			
+			echo 'fs.inotify.max_user_watches = 524288' >> /etc/sysctl.conf
+			sysctl -p --system
+			
 
 		    echo "Open new Terminal and once again './main.sh' and "
 		fi
