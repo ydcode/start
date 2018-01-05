@@ -23,6 +23,8 @@ Install_JDK()
 		fi
 		mkdir /usr/java && tar zxvf jdk*.tar.gz -C /usr/java/
 		ln -s /usr/java/${JDK_NAME}/bin/java /usr/local/bin/java #必要
+		
+
 
 		if grep -q "/usr/java/jdk" "~/.bashrc"; then #条目已存在
 		    echo "JDK Item Exist."
