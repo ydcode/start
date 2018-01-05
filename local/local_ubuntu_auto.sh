@@ -63,7 +63,7 @@ MAVEN_FILE="apache-maven-3.5.2-bin.tar.gz"
 
 Install_MVN(){
         if [ ! -d "/usr/maven/" ]; then
-		cd ${CurrentDir}
+		cd ~
 		if [ ! -e "${MAVEN_FILE}" ]; then
 			wget ${MAVEN_URL}
 		fi
@@ -81,7 +81,7 @@ NODEJS_FILE="node-v8.9.4-linux-x64.tar.xz"
 
 Install_NODEJS(){
         if [ ! -d "/usr/nodejs/" ]; then
-		cd ${CurrentDir}
+		cd ~
 		if [ ! -e "${NODEJS_FILE}" ]; then
 			wget ${NODEJS_URL}
 		fi
