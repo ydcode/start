@@ -22,7 +22,7 @@ SSH_DIR=$HOME
 #if [ -e "/usr/bin/sw_vers" ]; then #mac os
 #	SSH_DIR="/private/var/root"
 #else
-#	SSH_DIR="/root"
+#	SSH_DIR="~"
 #fi
 
     
