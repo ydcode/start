@@ -2,7 +2,7 @@
 
 # listary xshell 网易邮箱大师 360 有道笔记 chrome  jdk beyond RedisDesktopManager visual studio code 
 
-
+vi /etc/apt/source.list  追加 前缀 cn.
 sudo apt-get update
 sudo apt-get upgrade
 apt remove vim-common
