@@ -1,12 +1,31 @@
 #!/bin/bash
 
-# SS
-sudo add-apt-repository ppa:hzwhuang/ss-qt5
-sudo apt-get update
-sudo apt-get install shadowsocks-qt5
+# listary xshell 网易邮箱大师 360 有道笔记 chrome  jdk beyond RedisDesktopManager visual studio code 
 
+
+sudo apt-get update
+sudo apt-get upgrade
 apt remove vim-common
 apt install -y proxychains wget curl git vim gdebi
+
+
+
+# idea
+# 使用前请将“0.0.0.0 account.jetbrains.com”添加到hosts文件中
+#
+echo '0.0.0.0 account.jetbrains.com' >> /etc/hosts
+
+# 安装 plugin: lombok gitignore jrebel + 激活码即可
+Jrebel激活码
+EJEl4s+yMGbAvlPw9SChMRJk/j/w41VWeVW6nLhCP0Y6Uz1JWYTqMKuhF9K3LGh1h90xzUWsFsvcRgCsmp796FzUpS/9GWjhI2ok0GMCZ/Yq2jJEfNz+MP2x086z0Q1+bpjkCw==
+
+# Shift+Ctrl+Alt+/ --- 选择Registry --- compiler.automake.allow.when.app.running enable
+# https://my.jrebel.com
+# setting --- comipile --- Build Project Automatically
+# restart idea
+
+
+-------------------------------------------分割线--------------------------------------------------------------------
 
 ＃sougou
 apt remove fcitx*
@@ -26,22 +45,7 @@ vi /lib/systemd/system/docker.service 添加mirror  第一种方式会导致dock
 ExecStart=/usr/bin/dockerd -H fd:// --registry-mirror=https://vdcatpux.mirror.aliyuncs.com
 
 
-# listary xshell 网易邮箱大师 360 有道笔记 chrome  jdk beyond RedisDesktopManager visual studio code 
 
-
-# idea
-# 使用前请将“0.0.0.0 account.jetbrains.com”添加到hosts文件中
-#
-echo '0.0.0.0 account.jetbrains.com' >> /etc/hosts
-
-# 安装 plugin: lombok gitignore jrebel + 激活码即可
-Jrebel激活码
-EJEl4s+yMGbAvlPw9SChMRJk/j/w41VWeVW6nLhCP0Y6Uz1JWYTqMKuhF9K3LGh1h90xzUWsFsvcRgCsmp796FzUpS/9GWjhI2ok0GMCZ/Yq2jJEfNz+MP2x086z0Q1+bpjkCw==
-
-# Shift+Ctrl+Alt+/ --- 选择Registry --- compiler.automake.allow.when.app.running enable
-# https://my.jrebel.com
-# setting --- comipile --- Build Project Automatically
-# restart idea
 
 # gce ssh
 # ssh-keygen -t rsa -f $HOME/.ssh/id_rsa.gce -C "gce"
@@ -72,4 +76,10 @@ DEVICE="ens33"
 ONBOOT="yes"
 
 启动container 连接数据库
+
+
+# SS
+sudo add-apt-repository ppa:hzwhuang/ss-qt5
+sudo apt-get update
+sudo apt-get install shadowsocks-qt5
 
