@@ -45,6 +45,23 @@ services:
       - web_server_network
 
 
+  mysql:
+    image: mysql:5.7.20
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    container_name: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - /home/data/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=RGAowH8WeHtEMADZ9HPZz5u9H
+      - MYSQL_DATABASE=rwdb
+      - MYSQL_USER=rwdb
+      - MYSQL_PASSWORD=PMq08AK9RFqEbjdUiF7qpg3F9
+    restart: on-failure
+    networks:
+      - web_server_network
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
@@ -52,11 +69,13 @@ services:
       - 1699:80
     restart: on-failure
     environment:
-      - PMA_HOSTS=settingdb.cu1jn8fk6ux0.ap-southeast-2.rds.amazonaws.com
-      - PMA_VERBOSES=aws
+      - PMA_HOSTS=mysql
+      - PMA_VERBOSES=local
+    depends_on:
+      - mysql
     networks:
       - web_server_network
-
+ 
 
   web-admin:
     image: ${registry:-docker.io}/ydcode/pack:web-admin-1.0.0-snapshot
