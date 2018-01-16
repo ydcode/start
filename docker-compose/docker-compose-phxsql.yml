@@ -3,8 +3,13 @@ services:
   phxsql:
     image: ${registry:-docker.io}/ydcode/pack:phxsql1.0
     container_name: phxsql
+    volumes:
+      - phxsql-data:/data
     ports:
       - 54321:54321 # master
       - 54322:54322 # slave
     restart: on-failure
     network_mode: "host"
+
+volumes:
+  phxsql-data:
