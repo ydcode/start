@@ -34,8 +34,6 @@ services:
       - /home/tmp/nginx/vhost:/etc/nginx/conf.d
     networks:
       - web_server_network
-    depends_on:
-      - php-fpm
 
   useragent:
     image: ${registry:-docker.io}/ydcode/pack:image-user-agent-1.0.0-snapshot
