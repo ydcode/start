@@ -1,0 +1,107 @@
+version: "3.2"
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+    container_name: rabbitmq
+    restart: on-failure
+    ports:
+      - 5671:5671
+      - 5672:5672
+      - 4369:4369
+      - 25672:25672
+      - 15671:15671
+      - 15672:15672
+    networks:
+      - web_server_network
+
+  nginx:
+    image: ${registry:-docker.io}/ydcode/pack:image-nginx-1.0.0-snapshot
+    container_name: nginx
+    restart: on-failure
+    ports:
+      - 80:80
+      - 443:443
+      - 1688:1688
+    volumes:
+      - /home/wwwroot:/home/wwwroot
+      - /home/wwwroot/default:/home/wwwroot/default
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /home/tmp/logs:/home/tmp/logs
+      - /home/tmp/ssl:/home/tmp/ssl
+      - /home/tmp/nginx/vhost:/etc/nginx/conf.d
+    networks:
+      - web_server_network
+
+  useragent:
+    image: ${registry:-docker.io}/ydcode/pack:image-user-agent-1.0.0-snapshot
+    container_name: useragent
+    ports:
+      - 8099:8099
+    restart: on-failure
+    networks:
+      - web_server_network
+
+
+  mysql:
+    image: mysql:5.7.20
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    container_name: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - /home/data/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=RGAowH8WeHtEMADZ9HPZz5u9H
+      - MYSQL_DATABASE=bootdb
+      - MYSQL_USER=bootdb
+      - MYSQL_PASSWORD=PMq08AK9RFqEbjdUiF7qpg3F9
+    restart: on-failure
+    networks:
+      - web_server_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    ports:
+      - 1699:80
+    restart: on-failure
+    environment:
+      - PMA_HOSTS=mysql
+      - PMA_VERBOSES=local
+    depends_on:
+      - mysql
+    networks:
+      - web_server_network
+ 
+
+  web-admin:
+    image: ${registry:-docker.io}/ydcode/pack:web-admin-1.0.0-snapshot
+    container_name: web-admin
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - CDN_DOMAIN_CN=${CDN_DOMAIN_CN}
+      - SSL_EMAIL=${SSL_EMAIL}
+      - USER_AGENT_HOST=useragent
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+    volumes:
+      - /home/tmp/maxmind:/home/tmp/maxmind
+      - /home/tmp/ssl:/home/tmp/ssl
+    restart: on-failure
+    depends_on:
+      - phpmyadmin
+      - rabbitmq
+      - nginx
+      - useragent
+    ports:
+      - 8080:8080
+      - 8443:8443
+    networks:
+      - web_server_network
+
+networks:
+  web_server_network:
