@@ -55,8 +55,8 @@ services:
       - /home/data/mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=RGAowH8WeHtEMADZ9HPZz5u9H
-      - MYSQL_DATABASE=rwdb
-      - MYSQL_USER=rwdb
+      - MYSQL_DATABASE=bootdb
+      - MYSQL_USER=bootdb
       - MYSQL_PASSWORD=PMq08AK9RFqEbjdUiF7qpg3F9
     restart: on-failure
     networks:
