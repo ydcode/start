@@ -44,6 +44,20 @@ services:
     networks:
       - web_server_network
 
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    ports:
+      - 1699:80
+    restart: on-failure
+    environment:
+      - PMA_HOSTS=settingdb.cu1jn8fk6ux0.ap-southeast-2.rds.amazonaws.com
+      - PMA_VERBOSES=aws
+    networks:
+      - web_server_network
+
+
   web-admin:
     image: ${registry:-docker.io}/ydcode/pack:web-admin-1.0.0-snapshot
     container_name: web-admin
@@ -60,7 +74,6 @@ services:
       - /home/tmp/ssl:/home/tmp/ssl
     restart: on-failure
     depends_on:
-      - php-fpm
       - phpmyadmin
       - rabbitmq
       - nginx
