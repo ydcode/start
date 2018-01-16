@@ -12,3 +12,5 @@ services:
     network_mode: "host"
 
 
+volumes:
+  data:
