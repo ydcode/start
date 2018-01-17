@@ -48,11 +48,11 @@ IpSectionTwo=`echo "${IP}" |awk 'BEGIN{OFS=FS="."}{print $1,$2}'`
 Echo_Yellow "Server: ${ServerEnv}"
 
 
-JDK_URL="http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/jdk-8u152-linux-x64.tar.gz"
+JDK_URL="http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/jdk-8u162-linux-x64.tar.gz"
 MAVEN_URL="http://apache.mirror.colo-serv.net/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz"
 
-JDK_FILE="jdk-8u152-linux-x64.tar.gz"
-JDK_NAME="jdk1.8.0_152"
+JDK_FILE="jdk-8u162-linux-x64.tar.gz"
+JDK_NAME="jdk1.8.0_162"
 
 MAVEN_NAME="apache-maven-3.5.2"
 
