@@ -85,14 +85,15 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - CDN_DOMAIN_CN=${CDN_DOMAIN_CN}
       - SSL_EMAIL=${SSL_EMAIL}
-      - USER_AGENT_HOST=useragent
-      - RABBITMQ_HOST=rabbitmq
+      - USER_AGENT_HOST=${useragent}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
     volumes:
       - /home/tmp/maxmind:/home/tmp/maxmind
       - /home/tmp/ssl:/home/tmp/ssl
     restart: on-failure
     depends_on:
+      - mysql
       - phpmyadmin
       - rabbitmq
       - nginx
