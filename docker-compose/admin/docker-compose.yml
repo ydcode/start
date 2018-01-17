@@ -19,10 +19,7 @@ services:
     logging:
       options:
         max-size: "200m"
-        
-        
-    log_opt:
-      max-size: 50m
+       
   nginx:
     image: ${registry:-docker.io}/ydcode/pack:image-nginx-1.0.0-snapshot
     container_name: nginx
