@@ -82,6 +82,7 @@ services:
     container_name: web-admin
     environment:
       - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
       - DB_PASSWORD=${DB_PASSWORD}
       - CDN_DOMAIN_CN=${CDN_DOMAIN_CN}
       - SSL_EMAIL=${SSL_EMAIL}
