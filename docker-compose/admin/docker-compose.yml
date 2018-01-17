@@ -83,6 +83,7 @@ services:
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
       - DB_PASSWORD=${DB_PASSWORD}
       - CDN_DOMAIN_CN=${CDN_DOMAIN_CN}
       - SSL_EMAIL=${SSL_EMAIL}
