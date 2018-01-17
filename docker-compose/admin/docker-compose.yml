@@ -16,7 +16,8 @@ services:
       - 15672:15672
     networks:
       - web_server_network
-
+    log_opt:
+      max-size: 50m
   nginx:
     image: ${registry:-docker.io}/ydcode/pack:image-nginx-1.0.0-snapshot
     container_name: nginx
@@ -34,7 +35,9 @@ services:
       - /home/tmp/nginx/vhost:/etc/nginx/conf.d
     networks:
       - web_server_network
-
+    log_opt:
+      max-size: 50m
+      
   useragent:
     image: ${registry:-docker.io}/ydcode/pack:image-user-agent-1.0.0-snapshot
     container_name: useragent
@@ -43,7 +46,8 @@ services:
     restart: on-failure
     networks:
       - web_server_network
-
+    log_opt:
+      max-size: 50m
 
   mysql:
     image: mysql:5.7.20
@@ -61,7 +65,9 @@ services:
     restart: on-failure
     networks:
       - web_server_network
-
+    log_opt:
+      max-size: 50m
+      
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
@@ -75,7 +81,8 @@ services:
       - mysql
     networks:
       - web_server_network
- 
+    log_opt:
+      max-size: 50m 
 
   web-admin:
     image: ${registry:-docker.io}/ydcode/pack:web-admin-1.0.0-snapshot
@@ -105,6 +112,8 @@ services:
       - 8443:8443
     networks:
       - web_server_network
-
+    log_opt:
+      max-size: 50m
+      
 networks:
   web_server_network:
