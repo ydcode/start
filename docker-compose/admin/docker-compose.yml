@@ -54,10 +54,10 @@ services:
     volumes:
       - /home/data/mysql:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=RGAowH8WeHtEMADZ9HPZz5u9H
-      - MYSQL_DATABASE=bootdb
-      - MYSQL_USER=bootdb
-      - MYSQL_PASSWORD=PMq08AK9RFqEbjdUiF7qpg3F9
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_NAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
     restart: on-failure
     networks:
       - web_server_network
