@@ -103,6 +103,9 @@ services:
       - USER_AGENT_HOST=${USER_AGENT_HOST}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - AWS_ACCESS_KEY=${AWS_ACCESS_KEY}
+      - AWS_SECRET_KEY=${AWS_SECRET_KEY}
+
     volumes:
       - /home/tmp/maxmind:/home/tmp/maxmind
       - /home/tmp/ssl:/home/tmp/ssl
