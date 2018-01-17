@@ -94,7 +94,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - CDN_DOMAIN_CN=${CDN_DOMAIN_CN}
       - SSL_EMAIL=${SSL_EMAIL}
-      - USER_AGENT_HOST=${useragent}
+      - USER_AGENT_HOST=${USER_AGENT_HOST}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
     volumes:
