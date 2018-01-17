@@ -27,6 +27,7 @@ Install_JDK()
             echo 'export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$JRE_HOME/include:$MAVEN_HOME/bin:/usr/local/bin' >>  ~/.bashrc
             source ~/.bashrc
 
+		java -version
             Echo_Yellow "Open new Terminal and once again './main.sh' and "
             Echo_Green "Ctrl + C to exit"
             get_char
