@@ -90,9 +90,9 @@ services:
       options:
         max-size: "200m"
         
-  web-admin-dev:
+  web-admin:
     image: ${registry:-docker.io}/ydcode/pack:image-dev-1.0.0-snapshot
-    container_name: web-admin-dev
+    container_name: web-admin
     environment:
       - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
       - DB_HOST=${DB_HOST}
