@@ -1,4 +1,4 @@
-version: "3.2"
+version: "3.4"
 services:
   rabbitmq:
     image: rabbitmq:management
@@ -14,9 +14,14 @@ services:
       - 25672:25672
       - 15671:15671
       - 15672:15672
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
     networks:
       - web_server_network
-
+    logging:
+      options:
+        max-size: "200m"
+       
   nginx:
     image: ${registry:-docker.io}/ydcode/pack:image-nginx-1.0.0-snapshot
     container_name: nginx
@@ -26,15 +31,16 @@ services:
       - 443:443
       - 1688:1688
     volumes:
-      - /home/wwwroot:/home/wwwroot
-      - /home/wwwroot/default:/home/wwwroot/default
-      - /etc/letsencrypt:/etc/letsencrypt
-      - /home/tmp/logs:/home/tmp/logs
-      - /home/tmp/ssl:/home/tmp/ssl
-      - /home/tmp/nginx/vhost:/etc/nginx/conf.d
+      - nginx_wwwroot_data:/home/wwwroot
+      - nginx_ssl_data:/etc/letsencrypt
+      - nginx_conf_data:/etc/nginx/conf.d
+      - nginx_temp_logs:/home/temp/logs
     networks:
       - web_server_network
-
+    logging:
+      options:
+        max-size: "200m"
+      
   useragent:
     image: ${registry:-docker.io}/ydcode/pack:image-user-agent-1.0.0-snapshot
     container_name: useragent
@@ -43,8 +49,10 @@ services:
     restart: on-failure
     networks:
       - web_server_network
-
-
+    logging:
+      options:
+        max-size: "200m"
+        
   mysql:
     image: mysql:5.7.20
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
@@ -52,7 +60,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - /home/data/mysql:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${DB_NAME}
@@ -61,7 +69,10 @@ services:
     restart: on-failure
     networks:
       - web_server_network
-
+    logging:
+      options:
+        max-size: "200m"
+      
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
@@ -75,7 +86,70 @@ services:
       - mysql
     networks:
       - web_server_network
- 
+    logging:
+      options:
+        max-size: "200m"
+        
+  web-admin-dev:
+    image: busybox
+    container_name: web-admin-dev
+    environment:
+      - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - CDN_DOMAIN_CN=${CDN_DOMAIN_CN}
+      - SSL_EMAIL=${SSL_EMAIL}
+      - USER_AGENT_HOST=${USER_AGENT_HOST}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - AWS_ACCESS_KEY=${AWS_ACCESS_KEY}
+      - AWS_SECRET_KEY=${AWS_SECRET_KEY}
 
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+      - rocksdb_data:/home/data/rocksdb
+      - temp_data:/home/temp
+      - nginx_wwwroot_data:/home/wwwroot
+      - nginx_ssl_data:/etc/letsencrypt
+      - nginx_conf_data:/etc/nginx/conf.d
+      
+    restart: on-failure
+    depends_on:
+      - mysql
+      - phpmyadmin
+      - rabbitmq
+      - nginx
+      - useragent
+    ports:
+      - 8080:8080
+      - 8443:8443
+    networks:
+      - web_server_network
+    logging:
+      options:
+        max-size: "200m"
+      
 networks:
   web_server_network:
+
+volumes:
+  mysql_data:
+    name: mysql_data
+  rocksdb_data:
+    name: rocksdb_data
+  nginx_conf_data:
+      name: nginx_conf_data
+  nginx_wwwroot_data:
+    name: nginx_wwwroot_data
+  nginx_ssl_data:
+    name: nginx_ssl_data
+  nginx_temp_logs:
+    name: nginx_temp_logs
+  rabbitmq_data:
+    name: rabbitmq_data
+  temp_data:
+    name: temp_data
+
