@@ -108,7 +108,7 @@ services:
 
     volumes:
       - rocksdb_data:/home/data/rocksdb
-      - temp_data:/home/tmp
+      - tmp_data:/home/tmp
     restart: on-failure
     depends_on:
       - mysql
