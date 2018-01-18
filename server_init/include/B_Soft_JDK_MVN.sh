@@ -51,7 +51,7 @@ Install_MVN(){
 JDK_MVN_Choice()
 {
 	JdkMvnChoice="y"
-	Echo_Yellow "Add JDK && MVN (!!! Prod env no neew java and mvn)?"
+	Echo_Yellow "Add JDK && MVN (!!! Prod env NO need java and mvn)?"
     read -p "Default Yes,Enter your choice [Y/n]: " JdkMvnChoice
 
     case "${JdkMvnChoice}" in
