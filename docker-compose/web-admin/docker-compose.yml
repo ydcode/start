@@ -131,8 +131,15 @@ networks:
 
 volumes:
   mysql_data:
+    name: mysql_data
   rocksdb_data:
+    name: rocksdb_data
   nginx_conf_data:
+      name: nginx_conf_data
   nginx_wwwroot_data:
+    name: nginx_wwwroot_data
   nginx_ssl_data:
+    name: nginx_ssl_data
   temp_data:
+    name: temp_data
+
