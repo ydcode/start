@@ -88,9 +88,9 @@ services:
       options:
         max-size: "200m"
         
-  web_admin:
+  webadmin:
     image: ${registry:-docker.io}/ydcode/pack:web-admin-1.0.0-snapshot
-    container_name: web_admin
+    container_name: webadmin
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
