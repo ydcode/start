@@ -29,8 +29,7 @@ services:
       - 443:443
       - 1688:1688
     volumes:
-      - /home/wwwroot:/home/wwwroot
-      - /home/wwwroot/default:/home/wwwroot/default
+      - nginx_conf_ssl_data:/home/wwwroot
       - /etc/letsencrypt:/etc/letsencrypt
       - /home/tmp/logs:/home/tmp/logs
       - /home/tmp/ssl:/home/tmp/ssl
@@ -107,7 +106,7 @@ services:
       - AWS_SECRET_KEY=${AWS_SECRET_KEY}
 
     volumes:
-      - data:/home/data
+      - nginx_conf_ssl_data:/home/data
       - tmp:/home/temp
     restart: on-failure
     depends_on:
@@ -131,5 +130,7 @@ networks:
 volumes:
   mysql_data:
   rocksdb_data:
-  nginx_conf_ssl_data:
+  nginx_conf_data:
+  nginx_wwwroot_data:
+  nginx_ssl_data:
   logs_data:
