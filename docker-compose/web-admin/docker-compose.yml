@@ -109,6 +109,10 @@ services:
     volumes:
       - rocksdb_data:/home/data/rocksdb
       - temp_data:/home/temp
+      - nginx_wwwroot_data:/home/wwwroot
+      - nginx_ssl_data:/etc/letsencrypt
+      - nginx_conf_data:/etc/nginx/conf.d
+      
     restart: on-failure
     depends_on:
       - mysql
