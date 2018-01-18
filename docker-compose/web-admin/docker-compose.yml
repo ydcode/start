@@ -108,6 +108,8 @@ services:
       - AWS_SECRET_KEY=${AWS_SECRET_KEY}
 
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
       - rocksdb_data:/home/data/rocksdb
       - temp_data:/home/temp
       - nginx_wwwroot_data:/home/wwwroot
