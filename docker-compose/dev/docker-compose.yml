@@ -91,7 +91,7 @@ services:
         max-size: "200m"
         
   web-admin-dev:
-    image: busybox
+    image: ${registry:-docker.io}/ydcode/pack:image-dev-1.0.0-snapshot
     container_name: web-admin-dev
     environment:
       - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
