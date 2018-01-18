@@ -14,6 +14,8 @@ services:
       - 25672:25672
       - 15671:15671
       - 15672:15672
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
     networks:
       - web_server_network
     logging:
@@ -140,6 +142,8 @@ volumes:
     name: nginx_wwwroot_data
   nginx_ssl_data:
     name: nginx_ssl_data
+  rabbitmq_data:
+    name: rabbitmq_data
   temp_data:
     name: temp_data
 
