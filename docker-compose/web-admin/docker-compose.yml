@@ -34,7 +34,7 @@ services:
       - nginx_wwwroot_data:/home/wwwroot
       - nginx_ssl_data:/etc/letsencrypt
       - nginx_conf_data:/etc/nginx/conf.d
-      - temp_data:/home/tmp
+      - nginx_tmp_logs:/home/tmp/logs
     networks:
       - web_server_network
     logging:
@@ -139,8 +139,10 @@ volumes:
     name: nginx_wwwroot_data
   nginx_ssl_data:
     name: nginx_ssl_data
+  nginx_tmp_logs:
+    name: nginx_tmp_logs
   rabbitmq_data:
     name: rabbitmq_data
-  temp_data:
-    name: temp_data
+  tmp_data:
+    name: tmp_data
 
