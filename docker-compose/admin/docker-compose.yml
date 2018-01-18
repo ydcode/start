@@ -129,5 +129,7 @@ networks:
   web_server_network:
 
 volumes:
-  data:
-  temp:
+  mysql_data:
+  rocksdb_data:
+  nginx_conf_ssl_data:
+  logs_data:
