@@ -115,6 +115,8 @@ services:
       - nginx_wwwroot_data:/home/wwwroot
       - nginx_ssl_data:/etc/letsencrypt
       - nginx_conf_data:/etc/nginx/conf.d
+      - /root/.config:/root/.config # dev
+      - /home/gce:/home/gce # dev
       
     restart: on-failure
     depends_on:
