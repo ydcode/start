@@ -109,7 +109,6 @@ services:
       - nginx_wwwroot_data
       - nginx_ssl_data
       - nginx_conf_data
-      - mysql_data
       - temp_data
     restart: on-failure
     depends_on:
