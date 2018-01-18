@@ -107,8 +107,8 @@ services:
       - AWS_SECRET_KEY=${AWS_SECRET_KEY}
 
     volumes:
-      - /home/tmp/maxmind:/home/tmp/maxmind
-      - /home/tmp/ssl:/home/tmp/ssl
+      - data:/home/data
+      - tmp:/home/temp
     restart: on-failure
     depends_on:
       - mysql
@@ -127,3 +127,6 @@ services:
       
 networks:
   web_server_network:
+
+volumes:
+  data:
