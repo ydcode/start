@@ -5,6 +5,7 @@ if [ ! -e "/usr/bin/docker" ]; then
         sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo 
         sudo yum install -y  docker-ce
         sudo systemctl start docker
+        sudo systemctl enable docker #开机启动
 
         if grep -q "/usr/local/bin" "~/.bashrc"; then #条目已存在
                 Echo_Green "/usr/local/bin Exist."
