@@ -50,7 +50,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
-      - rocksdb_data:/home/data/rocksdb
       - temp_data:/home/temp
       - nginx_wwwroot_data:/home/wwwroot
       - nginx_ssl_data:/etc/letsencrypt
@@ -76,10 +75,6 @@ networks:
   web_server_network:
 
 volumes:
-  mysql_data:
-    name: mysql_data
-  rocksdb_data:
-    name: rocksdb_data
   nginx_conf_data:
       name: nginx_conf_data
   nginx_wwwroot_data:
@@ -88,7 +83,5 @@ volumes:
     name: nginx_ssl_data
   nginx_temp_logs:
     name: nginx_temp_logs
-  rabbitmq_data:
-    name: rabbitmq_data
   temp_data:
     name: temp_data
