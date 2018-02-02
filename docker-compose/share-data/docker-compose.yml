@@ -21,7 +21,23 @@ services:
     logging:
       options:
         max-size: "200m"
-              
+
+
+  rocksdb-server:
+    image: ${registry:-docker.io}/ydcode/pack:rocksdb-server-1.0.0-snapshot
+    container_name: rocksdb-server
+    restart: on-failure
+    ports:
+      - 6565:6565
+    volumes:
+      - rocksdb_data:/home/data/rocksdb
+    networks:
+      - web_server_network
+    logging:
+      options:
+        max-size: "200m"
+        
+        
   mysql:
     image: mysql:5.7.20
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
