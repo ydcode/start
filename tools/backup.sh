@@ -1,6 +1,6 @@
 #!/bin/bash
 
-compose_file_path=$1
+compose_file_path=/home/gce/start/docker-compose/share-data/docker-compose.yml
 project_name=${2,,}
 backup_path=$3
 backup_or_restore=$4
@@ -27,7 +27,8 @@ function restore_volume {
 }
 
 echo "Stopping running mysql container"
-docker-compose -f /home/gce/start/docker-compose/share-data/docker-compose.yml -p mysql stop
+docker-compose -f $compose_file_path -p mysql stop
+docker-compose -f $compose_file_path -p rocksdb-server stop
 
 echo "Perform backup MySQL"
 backup_volume mysql_data /home/backup
