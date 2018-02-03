@@ -27,7 +27,7 @@ function restore_volume {
 }
 
 echo "Stopping running mysql container"
-docker-compose -f /home/gce/start/docker-compose/share-data -p mysql stop
+docker-compose -f /home/gce/start/docker-compose/share-data/docker-compose.yml -p mysql stop
 
 echo "Perform backup MySQL"
 backup_volume mysql_data /home/backup
