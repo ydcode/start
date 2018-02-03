@@ -14,7 +14,7 @@ function backup_volume {
   backup_destination=$2
   date_suffix=$(date -I)
 
-  docker run --rm -v $volume_name:/data -v $backup_destination:/backup ubuntu tar -zcvf /backup/$volume_name-$date_suffix.tar /data
+  docker run --rm -v $volume_name:/data -v $backup_destination:/backup ubuntu tar -zcvf /backup/$DASHBOARD_DOMAIN-$volume_name-$date_suffix.tar /data
 }
 
 function restore_volume {
@@ -31,3 +31,6 @@ docker-compose -f /home/gce/start/docker-compose/share-data/docker-compose.yml -
 
 echo "Perform backup MySQL"
 backup_volume mysql_data /home/backup
+
+echo "Perform backup RocksDB"
+backup_volume rocksdb_data /home/backup
