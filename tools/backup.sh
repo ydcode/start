@@ -34,3 +34,5 @@ backup_volume mysql_data /home/backup
 
 echo "Perform backup RocksDB"
 backup_volume rocksdb_data /home/backup
+
+ls -al /home/backup/
