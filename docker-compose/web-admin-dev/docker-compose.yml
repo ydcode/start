@@ -1,7 +1,7 @@
 version: "3.4"
 services:       
   nginx:
-    image: ${registry:-docker.io}/ydcode/pack:image-nginx-1.0.0-snapshot
+    image: ${registry:-docker.io}/ydcode/pack:image-nginx-1.0.0
     container_name: nginx
     restart: on-failure
     ports:
@@ -20,7 +20,7 @@ services:
         max-size: "200m"
   
   useragent:
-    image: ${registry:-docker.io}/ydcode/pack:image-user-agent-1.0.0-snapshot
+    image: ${registry:-docker.io}/ydcode/pack:image-user-agent-1.0.0
     container_name: useragent
     ports:
       - 8099:8099
@@ -32,7 +32,7 @@ services:
         max-size: "200m"
         
   web-admin:
-    image: ${registry:-docker.io}/ydcode/pack:image-dev-1.0.0-snapshot
+    image: ${registry:-docker.io}/ydcode/pack:image-dev-1.0.0
     container_name: web-admin
     environment:
       - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
