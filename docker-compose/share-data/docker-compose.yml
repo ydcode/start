@@ -24,7 +24,7 @@ services:
 
 
   rocksdb-server:
-    image: ${registry:-docker.io}/ydcode/pack:rocksdb-server-1.0.0-snapshot
+    image: ${registry:-docker.io}/ydcode/pack:rocksdb-server-1.0.0
     container_name: rocksdb-server
     restart: on-failure
     ports:
