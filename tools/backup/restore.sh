@@ -18,10 +18,12 @@ docker-compose -f $compose_file_path -p mysql stop
 docker-compose -f $compose_file_path -p rocksdb-server stop
 
 echo "Perform Restore MySQL"
-restore_volume mysql_data /home/backup *-mysql_data-*.tar
+MySQL_FILE=`ls /home/backup/ | grep mysql`
+restore_volume mysql_data /home/backup $MySQL_FILE
 
 echo "Perform Restore RocksDB"
-restore_volume rocksdb_data /home/backup *-rocksdb_data-*.tar
+ROCK_FILE=`ls /home/backup/ | grep rocksdb`
+restore_volume rocksdb_data /home/backup $ROCK_FILE
 
 
 
