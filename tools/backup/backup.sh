@@ -14,8 +14,10 @@ function backup_volume {
 
 
 echo "Stopping running MySQL && RocksDB container"
-docker-compose -f $compose_file_path -p mysql stop
-docker-compose -f $compose_file_path -p rocksdb-server stop
+docker-compose -f $compose_file_path down --remove-orphans
+
+# docker-compose -f $compose_file_path -p mysql stop
+# docker-compose -f $compose_file_path -p rocksdb-server stop
 
 echo "Perform backup MySQL"
 backup_volume mysql_data /home/backup
@@ -23,7 +25,7 @@ backup_volume mysql_data /home/backup
 echo "Perform backup RocksDB"
 backup_volume rocksdb_data /home/backup
 
-
+docker-compose -f $compose_file_path up -d
 echo "---------------------------------------------------------------------------ls -lh /home/backup/---------------------"
 ls -lh /home/backup/
 echo "---------------------------------------------------------------------------cd /home/backup/-------------------------"
