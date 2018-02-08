@@ -50,30 +50,28 @@ Install_MVN(){
 
 JDK_MVN_Choice()
 {
-	JdkMvnChoice="y"
+	JdkMvnChoice="n"
 	Echo_Yellow "Add JDK && MVN (!!! Prod env NO need java and mvn)?"
-    read -p "Default Yes,Enter your choice [Y/n]: " JdkMvnChoice
+	read -p "Default No,Enter your choice [Y/n]: " JdkMvnChoice
 
-    case "${JdkMvnChoice}" in
-    [yY][eE][sS]|[yY])
-        echo "You will add JDK && MVN"
-        JdkMvnChoice="y"
-        ;;
-    [nN][oO]|[nN])
-        echo "No JDK && MVN"
-        JdkMvnChoice="n"
-        ;;
-    *)
-        echo "No input,You will Add JDK && MVN."
-        JdkMvnChoice="y"
-    esac
+	case "${JdkMvnChoice}" in
+	[yY][eE][sS]|[yY])
+		echo "You will add JDK && MVN"
+		JdkMvnChoice="y"
+		;;
+	[nN][oO]|[nN])
+		echo "No JDK && MVN"
+		JdkMvnChoice="n"
+		;;
+	*)
+	esac
 
 	if [ "${JdkMvnChoice}" = "y" ]; then
-	    Install_MVN
-        Install_JDK
-    else
+		Install_MVN
+		Install_JDK
+	else
 		Echo_Yellow "Choose No JDK && MVN"
-    fi
+	fi
 }
 
 JDK_MVN_Choice
