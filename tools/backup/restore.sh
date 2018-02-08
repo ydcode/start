@@ -18,10 +18,10 @@ docker-compose -f $compose_file_path -p mysql stop
 docker-compose -f $compose_file_path -p rocksdb-server stop
 
 echo "Perform Restore MySQL"
-restore_volume mysql_data /home/backup us.apipie.com-mysql_data-2018-02-03-16.tar
+restore_volume mysql_data /home/backup *-mysql_data-*.tar
 
 echo "Perform Restore RocksDB"
-restore_volume rocksdb_data /home/backup us.apipie.com-rocksdb_data-2018-02-03-16.tar
+restore_volume rocksdb_data /home/backup *-rocksdb_data-*.tar
 
 
 
