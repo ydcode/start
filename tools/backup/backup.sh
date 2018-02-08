@@ -1,10 +1,6 @@
 #!/bin/bash
 
 compose_file_path=/home/gce/start/docker-compose/share-data/docker-compose.yml
-project_name=${2,,}
-backup_path=$3
-backup_or_restore=$4
-restore_date=$5
 
 set -e
 
