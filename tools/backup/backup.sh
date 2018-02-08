@@ -24,9 +24,9 @@ echo "Perform backup RocksDB"
 backup_volume rocksdb_data /home/backup
 
 
-echo "---------------------------------------------------------------------------ls -al /home/backup/---------------------"
-ls -al /home/backup/
+echo "---------------------------------------------------------------------------ls -lh /home/backup/---------------------"
+ls -lh /home/backup/
 echo "---------------------------------------------------------------------------cd /home/backup/-------------------------"
-pwd
+echo pwd
 cd /home/backup/
 
