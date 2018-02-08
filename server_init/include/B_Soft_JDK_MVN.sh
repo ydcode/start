@@ -52,7 +52,7 @@ JDK_MVN_Choice()
 {
 	JdkMvnChoice="n"
 	Echo_Yellow "Add JDK && MVN (!!! Prod env NO need java and mvn)?"
-	read -p "Default No,Enter your choice [Y/n]: " JdkMvnChoice
+	read -p "Default No,Enter your choice [y/N]: " JdkMvnChoice
 
 	case "${JdkMvnChoice}" in
 	[yY][eE][sS]|[yY])
