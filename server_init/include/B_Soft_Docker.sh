@@ -18,6 +18,7 @@ if [ ! -e "/usr/bin/docker" ]; then
         docker-compose --version
         
         sudo systemctl start docker
+        docker login
 fi
     
     
