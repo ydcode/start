@@ -2,15 +2,16 @@ SQL_FILE=$1
 
 set -e
 
-function mysql_import {
-  sqlfile=$1
-  docker exec mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"'  ${DB_NAME} < $sqlfile
-}
-
-
 
 echo "Perform Import MySQL"
-mysql_import $SQL_FILE
+
+if [ -z "$SQL_FILE" ]; then
+    echo "./mysql_import.sh  sql_file"
+fi
+
+docker exec mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"'  ${DB_NAME} < $SQL_FILE
+
+
 
 echo "---------------------------------------------------------------------------ls -lh /home/backup/---------------------"
 ls -lh /home/backup/
