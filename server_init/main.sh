@@ -11,4 +11,5 @@ fi
 . include/B_Soft_Docker.sh
 . include/B_Soft_JDK_MVN.sh
 
+mkdir /home/backup
 #安装Jemollo
