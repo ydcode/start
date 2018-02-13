@@ -7,6 +7,7 @@ echo "Perform Import MySQL"
 
 if [ -z "$SQL_FILE" ]; then
     echo "./mysql_import.sh  sql_file"
+    exit 0
 fi
 
 docker exec mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"'  ${DB_NAME} < $SQL_FILE
