@@ -4,7 +4,7 @@ set -e
 
 function mysql_import {
   sqlfile=$1
-  docker exec mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"'  ${DB_NAME} < ${sqlfile}
+  docker exec mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"'  ${DB_NAME} < $sqlfile
 }
 
 
