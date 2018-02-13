@@ -2,14 +2,15 @@ compose_file_path=/home/gce/start/docker-compose/share-data/docker-compose.yml
 
 set -e
 
-function mysql_dump {
-  backup_destination=$1
+function mysql_import {
+  sql_file=$1
   date_suffix=$(date +%Y-%m-%d-%H)
-  docker exec mysql sh -c 'exec mysqldump --databases '${DB_NAME}' -uroot -p"$MYSQL_ROOT_PASSWORD"'  > $backup_destination/${DB_NAME}-$date_suffix.sql
+  docker exec mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD"'  ${DB_NAME} < $sql_file
 }
 
-echo "Perform Dump MySQL"
-mysql_dump /home/backup
+
+echo "Perform Import MySQL"
+mysql_import /home/backup
 
 echo "---------------------------------------------------------------------------ls -lh /home/backup/---------------------"
 ls -lh /home/backup/
