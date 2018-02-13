@@ -9,8 +9,10 @@ function mysql_import {
 }
 
 
+SQL_FILE=`ls /home/backup/ | grep [.]sql`
+
 echo "Perform Import MySQL"
-mysql_import /home/backup
+mysql_import SQL_FILE
 
 echo "---------------------------------------------------------------------------ls -lh /home/backup/---------------------"
 ls -lh /home/backup/
