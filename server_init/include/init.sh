@@ -90,12 +90,7 @@ Deb_Dependent()
 {
     Echo_Blue "[+] Apt-get installing dependent packages..."
     apt-get update -y
-    apt-get autoremove -y
-    apt-get -fy install
-    export DEBIAN_FRONTEND=noninteractive
-    apt-get --no-install-recommends install -y build-essential gcc g++ make
-    for packages in debian-keyring debian-archive-keyring build-essential gcc g++ make cmake autoconf automake re2c git wget cron bzip2 libzip-dev libc6-dev bison file rcconf flex vim bison m4 gawk less cpp binutils diffutils unzip tar bzip2 libbz2-dev libncurses5 libncurses5-dev libtool libevent-dev openssl libssl-dev zlibc libsasl2-dev libltdl3-dev libltdl-dev zlib1g zlib1g-dev libbz2-1.0 libbz2-dev libglib2.0-0 libglib2.0-dev libpng3 libjpeg-dev libpng-dev libpng12-0 libpng12-dev libkrb5-dev curl libcurl3 libcurl3-gnutls libcurl4-gnutls-dev libcurl4-openssl-dev libpq-dev libpq5 gettext libjpeg-dev libpng12-dev libxml2-dev libcap-dev ca-certificates libc-client2007e-dev psmisc patch git libc-ares-dev libicu-dev e2fsprogs libxslt libxslt1-dev libc-client-dev xz-utils libexpat1-dev;
-    do apt-get --no-install-recommends install -y $packages --force-yes; done
+    apt-get install -ygit wget 
 }
 
 
@@ -111,7 +106,16 @@ Check_Download()
     Echo_Blue "[+] Downloading files..."
     cd ${cur_dir}/src
     # Download_Files ${Download_Mirror}/lib/autoconf/${Autoconf_Ver}.tar.gz ${Autoconf_Ver}.tar.gz
-
 }
+
+
+
+if [ "$PM" = "yum" ]; then
+    CentOS_Dependent
+elif [ "$PM" = "apt" ]; then
+    Deb_Dependent
+fi
+
+Echo_Server_IP
 
 
