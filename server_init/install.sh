@@ -9,6 +9,8 @@ if [ $(id -u) != "0" ]; then
 fi
 
 . include/main.sh
+. include/init.sh
+
 . include/A_Begin.sh
 . include/B_Soft_Docker.sh
 . include/B_Soft_JDK_MVN.sh
