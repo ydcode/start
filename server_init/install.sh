@@ -11,6 +11,14 @@ fi
 . include/main.sh
 . include/init.sh
 
+Get_Dist_Name
+
+if [ "${DISTRO}" = "unknow" ]; then
+    Echo_Red "Unable to get Linux distribution name, or do NOT support the current distribution."
+    exit 1
+fi
+
+
 . include/A_Begin.sh
 . include/B_Soft_Docker.sh
 . include/B_Soft_JDK_MVN.sh
