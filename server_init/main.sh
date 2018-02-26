@@ -1,15 +1,224 @@
 #!/bin/bash
-PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:/usr/java/jdk1.8.0_101/bin:/usr/java/jdk1.8.0_101/jre/bin:/usr/java/jdk1.8.0_101/include:/usr/maven/apache-maven-3.5.0/bin:/root/bin
-export PATH
 
-# Check if user is root
-if [ $(id -u) != "0" ]; then
-    echo "Error: You must be root to run this script, please use root to install lnmp"
-    exit 1
-fi
-. include/A_Begin.sh
-. include/B_Soft_Docker.sh
-. include/B_Soft_JDK_MVN.sh
+Kill_PM()
+{
+    if ps aux | grep "yum" | grep -qv "grep"; then
+        killall yum
+    elif ps aux | grep "apt-get" | grep -qv "grep"; then
+        killall apt-get
+    fi
+}
 
-mkdir /home/backup
-#安装Jemollo
+Press_Install()
+{
+    echo ""
+    Echo_Green "Press any key to install...or Press Ctrl+c to cancel"
+    OLDCONFIG=`stty -g`
+    stty -icanon -echo min 1 time 0
+    dd count=1 2>/dev/null
+    stty ${OLDCONFIG}
+    . include/version.sh
+    Kill_PM
+}
+
+Press_Start()
+{
+    echo ""
+    Echo_Green "Press any key to start...or Press Ctrl+c to cancel"
+    OLDCONFIG=`stty -g`
+    stty -icanon -echo min 1 time 0
+    dd count=1 2>/dev/null
+    stty ${OLDCONFIG}
+}
+
+Install_LSB()
+{
+    echo "[+] Installing lsb..."
+    if [ "$PM" = "yum" ]; then
+        yum -y install redhat-lsb
+    elif [ "$PM" = "apt" ]; then
+        apt-get update
+        apt-get --no-install-recommends install -y lsb-release
+    fi
+}
+
+Get_Dist_Version()
+{
+    if [ -s /usr/bin/python3 ]; then
+        eval ${DISTRO}_Version=`/usr/bin/python3 -c 'import platform; print(platform.linux_distribution()[1])'`
+    elif [ -s /usr/bin/python2 ]; then
+        eval ${DISTRO}_Version=`/usr/bin/python2 -c 'import platform; print platform.linux_distribution()[1]'`
+    fi
+    if [ $? -ne 0 ]; then
+        Install_LSB
+        eval ${DISTRO}_Version=`lsb_release -rs`
+    fi
+}
+
+Get_Dist_Name()
+{
+    if grep -Eqi "CentOS" /etc/issue || grep -Eq "CentOS" /etc/*-release; then
+        DISTRO='CentOS'
+        PM='yum'
+    elif grep -Eqi "Red Hat Enterprise Linux Server" /etc/issue || grep -Eq "Red Hat Enterprise Linux Server" /etc/*-release; then
+        DISTRO='RHEL'
+        PM='yum'
+    elif grep -Eqi "Aliyun" /etc/issue || grep -Eq "Aliyun" /etc/*-release; then
+        DISTRO='Aliyun'
+        PM='yum'
+    elif grep -Eqi "Fedora" /etc/issue || grep -Eq "Fedora" /etc/*-release; then
+        DISTRO='Fedora'
+        PM='yum'
+    elif grep -Eqi "Amazon Linux AMI" /etc/issue || grep -Eq "Amazon Linux AMI" /etc/*-release; then
+        DISTRO='Amazon'
+        PM='yum'
+    elif grep -Eqi "Debian" /etc/issue || grep -Eq "Debian" /etc/*-release; then
+        DISTRO='Debian'
+        PM='apt'
+    elif grep -Eqi "Ubuntu" /etc/issue || grep -Eq "Ubuntu" /etc/*-release; then
+        DISTRO='Ubuntu'
+        PM='apt'
+    elif grep -Eqi "Raspbian" /etc/issue || grep -Eq "Raspbian" /etc/*-release; then
+        DISTRO='Raspbian'
+        PM='apt'
+    elif grep -Eqi "Deepin" /etc/issue || grep -Eq "Deepin" /etc/*-release; then
+        DISTRO='Deepin'
+        PM='apt'
+    elif grep -Eqi "Mint" /etc/issue || grep -Eq "Mint" /etc/*-release; then
+        DISTRO='Mint'
+        PM='apt'
+    else
+        DISTRO='unknow'
+    fi
+    Get_OS_Bit
+}
+
+Get_RHEL_Version()
+{
+    Get_Dist_Name
+    if [ "${DISTRO}" = "RHEL" ]; then
+        if grep -Eqi "release 5." /etc/redhat-release; then
+            echo "Current Version: RHEL Ver 5"
+            RHEL_Ver='5'
+        elif grep -Eqi "release 6." /etc/redhat-release; then
+            echo "Current Version: RHEL Ver 6"
+            RHEL_Ver='6'
+        elif grep -Eqi "release 7." /etc/redhat-release; then
+            echo "Current Version: RHEL Ver 7"
+            RHEL_Ver='7'
+        fi
+    fi
+}
+
+Get_OS_Bit()
+{
+    if [[ `getconf WORD_BIT` = '32' && `getconf LONG_BIT` = '64' ]] ; then
+        Is_64bit='y'
+    else
+        Is_64bit='n'
+    fi
+}
+
+Get_ARM()
+{
+    if uname -m | grep -Eqi "arm"; then
+        Is_ARM='y'
+    fi
+}
+
+Download_Files()
+{
+    local URL=$1
+    local FileName=$2
+    if [ -s "${FileName}" ]; then
+        echo "${FileName} [found]"
+    else
+        echo "Notice: ${FileName} not found!!!download now..."
+        wget -c --progress=bar:force --prefer-family=IPv4 --no-check-certificate ${URL}
+    fi
+}
+
+Tar_Cd()
+{
+    local FileName=$1
+    local DirName=$2
+    cd ${cur_dir}/src
+    [[ -d "${DirName}" ]] && rm -rf ${DirName}
+    echo "Uncompress ${FileName}..."
+    tar zxf ${FileName}
+    echo "cd ${DirName}..."
+    cd ${DirName}
+}
+
+Tarj_Cd()
+{
+    local FileName=$1
+    local DirName=$2
+    cd ${cur_dir}/src
+    [[ -d "${DirName}" ]] && rm -rf ${DirName}
+    echo "Uncompress ${FileName}..."
+    tar jxf ${FileName}
+    echo "cd ${DirName}..."
+    cd ${DirName}
+}
+
+
+Print_Sys_Info()
+{
+    eval echo "${DISTRO} \${${DISTRO}_Version}"
+    cat /etc/issue
+    cat /etc/*-release
+    uname -a
+    MemTotal=`free -m | grep Mem | awk '{print  $2}'`
+    echo "Memory is: ${MemTotal} MB "
+    df -h
+}
+
+StartUp()
+{
+    init_name=$1
+    echo "Add ${init_name} service at system startup..."
+    if [ "$PM" = "yum" ]; then
+        chkconfig --add ${init_name}
+        chkconfig ${init_name} on
+    elif [ "$PM" = "apt" ]; then
+        update-rc.d -f ${init_name} defaults
+    fi
+}
+
+Remove_StartUp()
+{
+    init_name=$1
+    echo "Removing ${init_name} service at system startup..."
+    if [ "$PM" = "yum" ]; then
+        chkconfig ${init_name} off
+        chkconfig --del ${init_name}
+    elif [ "$PM" = "apt" ]; then
+        update-rc.d -f ${init_name} remove
+    fi
+}
+
+Color_Text()
+{
+  echo -e " \e[0;$2m$1\e[0m"
+}
+
+Echo_Red()
+{
+  echo $(Color_Text "$1" "31")
+}
+
+Echo_Green()
+{
+  echo $(Color_Text "$1" "32")
+}
+
+Echo_Yellow()
+{
+  echo $(Color_Text "$1" "33")
+}
+
+Echo_Blue()
+{
+  echo $(Color_Text "$1" "34")
+}
