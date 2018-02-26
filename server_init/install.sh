@@ -7,6 +7,8 @@ if [ $(id -u) != "0" ]; then
     echo "Error: You must be root to run this script, please use root to install lnmp"
     exit 1
 fi
+
+. include/main.sh
 . include/A_Begin.sh
 . include/B_Soft_Docker.sh
 . include/B_Soft_JDK_MVN.sh
