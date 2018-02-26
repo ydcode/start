@@ -19,7 +19,6 @@ if [ "${DISTRO}" = "unknow" ]; then
 fi
 
 
-. include/A_Begin.sh
 . include/B_Soft_Docker.sh
 . include/B_Soft_JDK_MVN.sh
 
