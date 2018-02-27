@@ -53,7 +53,7 @@ if [ ! -e "/usr/bin/docker" ]; then
         if [ "$DISTRO" = "CentOS" ]; then
                 Install_Docker_CentOS
         elif [ "$DISTRO" = "Fedora" ]; then
-                Install_Docker_CentOS
+                Install_Docker_Fedora
         elif [ "$DISTRO" = "Debian" ]; then
                 Install_Docker_Debian
         elif [ "$DISTRO" = "Ubuntu" ]; then
