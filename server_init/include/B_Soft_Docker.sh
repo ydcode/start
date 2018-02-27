@@ -9,32 +9,32 @@ Install_Docker_CentOS()
 
 Install_Docker_Fedora()
 {
-       sudo dnf remove docker docker-common docker-selinux docker-engine-selinux docker-engine
+       sudo dnf remove -y docker docker-common docker-selinux docker-engine-selinux docker-engine
        sudo dnf -y install dnf-plugins-core
        sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-       sudo dnf install docker-ce
+       sudo dnf install -y docker-ce
 }
 
 
 Install_Docker_Ubuntu()
 {
-        sudo apt-get update
+        sudo apt-get update -y
         sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
         sudo add-apt-repository  "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-        apt-get update
-        apt-get install docker-ce
+        apt-get update -y
+        apt-get install -y docker-ce
 }
 
 
 Install_Docker_Debian()
 {
-        sudo apt-get update
+        sudo apt-get update -y
         sudo apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common
         curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | sudo apt-key add -
         sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") $(lsb_release -cs) stable"
-        sudo apt-get update
-        sudo apt-get install docker-ce
+        sudo apt-get update -y
+        sudo apt-get install -y docker-ce
 }
 
 
