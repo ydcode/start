@@ -40,8 +40,7 @@ Install_Docker_Compose()
 
 if [ ! -e "/usr/bin/docker" ]; then
 
-        echo $DISTRO
-        exit
+        Echo_Green $DISTRO
         
         if [ "$DISTRO" = "CentOS" ]; then
                 Install_Docker_CentOS
