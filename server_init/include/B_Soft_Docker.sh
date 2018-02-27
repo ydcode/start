@@ -39,10 +39,20 @@ Install_Docker_Compose()
     
 
 if [ ! -e "/usr/bin/docker" ]; then
-        if [ "$PM" = "yum" ]; then
-                Install_Docker_Yum
-        elif [ "$PM" = "apt" ]; then
-                Install_Docker_Apt
+
+        echo $DISTRO
+        exit
+        
+        if [ "$DISTRO" = "CentOS" ]; then
+                Install_Docker_CentOS
+        elif [ "$DISTRO" = "Fedora" ]; then
+                Install_Docker_CentOS
+        elif [ "$DISTRO" = "Debian" ]; then
+                Install_Docker_Debian
+        elif [ "$DISTRO" = "Ubuntu" ]; then
+                Install_Docker_Ubuntu
+        elif [ "$DISTRO" = "Amazon" ]; then
+                Install_Docker_CentOS
         fi
 fi
 
