@@ -10,6 +10,7 @@ MAVEN_NAME="apache-maven-3.5.2"
 
 
 
+
 Set_Timezone()
 {
     Echo_Blue "Setting timezone..."
