@@ -42,6 +42,7 @@ services:
     image: mysql:5.7.20
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
     container_name: mysql
+    restart: always
     ports:
       - 3306:3306
     volumes:
@@ -63,6 +64,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
+    restart: always
     ports:
       - 1699:80
     restart: on-failure
