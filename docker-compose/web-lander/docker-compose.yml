@@ -3,7 +3,7 @@ services:
   nginx:
     image: ${registry:-docker.io}/ydcode/pack:image-nginx-1.0.0
     container_name: nginx
-    restart: on-failure
+    restart: always
     ports:
       - 80:80
       - 443:443
@@ -23,7 +23,7 @@ services:
     container_name: useragent
     ports:
       - 8099:8099
-    restart: on-failure
+    restart: always
     networks:
       - web_server_network
     logging:
@@ -55,7 +55,7 @@ services:
       - nginx_ssl_data:/etc/letsencrypt
       - nginx_conf_data:/etc/nginx/conf.d
       
-    restart: on-failure
+    restart: always
     depends_on:
       - nginx
       - useragent
