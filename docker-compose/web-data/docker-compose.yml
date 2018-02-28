@@ -54,7 +54,6 @@ services:
       - MYSQL_DATABASE=${DB_NAME}
       - MYSQL_USER=${DB_NAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
-    restart: on-failure
     networks:
       - web_server_network
     logging:
@@ -67,7 +66,6 @@ services:
     restart: always
     ports:
       - 1699:80
-    restart: on-failure
     environment:
       - PMA_HOSTS=mysql
       - PMA_VERBOSES=local
