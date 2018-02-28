@@ -58,7 +58,7 @@ services:
       - nginx_ssl_data:/etc/letsencrypt
       - nginx_conf_data:/etc/nginx/conf.d
       - /root/.ssh:/root/.ssh # dev
-      - /home/gce:/home/gce # dev
+      - /root/boot:/root/boot # dev
       - /root/.m2:/root/.m2 #dev
     restart: always
     depends_on:
