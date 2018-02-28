@@ -6,7 +6,7 @@ services:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
     container_name: rabbitmq
-    restart: on-failure
+    restart: always
     ports:
       - 5671:5671
       - 5672:5672
@@ -26,7 +26,7 @@ services:
   rocksdb-server:
     image: ${registry:-docker.io}/ydcode/pack:rocksdb-server-1.0.0
     container_name: rocksdb-server
-    restart: on-failure
+    restart: always
     ports:
       - 6565:6565
     volumes:
