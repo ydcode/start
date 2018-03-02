@@ -25,15 +25,6 @@ Echo_Blue()
 
 
 Import_Data(){
-	echo "Perform Import MySQL"
-	SQL_FILE=$1
-
-
-	if [ -z "$SQL_FILE" ]; then
-		echo "usage: mysql_import.sh  ***.sql"
-		exit 0
-	fi
-
 	docker exec mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD" bootdb < $SQL_FILE'
 
 	echo "---------------------------------------------------------------------------ls -lh /home/backup/---------------------"
@@ -61,14 +52,23 @@ Import_Choice()
 	esac
 
 	if [ "${ImportChoice}" = "y" ]; then
-		Import_Data $1	
+		Import_Data
 	else
 		Echo_Yellow "Choose Not Import"
 	fi
 }
 
 set -e
-Import_Choice $1
+
+echo "Perform Import MySQL"
+SQL_FILE=$1
+
+if [ -z "$SQL_FILE" ]; then
+	echo "usage: mysql_import.sh  ***.sql"
+	exit 0
+fi
+	
+Import_Choice
 
 
 
