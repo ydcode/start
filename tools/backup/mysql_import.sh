@@ -1,3 +1,11 @@
+set -e
+
+echo "Perform Import MySQL"
+SQL_FILE=$1
+
+
+
+
 Color_Text()
 {
   echo -e " \e[0;$2m$1\e[0m"
@@ -58,10 +66,7 @@ Import_Choice()
 	fi
 }
 
-set -e
 
-echo "Perform Import MySQL"
-SQL_FILE=$1
 
 if [ -z "$SQL_FILE" ]; then
 	echo "usage: mysql_import.sh  ***.sql"
