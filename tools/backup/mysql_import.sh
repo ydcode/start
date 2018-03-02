@@ -1,16 +1,51 @@
-SQL_FILE=$1
+Import_Data(){
+    echo "Perform Import MySQL"
 
+    docker exec mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD" bootdb < $SQL_FILE'
+
+    echo "---------------------------------------------------------------------------ls -lh /home/backup/---------------------"
+    ls -lh /home/backup/
+    echo "---------------------------------------------------------------------------cd /home/backup/-------------------------"
+
+}
+
+
+Import_Choice()
+{
+	ImportChoice="n"
+	Echo_Yellow "Import Data (Danger!!!)?"
+	read -p "Default No,Enter your choice [y/N]: " ImportChoice
+
+	case "${ImportChoice}" in
+	[yY][eE][sS]|[yY])
+		echo "You will import Data"
+		ImportChoice="y"
+		;;
+	[nN][oO]|[nN])
+		echo "No JDK && MVN"
+		ImportChoice="n"
+		;;
+	*)
+	esac
+
+	if [ "${ImportChoice}" = "y" ]; then
+		Import_Data		
+	else
+		Echo_Yellow "Choose Not Import"
+	fi
+}
+
+
+SQL_FILE=$1
 set -e
 
 if [ -z "$SQL_FILE" ]; then
-
     echo "usage: mysql_import.sh  ***.sql"
     exit 0
 fi
-echo "Perform Import MySQL"
 
-docker exec mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD" bootdb < $SQL_FILE'
+Import_Choice
 
-echo "---------------------------------------------------------------------------ls -lh /home/backup/---------------------"
-ls -lh /home/backup/
-echo "---------------------------------------------------------------------------cd /home/backup/-------------------------"
+
+
+
