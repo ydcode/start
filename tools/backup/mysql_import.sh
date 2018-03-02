@@ -3,6 +3,7 @@ set -e
 echo "Perform Import MySQL"
 SQL_FILE=$1
 
+echo $SQL_FILE
 
 
 
