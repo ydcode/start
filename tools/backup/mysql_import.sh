@@ -3,9 +3,6 @@ set -e
 echo "Perform Import MySQL"
 SQL_FILE=$1
 
-echo $SQL_FILE
-
-
 
 Color_Text()
 {
@@ -34,6 +31,8 @@ Echo_Blue()
 
 
 Import_Data(){
+	echo "****************"
+	echo $SQL_FILE
 	docker exec mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD" bootdb < $SQL_FILE'
 
 	echo "---------------------------------------------------------------------------ls -lh /home/backup/---------------------"
@@ -61,6 +60,9 @@ Import_Choice()
 	esac
 
 	if [ "${ImportChoice}" = "y" ]; then
+		echo "-----------------"
+		echo $SQL_FILE
+
 		Import_Data
 	else
 		Echo_Yellow "Choose Not Import"
