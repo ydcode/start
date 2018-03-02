@@ -33,7 +33,7 @@ Echo_Blue()
 Import_Data(){
 	echo "****************"
 	echo $SQL_FILE
-	docker exec mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD" bootdb < $SQL_FILE'
+	docker exec mysql sh -c "exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD" bootdb < $SQL_FILE"
 
 	echo "---------------------------------------------------------------------------ls -lh /home/backup/---------------------"
 	ls -lh /home/backup/
