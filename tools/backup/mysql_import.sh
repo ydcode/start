@@ -1,9 +1,3 @@
-set -e
-
-echo "Perform Import MySQL"
-SQL_FILE=$1
-
-
 Color_Text()
 {
   echo -e " \e[0;$2m$1\e[0m"
@@ -31,8 +25,6 @@ Echo_Blue()
 
 
 Import_Data(){
-	echo "****************"
-	echo $SQL_FILE
 	docker exec mysql sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD" bootdb < '$SQL_FILE
 
 	echo "---------------------------------------------------------------------------ls -lh /home/backup/---------------------"
@@ -70,6 +62,9 @@ Import_Choice()
 }
 
 
+set -e
+echo "Perform Import MySQL"
+SQL_FILE=$1
 
 if [ -z "$SQL_FILE" ]; then
 	echo "usage: mysql_import.sh  ***.sql"
