@@ -36,7 +36,10 @@ Install_Shadowsocks()
 
       Echo_Yellow "Shadowsocks Installing....."
       
-        yum install -y epel-release
+        yum install -y wget epel-release
+	wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+	rpm -ivh epel-release-latest-7.noarch.rpm
+	
         yum install -y python-pip
         pip install --upgrade pip
         pip install shadowsocks
