@@ -74,6 +74,8 @@ else
         echo 'export PATH=$PATH:/usr/local/bin' >>  ~/.bashrc
 fi
 source ~/.bashrc
+source ~/.bashrc
+source ~/.bashrc
 
 sudo systemctl start docker
 
