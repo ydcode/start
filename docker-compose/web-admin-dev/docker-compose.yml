@@ -56,6 +56,7 @@ services:
       - nginx_wwwroot_data:/home/wwwroot
       - nginx_ssl_data:/etc/letsencrypt
       - nginx_conf_data:/etc/nginx/conf.d
+      - ttl3db_data:/home/data/ttldb_3
       - /root/.ssh:/root/.ssh # dev
       - /root/boot:/root/boot # dev
       - /root/.m2:/root/.m2 #dev
@@ -86,3 +87,5 @@ volumes:
     name: nginx_temp_logs
   temp_data:
     name: temp_data
+  ttl3db_data:
+    name: ttl3db_data
