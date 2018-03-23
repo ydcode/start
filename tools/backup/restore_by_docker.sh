@@ -1,6 +1,6 @@
 #!/bin/bash
 
-compose_file_path=/root/start/docker-compose/share-data/docker-compose.yml
+compose_file_path=/root/start/docker-compose/web-data/docker-compose.yml
 
 set -e
 
