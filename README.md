@@ -3,5 +3,5 @@
 
 
 ```
-yum install -y git wget && cd /home/gce && git clone https://github.com/ydcode/start.git && cd start 
+yum install -y git wget && cd /root && git clone https://github.com/ydcode/start.git && cd start 
 ```
