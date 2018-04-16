@@ -32,7 +32,7 @@ services:
         max-size: "200m"
         
   web-admin:
-    image: ${registry:-docker.io}/ydcode/pack:image-dev-1.0.0
+    image: ${registry:-docker.io}/ydcode/pack:web-admin-dev-1.0.0
     container_name: web-admin
     environment:
       - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
