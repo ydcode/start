@@ -31,7 +31,7 @@ services:
         max-size: "200m"
                 
   web-tag:
-    image: ${registry:-docker.io}/ydcode/pack:web-tag-1.0.0
+    image: ${registry:-docker.io}/ydcode/pack:web-tag-dev-1.0.0
     container_name: web-tag
     environment:
       - DB_HOST=${DB_HOST}
