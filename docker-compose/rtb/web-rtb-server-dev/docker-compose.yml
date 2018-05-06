@@ -105,6 +105,7 @@ services:
     restart: always
     depends_on:
       - nginx
+      - web-rtb-server
     ports:
       - 8080:8080
       - 8443:8443
