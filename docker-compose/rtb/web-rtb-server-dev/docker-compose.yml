@@ -31,9 +31,9 @@ services:
       options:
         max-size: "200m"
         
-  web-tag-admin:
-    image: ${registry:-docker.io}/ydcode/pack:web-tag-admin-dev-1.0.0
-    container_name: web-tag-admin
+  web-rtb-server:
+    image: ${registry:-docker.io}/ydcode/pack:web-rtb-server-dev-1.0.0
+    container_name: web-rtb-server
     environment:
       - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
       - DB_HOST=${DB_HOST}
