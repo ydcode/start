@@ -89,7 +89,10 @@ services:
       - AWS_ACCESS_KEY_MASTER=${AWS_ACCESS_KEY_MASTER}
       - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
       - SERVER_NAME=${SERVER_NAME}
-
+      
+      - /root/.ssh:/root/.ssh # dev
+      - /root/boot:/root/boot # dev
+      - /root/.m2:/root/.m2 #dev
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
