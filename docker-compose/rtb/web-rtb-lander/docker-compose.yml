@@ -30,9 +30,9 @@ services:
       options:
         max-size: "200m"
                 
-  web-tag-lander:
-    image: ${registry:-docker.io}/ydcode/pack:web-tag-lander-1.0.0
-    container_name: web-tag-lander
+  web-rtb-lander:
+    image: ${registry:-docker.io}/ydcode/pack:web-rtb-lander-1.0.0
+    container_name: web-rtb-lander
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
