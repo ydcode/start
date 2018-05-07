@@ -2,7 +2,7 @@ version: "3.4"
 services:       
   nginx:
     image: ${registry:-docker.io}/ydcode/pack:image-nginx-1.0.0
-    container_name: pop-nginx
+    container_name: nginx
     restart: always
     ports:
       - 80:80
@@ -21,7 +21,7 @@ services:
   
   useragent:
     image: ${registry:-docker.io}/ydcode/pack:image-user-agent-1.0.0
-    container_name: pop-useragent
+    container_name: useragent
     ports:
       - 8099:8099
     restart: always
