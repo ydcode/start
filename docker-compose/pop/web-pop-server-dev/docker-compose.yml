@@ -2,7 +2,7 @@ version: "3.4"
 services:       
   nginx:
     image: ${registry:-docker.io}/ydcode/pack:image-nginx-1.0.0
-    container_name: nginx
+    container_name: pop-nginx
     restart: always
     ports:
       - 80:80
@@ -21,7 +21,7 @@ services:
   
   useragent:
     image: ${registry:-docker.io}/ydcode/pack:image-user-agent-1.0.0
-    container_name: useragent
+    container_name: pop-useragent
     ports:
       - 8099:8099
     restart: always
@@ -31,9 +31,9 @@ services:
       options:
         max-size: "200m"
         
-  web-rtb-server:
-    image: ${registry:-docker.io}/ydcode/pack:web-rtb-server-dev-1.0.0
-    container_name: web-rtb-server
+  web-pop-server:
+    image: ${registry:-docker.io}/ydcode/pack:web-pop-server-dev-1.0.0
+    container_name: web-pop-server
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
@@ -70,9 +70,9 @@ services:
         max-size: "200m"
         
         
-  web-rtb-dashboard:
-    image: ${registry:-docker.io}/ydcode/pack:web-rtb-dashboard-dev-1.0.0
-    container_name: web-rtb-dashboard
+  web-pop-dashboard:
+    image: ${registry:-docker.io}/ydcode/pack:web-pop-dashboard-dev-1.0.0
+    container_name: web-pop-dashboard
     environment:
       - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
       - DB_HOST=${DB_HOST}
