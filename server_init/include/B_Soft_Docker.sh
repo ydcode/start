@@ -4,7 +4,7 @@ Install_Docker_CentOS()
         sudo yum install -y yum-utils device-mapper-persistent-data lvm2
 
         sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo 
-        sudo yum install -y  docker-ce
+        sudo yum install -y  docker-ce-17.12.1-ce
 }
 
 Install_Docker_Fedora()
@@ -12,7 +12,7 @@ Install_Docker_Fedora()
        sudo dnf remove -y docker docker-common docker-selinux docker-engine-selinux docker-engine
        sudo dnf -y install dnf-plugins-core
        sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-       sudo dnf install -y docker-ce
+       sudo dnf install -y docker-ce-17.12.1-ce
 }
 
 
@@ -23,7 +23,7 @@ Install_Docker_Ubuntu()
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
         sudo add-apt-repository  "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
         apt-get update -y
-        apt-get install -y docker-ce
+        apt-get install -y docker-ce-17.12.1-ce
 }
 
 
@@ -34,7 +34,7 @@ Install_Docker_Debian()
         curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | sudo apt-key add -
         sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") $(lsb_release -cs) stable"
         sudo apt-get update -y
-        sudo apt-get install -y docker-ce
+        sudo apt-get install -y docker-ce-17.12.1-ce
 }
 
 
