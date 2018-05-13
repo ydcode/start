@@ -30,9 +30,9 @@ services:
       options:
         max-size: "200m"
                 
-  web-rtb-redirect:
-    image: ${registry:-docker.io}/ydcode/pack:web-rtb-redirect-1.0.0
-    container_name: web-rtb-redirect
+  web-pop-redirect:
+    image: ${registry:-docker.io}/ydcode/pack:web-pop-redirect-1.0.0
+    container_name: web-pop-redirect
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
