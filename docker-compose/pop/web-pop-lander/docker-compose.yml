@@ -30,9 +30,9 @@ services:
       options:
         max-size: "200m"
                 
-  web-rtb-lander:
-    image: ${registry:-docker.io}/ydcode/pack:web-rtb-lander-1.0.0
-    container_name: web-rtb-lander
+  web-pop-lander:
+    image: ${registry:-docker.io}/ydcode/pack:web-pop-lander-1.0.0
+    container_name: web-pop-lander
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
@@ -46,6 +46,7 @@ services:
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
       - AWS_ACCESS_KEY_MASTER=${AWS_ACCESS_KEY_MASTER}
       - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
+      - SERVER_NAME=${SERVER_NAME}
       
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
