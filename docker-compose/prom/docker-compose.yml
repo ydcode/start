@@ -1,0 +1,23 @@
+version: "3.4"
+services:       
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - prom_data:/etc/prometheus
+    networks:
+      - web_server_network
+    logging:
+      options:
+        max-size: "200m"
+        
+      
+networks:
+  web_server_network:
+
+volumes:
+  prom_data:
+      name: prom_data
