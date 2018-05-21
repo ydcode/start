@@ -4,7 +4,7 @@ After=network.target
 [Service]
 Type=simple
 User=prometheus
-ExecStart=/usr/local/prometheus/node_exporter/node_exporter --web.listen-address="0.0.0.0:9100"
+ExecStart=/usr/local/prometheus/node_exporter/node_exporter
 Restart=on-failure
 [Install]
 WantedBy=multi-user.target
