@@ -6,3 +6,6 @@
 ```
 yum install -y git wget && cd /root && git clone https://github.com/ydcode/start.git && cd start 
 ```
+
+
+service network restart
