@@ -8,6 +8,9 @@ services:
       - 9090:9090
     volumes:
       - prom_data:/etc/prometheus
+    command:
+      - '--config.file=/root/prom/prometheus.yml'
+      
     networks:
       - web_server_network
     logging:
