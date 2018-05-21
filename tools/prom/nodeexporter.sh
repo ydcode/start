@@ -12,3 +12,6 @@ cp -f /root/start/tools/prom/node_exporter.service /usr/lib/systemd/system/node_
 
 systemctl enable node_exporter
 systemctl start node_exporter
+
+
+# systemctl --no-pager -l status node_exporter
