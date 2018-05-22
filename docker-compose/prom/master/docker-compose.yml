@@ -18,10 +18,31 @@ services:
       options:
         max-size: "200m"
         
-      
+        
+        
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=pass
+    depends_on:
+      - prometheus
+    ports:
+      - '3000:3000'
+    networks:
+      - web_server_network
+    logging:
+      options:
+        max-size: "200m"
+             
+  
 networks:
   web_server_network:
 
 volumes:
   prom_data:
       name: prom_data
+  grafana_data:
+      name: grafana_data
