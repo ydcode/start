@@ -15,3 +15,13 @@ systemctl start node_exporter
 
 
 # systemctl --no-pager -l status node_exporter
+
+# firewall-cmd --permanent source address="127.0.0.3" port protocol="tcp" port="1521" accept"
+# firewall-cmd --zone=public --add-port=12345/tcp --permanent
+# firewall-cmd --zone=public --remove-port=9100/tcp --permanent
+# firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="192.168.142.166" port protocol="tcp" port="9100" accept"
+
+
+# sudo firewall-cmd --reload
+# firewall-cmd --list-all
+
