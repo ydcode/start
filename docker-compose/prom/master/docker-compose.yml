@@ -7,7 +7,7 @@ services:
     ports:
       - 9090:9090
     volumes:
-      - prom_data:/etc/prometheus
+      - prometheus_data:/prometheus
       - /root/prom/:/root/prom/
     command:
       - '--config.file=/root/prom/prometheus.yml'
@@ -40,7 +40,7 @@ networks:
   web_server_network:
 
 volumes:
-  prom_data:
-      name: prom_data
+  prometheus_data:
+      name: prometheus_data
   grafana_data:
       name: grafana_data
