@@ -26,5 +26,5 @@ systemctl start node_exporter
 # sudo firewall-cmd --reload
 # firewall-cmd --list-all
 
-# 
+# ip a | grep 10.
 
