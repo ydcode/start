@@ -13,7 +13,7 @@ Install_JDK()
     	source ~/.bashrc
         if [ ! -e "${JDK_FILE}" ]; then
             wget --continue --no-check-certificate --header "Cookie: oraclelicense=a" ${JDK_URL}
-#            'http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz'
+#            'http://download.oracle.com/otn-pub/java/jdk/10.0.1+10/fb4372174a714e6b8c52526dc134031e/jdk-10.0.1_linux-x64_bin.tar.gz'
         fi
         mkdir /usr/java && tar zxvf jdk*.tar.gz -C /usr/java/
         ln -s /usr/java/${JDK_NAME}/bin/java /usr/local/bin/java #必要
