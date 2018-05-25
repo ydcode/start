@@ -7,7 +7,7 @@ services:
     ports:
       - 1699:80
     environment:
-      - PMA_HOSTS=199.247.6.46
+      - PMA_HOSTS=172.18.0.3
       - PMA_PORT=4000
       - PMA_VERBOSES=local
     networks:
