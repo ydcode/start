@@ -11,6 +11,7 @@ services:
       - PMA_PORT=4000
       - PMA_VERBOSES=local
       - PMA_USER=root
+      - PMA_PASSWORD=
     networks:
       - web_server_network
     logging:
