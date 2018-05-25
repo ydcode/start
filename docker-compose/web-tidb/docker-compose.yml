@@ -1,0 +1,25 @@
+version: "3.4"
+services:   
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - 1699:80
+    environment:
+      - PMA_HOSTS=127.0.0.1
+      - PMA_VERBOSES=local
+    depends_on:
+      - mysql
+    networks:
+      - web_server_network
+    logging:
+      options:
+        max-size: "200m"
+        
+networks:
+  web_server_network:
+
+volumes:
+  mysql_data:
+    name: mysql_data
