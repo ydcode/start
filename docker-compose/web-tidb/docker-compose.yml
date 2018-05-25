@@ -6,6 +6,8 @@ services:
     restart: always
     ports:
       - 1699:80
+      - 4000:4000
+
     environment:
       - PMA_HOSTS=127.0.0.1
       - PMA_PORT=4000
