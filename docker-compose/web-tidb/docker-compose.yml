@@ -10,6 +10,7 @@ services:
       - PMA_HOSTS=127.0.0.1
       - PMA_PORT=4000
       - PMA_VERBOSES=local
+      - PMA_USER=root
     networks:
       - web_server_network
     logging:
