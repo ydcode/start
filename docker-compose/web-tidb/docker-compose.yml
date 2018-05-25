@@ -10,8 +10,6 @@ services:
       - PMA_HOSTS=127.0.0.1
       - PMA_PORT=4000
       - PMA_VERBOSES=local
-    depends_on:
-      - mysql
     networks:
       - web_server_network
     logging:
