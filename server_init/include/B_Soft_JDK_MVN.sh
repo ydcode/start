@@ -14,14 +14,15 @@ Install_JDK()
         if [ ! -e "${JDK_FILE}" ]; then
             wget --continue --no-check-certificate --header "Cookie: oraclelicense=a" ${JDK_URL}
         fi
-        mkdir /usr/java && tar zxvf jdk*.tar.gz -C /usr/java/
-        ln -s /usr/java/${JDK_NAME}/bin/java /usr/local/bin/java #必要
+	
+    	mkdir /usr/java && tar xzvf jdk*.tar.gz --strip-components 1  -C /usr/java/
+        ln -s /usr/java/bin/java /usr/local/bin/java #必要
 
         if grep -q "/usr/java/jdk" "~/.bashrc"; then #条目已存在
             Echo_Green "JDK Item Exist."
         else
-            echo "export JAVA_HOME=/usr/java/${JDK_NAME}" >> ~/.bashrc
-            echo "export JRE_HOME=/usr/java/${JDK_NAME}/jre" >> ~/.bashrc
+            echo "export JAVA_HOME=/usr/java/" >> ~/.bashrc
+            echo "export JRE_HOME=/usr/java/jre" >> ~/.bashrc
             echo "export MAVEN_HOME=/usr/maven" >> ~/.bashrc
             echo 'export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$JRE_HOME/include:$MAVEN_HOME/bin:/usr/local/bin' >>  ~/.bashrc
             source ~/.bashrc
