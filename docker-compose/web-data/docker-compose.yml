@@ -42,8 +42,7 @@ services:
     image: pikadb/pika:v2.3.4
     container_name: pika
     volumes:
-      - /home/data/pika:/pika/output/db
-      - /home/tmp/pika/pika.conf:/pika/output/conf/pika.conf
+      - pika_data:/pika/output/db
     restart: on-failure
     ports:
       - 9221:9221
@@ -105,3 +104,5 @@ volumes:
     name: rocksdb_data
   rabbitmq_data:
     name: rabbitmq_data
+  pika_data:
+    name: pika_data
