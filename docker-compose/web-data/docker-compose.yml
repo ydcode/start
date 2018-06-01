@@ -37,7 +37,25 @@ services:
       options:
         max-size: "200m"
         
-        
+   
+  pika:
+    image: pikadb/pika:v2.3.4
+    container_name: pika
+    volumes:
+      - /home/data/pika:/pika/output/db
+      - /home/tmp/pika/pika.conf:/pika/output/conf/pika.conf
+    restart: on-failure
+    ports:
+      - 9221:9221
+    command: pika -c conf/pika.conf
+    networks:
+      - web_server_network
+    logging:
+      options:
+        max-size: "200m"
+      
+      
+      
   mysql:
     image: mysql:5.7.20
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
