@@ -39,8 +39,8 @@ services:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
       - DB_NAME=${DB_NAME}
-      - ROCKSDB_HOST=${ROCKSDB_HOST}
-      - ROCKSDB_PORT=${ROCKSDB_PORT}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
       - DB_PASSWORD=${DB_PASSWORD}
       - SSL_EMAIL=${SSL_EMAIL}
       - USER_AGENT_HOST=${USER_AGENT_HOST}
@@ -61,48 +61,6 @@ services:
     restart: always
     depends_on:
       - nginx
-    networks:
-      - web_server_network
-    logging:
-      options:
-        max-size: "200m"
-        
-        
-  web-rtb-dashboard:
-    image: ${registry:-docker.io}/ydcode/pack:web-rtb-dashboard-1.0.0
-    container_name: web-rtb-dashboard
-    environment:
-      - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
-      - ROCKSDB_HOST=${ROCKSDB_HOST}
-      - ROCKSDB_PORT=${ROCKSDB_PORT}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - CDN_DOMAIN_CN=${CDN_DOMAIN_CN}
-      - SSL_EMAIL=${SSL_EMAIL}
-      - USER_AGENT_HOST=${USER_AGENT_HOST}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-      - AWS_ACCESS_KEY_MASTER=${AWS_ACCESS_KEY_MASTER}
-      - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
-      - SERVER_NAME=${SERVER_NAME}
-
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/bin/docker:/usr/bin/docker
-      - temp_data:/home/temp
-      - nginx_wwwroot_data:/home/wwwroot
-      - nginx_ssl_data:/etc/letsencrypt
-      - nginx_conf_data:/etc/nginx/conf.d
-
-    restart: always
-    depends_on:
-      - nginx
-      - web-rtb-server
-    ports:
-      - 8080:8080
-      - 8443:8443
     networks:
       - web_server_network
     logging:
