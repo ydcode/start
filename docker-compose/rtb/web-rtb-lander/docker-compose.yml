@@ -46,7 +46,8 @@ services:
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
       - AWS_ACCESS_KEY_MASTER=${AWS_ACCESS_KEY_MASTER}
       - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
-      
+      - SERVER_NAME=${SERVER_NAME}
+
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
