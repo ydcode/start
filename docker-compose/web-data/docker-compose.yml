@@ -31,6 +31,10 @@ services:
     ports:
       - 9221:9221
     command: pika -c conf/pika.conf
+    
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      
     networks:
       - web_server_network
     logging:
