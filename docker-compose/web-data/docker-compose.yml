@@ -23,7 +23,7 @@ services:
         max-size: "200m"
    
   pika:
-    image: pikadb/pika:v2.3.4
+    image: ${registry:-docker.io}/ydcode/pack:image-pika-1.0.0
     container_name: pika
     volumes:
       - pika_data:/pika/output/db
