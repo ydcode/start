@@ -6,24 +6,24 @@ scrape_configs:
     static_configs:
       - targets: ['10.9.96.7:9100']
         labels:
-          instance: Pop Server DE
+          instance: Rtb Server DE
           
           
   - job_name: lander_metrics
     static_configs:
       - targets: ['10.9.96.4:9100']
         labels:
-          instance: Pop Lander DE
+          instance: Rtb Lander DE
           
   - job_name: redirect_prop_metrics
     static_configs:
       - targets: ['10.9.96.3:9100']
         labels:
-          instance: Pop Redirect DE
+          instance: Rtb Redirect DE
           
   - job_name: data_metrics
     static_configs:
       - targets: ['10.9.96.6:9100']
         labels:
-          instance: Pop Data DE
+          instance: Rtb Data DE
 
