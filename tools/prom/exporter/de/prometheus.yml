@@ -15,7 +15,7 @@ scrape_configs:
         labels:
           instance: Rtb Lander DE
           
-  - job_name: redirect_prop_metrics
+  - job_name: redirect_metrics
     static_configs:
       - targets: ['10.9.96.3:9100']
         labels:
