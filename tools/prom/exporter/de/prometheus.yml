@@ -1,0 +1,29 @@
+global:
+    scrape_interval: 15s
+    
+scrape_configs:
+  - job_name: server_metrics
+    static_configs:
+      - targets: ['10.9.96.7:9100']
+        labels:
+          instance: Pop Server DE
+          
+          
+  - job_name: lander_metrics
+    static_configs:
+      - targets: ['10.9.96.4:9100']
+        labels:
+          instance: Pop Lander DE
+          
+  - job_name: redirect_prop_metrics
+    static_configs:
+      - targets: ['10.9.96.3:9100']
+        labels:
+          instance: Pop Redirect DE
+          
+  - job_name: data_metrics
+    static_configs:
+      - targets: ['10.9.96.6:9100']
+        labels:
+          instance: Pop Data DE
+
