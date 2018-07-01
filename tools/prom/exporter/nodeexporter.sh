@@ -8,7 +8,7 @@ mkdir -p /usr/local/prometheus/node_exporter
 
 mv node_exporter-0.16.0.linux-amd64/* /usr/local/prometheus/node_exporter/
 
-cp -f /root/start/tools/prom/node_exporter.service /usr/lib/systemd/system/node_exporter.service
+cp -f /root/start/tools/prom/exporter/node_exporter.service /usr/lib/systemd/system/node_exporter.service
 
 systemctl enable node_exporter
 systemctl start node_exporter
