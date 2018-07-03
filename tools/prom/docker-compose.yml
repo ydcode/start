@@ -8,9 +8,9 @@ services:
       - 9090:9090
     volumes:
       - prometheus_data:/prometheus
-      - /root/prom/:/root/prom/
+      - /root/start/:/root/start/
     command:
-      - '--config.file=/root/prom/prometheus.yml'
+      - '--config.file=/root/start/tools/prom/config/us/prometheus.yml'
       
     networks:
       - web_server_network
