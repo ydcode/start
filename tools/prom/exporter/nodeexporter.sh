@@ -13,7 +13,7 @@ cp -f /root/start/tools/prom/exporter/node_exporter.service /usr/lib/systemd/sys
 systemctl enable node_exporter
 systemctl start node_exporter
 
-
+#需要开启端口
 # systemctl --no-pager -l status node_exporter
 
 # firewall-cmd --permanent source address="127.0.0.3" port protocol="tcp" port="1521" accept"
