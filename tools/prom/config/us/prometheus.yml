@@ -1,0 +1,16 @@
+global:
+    scrape_interval: 15s
+    
+scrape_configs:         
+  - job_name: redirect_metrics
+    static_configs:
+      - targets: ['10.12.96.5:9100']
+        labels:
+          instance: Rtb Redirect US
+          
+  - job_name: data_metrics
+    static_configs:
+      - targets: ['10.12.96.3:9100']
+        labels:
+          instance: Rtb Data US
+
