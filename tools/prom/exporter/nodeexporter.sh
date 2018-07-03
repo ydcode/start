@@ -14,6 +14,7 @@ systemctl enable node_exporter
 systemctl start node_exporter
 
 #需要开启端口
+#Grafana Master Server也要开启端口
 # systemctl --no-pager -l status node_exporter
 
 # firewall-cmd --permanent source address="127.0.0.3" port protocol="tcp" port="1521" accept"
