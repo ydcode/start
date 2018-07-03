@@ -13,6 +13,7 @@ cp -f /root/start/tools/prom/exporter/node_exporter.service /usr/lib/systemd/sys
 systemctl enable node_exporter
 systemctl start node_exporter
 
+#不要更改Node Exporter版本，新版更改，dashboard不兼容   Dashboard编号22
 #需要开启端口
 #Grafana Master Server也要开启端口
 # systemctl --no-pager -l status node_exporter
