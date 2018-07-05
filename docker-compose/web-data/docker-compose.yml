@@ -93,8 +93,6 @@ services:
     networks:
       - web_server_network
     command: 
-      - "--collect.info_schema.innodbcmp"
-
     depends_on:
       - mysql
 
