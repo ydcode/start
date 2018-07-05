@@ -87,12 +87,13 @@ services:
     image: prom/mysqld-exporter:latest
     container_name: mysql_exporter
     environment:
-      - DATA_SOURCE_NAME=${DB_NAME}:${DB_PASSWORD}@(mysql:3306)
+      - DATA_SOURCE_NAME=${DB_NAME}:${DB_PASSWORD}@(mysql:3306)/bootdb
     ports:
       - 9104:9104
     networks:
       - web_server_network
-    command: ["--web.listen-address=:9104","--collect.global_status=true"]
+    command: 
+      - "--collect.info_schema.innodbcmp"
 
     depends_on:
       - mysql
