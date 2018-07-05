@@ -8,9 +8,9 @@ scrape_configs:
         labels:
           instance: Rtb Redirect US
           
-  - job_name: data_metrics
+  - job_name: mysql_metrics
     static_configs:
       - targets: ['10.12.96.3:9104']
         labels:
-          instance: Rtb Data US
+          instance: Rtb MySQL US
 
