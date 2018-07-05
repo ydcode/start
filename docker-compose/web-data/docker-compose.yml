@@ -45,7 +45,7 @@ services:
 
   mysql:
     image: mysql:5.7.20
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --innodb-buffer-pool-size=1024M
     container_name: mysql
     restart: always
     ports:
