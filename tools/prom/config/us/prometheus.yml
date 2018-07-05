@@ -13,3 +13,9 @@ scrape_configs:
       - targets: ['10.12.96.3:9104']
         labels:
           instance: Rtb MySQL US
+
+  - job_name: node_metrics
+    static_configs:
+      - targets: ['10.12.96.3:9100']
+        labels:
+          instance: Rtb MySQL US
