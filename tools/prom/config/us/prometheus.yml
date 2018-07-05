@@ -6,13 +6,13 @@ scrape_configs:
     static_configs:
       - targets: ['10.12.96.5:9100']
         labels:
-          instance: Rtb US Redirect
+          instance: Rtb Redirect US
           
   - job_name: mysql_metrics
     static_configs:
       - targets: ['10.12.96.3:9104']
         labels:
-          instance: Rtb US MySQL
+          instance: Rtb MySQL US
     params:
       collect[]:
         - global_status
