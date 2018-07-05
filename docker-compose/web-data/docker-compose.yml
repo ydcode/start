@@ -21,7 +21,7 @@ services:
     logging:
       options:
         max-size: "200m"
-   
+
   pika:
     image: ${registry:-docker.io}/ydcode/pack:image-pika-1.0.0
     container_name: pika
@@ -31,18 +31,18 @@ services:
     ports:
       - 9221:9221
     command: pika -c conf/pika.conf
-    
+
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
-      
+
     networks:
       - web_server_network
     logging:
       options:
         max-size: "200m"
-      
-      
-      
+
+
+
   mysql:
     image: mysql:5.7.20
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
@@ -64,7 +64,7 @@ services:
     logging:
       options:
         max-size: "200m"
-      
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
@@ -81,7 +81,20 @@ services:
     logging:
       options:
         max-size: "200m"
-        
+
+
+  mysql_exporter:
+    image: prom/mysqld-exporter:latest
+    container_name: mysql_exporter
+    environment:
+      - DATA_SOURCE_NAME=${DB_NAME}:${DB_PASSWORD}@(mysql:3306)
+    ports:
+      - "9106:9106"
+    networks:
+      - web_server_network
+    depends_on:
+      - mysql
+
 networks:
   web_server_network:
 
