@@ -92,7 +92,8 @@ services:
       - 9104:9104
     networks:
       - web_server_network
-    command: []
+    command: 
+      - "--collect.auto_increment.columns"
     depends_on:
       - mysql
 
