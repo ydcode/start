@@ -13,4 +13,7 @@ scrape_configs:
       - targets: ['10.12.96.3:9104']
         labels:
           instance: Rtb US MySQL
+    params:
+      collect[]:
+        - global_status
 
