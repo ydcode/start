@@ -92,7 +92,7 @@ services:
       - 9104:9104
     networks:
       - web_server_network
-    command: ["-web.listen-address=:9104","-collect.global_status=true"]
+    command: ["--web.listen-address=:9104","--collect.global_status=true"]
 
     depends_on:
       - mysql
