@@ -93,7 +93,7 @@ services:
     networks:
       - web_server_network
     command: 
-      - "--collect.auto_increment.columns"
+      - "--collect.info_schema.innodb_cmpmem"
     depends_on:
       - mysql
 
