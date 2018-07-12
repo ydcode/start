@@ -36,6 +36,7 @@ services:
     container_name: web-rtb-dashboard
     environment:
       - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
+      - DASHBOARD_DOMAIN_ALIAS=${DASHBOARD_DOMAIN_ALIAS}
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
       - DB_NAME=${DB_NAME}
