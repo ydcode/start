@@ -29,12 +29,12 @@ Install_Docker_Ubuntu()
 
 Install_Docker_Debian()
 {
-        sudo apt-get update -y
-        sudo apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
+        apt-get update -y
+        apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
         curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | sudo apt-key add -
-        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") $(lsb_release -cs) stable"
-        sudo apt-get update -y
-        sudo apt-get install -y docker-ce
+        add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") $(lsb_release -cs) stable"
+        apt-get update -y
+        apt-get install -y docker-ce
 }
 
 
