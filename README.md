@@ -8,7 +8,7 @@ yum install -y git wget && cd /root && git clone https://github.com/ydcode/start
 ```
 
 ```
-apt install -y git wget && cd /root && git clone https://github.com/ydcode/start.git && cd start 
+apt install -y git wget sudo && cd /root && git clone https://github.com/ydcode/start.git && cd start 
 ```
 
 
