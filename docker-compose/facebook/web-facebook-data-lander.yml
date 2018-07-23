@@ -1,0 +1,109 @@
+version: "3.4"
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5671:5671
+      - 5672:5672
+      - 4369:4369
+      - 25672:25672
+      - 15671:15671
+      - 15672:15672
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - web_server_network
+    logging:
+      options:
+        max-size: "200m"
+
+  pika:
+    image: ${registry:-docker.io}/ydcode/pack:image-pika-1.0.0
+    container_name: pika
+    volumes:
+      - pika_data:/pika/output/db
+    restart: on-failure
+    ports:
+      - 9221:9221
+    command: pika -c conf/pika.conf
+
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+
+    networks:
+      - web_server_network
+    logging:
+      options:
+        max-size: "200m"
+
+
+
+  mysql:
+    image: mysql:5.7.20
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --innodb-buffer-pool-size=1024M --max_connections=2048
+    container_name: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - /home/backup:/home/backup
+
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_NAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    networks:
+      - web_server_network
+    logging:
+      options:
+        max-size: "200m"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - 1699:80
+    environment:
+      - PMA_HOSTS=mysql
+      - PMA_VERBOSES=local
+    depends_on:
+      - mysql
+    networks:
+      - web_server_network
+    logging:
+      options:
+        max-size: "200m"
+
+
+  mysql_exporter:
+    image: prom/mysqld-exporter:latest
+    container_name: mysql_exporter
+    environment:
+      - DATA_SOURCE_NAME=${DB_NAME}:${DB_PASSWORD}@(mysql:3306)/
+    ports:
+      - 9104:9104
+    networks:
+      - web_server_network
+    command: 
+      - "--collect.info_schema.innodb_cmpmem"
+    depends_on:
+      - mysql
+
+networks:
+  web_server_network:
+
+volumes:
+  mysql_data:
+    name: mysql_data
+  rabbitmq_data:
+    name: rabbitmq_data
+  pika_data:
+    name: pika_data
