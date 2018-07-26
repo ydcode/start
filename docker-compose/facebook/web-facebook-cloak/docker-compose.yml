@@ -30,9 +30,9 @@ services:
       options:
         max-size: "200m"
                 
-  web-facebook-puppet:
-    image: ${registry:-docker.io}/ydcode/pack:web-facebook-puppet-1.0.0
-    container_name: web-facebook-puppet
+  web-facebook-cloak:
+    image: ${registry:-docker.io}/ydcode/pack:web-facebook-cloak-1.0.0
+    container_name: web-facebook-cloak
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
