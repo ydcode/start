@@ -34,19 +34,6 @@ services:
       options:
         max-size: "200m"
       
-     
-      
-  useragent:
-    image: ${registry:-docker.io}/ydcode/pack:image-user-agent-1.0.0
-    container_name: useragent
-    ports:
-      - 8099:8099
-    restart: always
-    networks:
-      - web_server_network
-    logging:
-      options:
-        max-size: "200m"
                 
   web-facebook-cloak:
     image: ${registry:-docker.io}/ydcode/pack:web-facebook-cloak-1.0.0
