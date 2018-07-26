@@ -30,9 +30,9 @@ services:
       options:
         max-size: "200m"
                 
-  web-lander:
-    image: ${registry:-docker.io}/ydcode/pack:web-lander-1.0.0
-    container_name: web-lander
+  web-facebook-lander:
+    image: ${registry:-docker.io}/ydcode/pack:web-facebook-lander-1.0.0
+    container_name: web-facebook-lander
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
