@@ -75,7 +75,24 @@ services:
       
   
         
-        
+  php:
+    image: php:7-fpm
+    container_name: php
+    restart: always
+    ports:
+      - 9000:9000
+    volumes:
+      - nginx_wwwroot_data:/home/wwwroot
+      - nginx_ssl_data:/etc/letsencrypt
+      - nginx_conf_data:/etc/nginx/conf.d
+      - nginx_temp_logs:/home/temp/logs
+    networks:
+      - web_server_network
+    logging:
+      options:
+        max-size: "200m"
+      
+      
         
 networks:
   web_server_network:
