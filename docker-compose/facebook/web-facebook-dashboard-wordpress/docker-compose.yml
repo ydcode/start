@@ -78,7 +78,6 @@ services:
   php:
     image: ${registry:-docker.io}/ydcode/pack:image-php-1.0.0
     container_name: php
-    command: chmod -R 777 /home/wwwroot
     restart: always
     ports:
       - 9000:9000
