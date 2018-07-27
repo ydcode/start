@@ -82,7 +82,7 @@ services:
     ports:
       - 9000:9000
     volumes:
-      - nginx_wwwroot_data:/var/www/html
+      - nginx_wwwroot_data:/home/wwwroot
       - nginx_ssl_data:/etc/letsencrypt
       - nginx_conf_data:/etc/nginx/conf.d
       - nginx_temp_logs:/home/temp/logs
