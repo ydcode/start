@@ -76,7 +76,7 @@ services:
   
         
   php:
-    image: php:7-fpm
+    image: ${registry:-docker.io}/ydcode/pack:image-php-1.0.0
     container_name: php
     restart: always
     ports:
