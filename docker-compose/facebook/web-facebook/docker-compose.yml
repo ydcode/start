@@ -199,8 +199,8 @@ services:
       - nginx
       - useragent
     ports:
-      - 8080:8080
-      - 8443:8443
+      - 1080:1080
+      - 1443:1443
     networks:
       - web_server_network
     logging:
@@ -239,8 +239,8 @@ services:
       - nginx
       - useragent
     ports:
-      - 8080:8080
-      - 8443:8443
+      - 2080:2080
+      - 2443:2443
     networks:
       - web_server_network
     logging:
