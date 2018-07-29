@@ -17,7 +17,7 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
-      - web_server_network
+      - web_facebook_network
     logging:
       options:
         max-size: "200m"
@@ -36,7 +36,7 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
     networks:
-      - web_server_network
+      - web_facebook_network
     logging:
       options:
         max-size: "200m"
@@ -60,7 +60,7 @@ services:
       - MYSQL_USER=${DB_NAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
     networks:
-      - web_server_network
+      - web_facebook_network
     logging:
       options:
         max-size: "200m"
@@ -77,7 +77,7 @@ services:
     depends_on:
       - mysql
     networks:
-      - web_server_network
+      - web_facebook_network
     logging:
       options:
         max-size: "200m"
@@ -91,7 +91,7 @@ services:
     ports:
       - 9104:9104
     networks:
-      - web_server_network
+      - web_facebook_network
     command:
       - "--collect.info_schema.innodb_cmpmem"
     depends_on:
@@ -129,7 +129,7 @@ services:
     depends_on:
       - phpmyadmin
     networks:
-      - web_server_network
+      - web_facebook_network
     logging:
       options:
         max-size: "200m"
@@ -148,7 +148,7 @@ services:
       - nginx_conf_data:/etc/nginx/conf.d
       - nginx_temp_logs:/home/temp/logs
     networks:
-      - web_server_network
+      - web_facebook_network
     logging:
       options:
         max-size: "200m"
@@ -160,7 +160,7 @@ services:
       - 8099:8099
     restart: always
     networks:
-      - web_server_network
+      - web_facebook_network
     logging:
       options:
         max-size: "200m"
@@ -202,7 +202,7 @@ services:
       - 1080:1080
       - 1443:1443
     networks:
-      - web_server_network
+      - web_facebook_network
     logging:
       options:
         max-size: "200m"
@@ -242,17 +242,55 @@ services:
       - 2080:2080
       - 2443:2443
     networks:
-      - web_server_network
+      - web_facebook_network
+    logging:
+      options:
+        max-size: "200m"
+
+  web-facebook-lander:
+    image: ${registry:-docker.io}/ydcode/pack:web-facebook-lander-1.0.0
+    container_name: web-facebook-lander
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - SSL_EMAIL=${SSL_EMAIL}
+      - USER_AGENT_HOST=${USER_AGENT_HOST}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - AWS_ACCESS_KEY_MASTER=${AWS_ACCESS_KEY_MASTER}
+      - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
+      - SERVER_NAME=${SERVER_NAME}
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+      - temp_data:/home/temp
+      - nginx_wwwroot_data:/home/wwwroot
+      - nginx_ssl_data:/etc/letsencrypt
+      - nginx_conf_data:/etc/nginx/conf.d
+
+    restart: always
+    depends_on:
+      - nginx
+      - useragent
+    ports:
+      - 3080:3080
+      - 3443:3443
+    networks:
+      - web_facebook_network
     logging:
       options:
         max-size: "200m"
 
 
 
-
-
 networks:
-  web_server_network:
+  web_facebook_network:
 
 volumes:
   mysql_data:
