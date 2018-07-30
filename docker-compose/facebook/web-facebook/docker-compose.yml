@@ -200,7 +200,6 @@ services:
       - useragent
     ports:
       - 1080:1080
-      - 1443:1443
     networks:
       - web_facebook_network
     logging:
@@ -240,7 +239,6 @@ services:
       - useragent
     ports:
       - 2080:2080
-      - 2443:2443
     networks:
       - web_facebook_network
     logging:
@@ -280,7 +278,6 @@ services:
       - useragent
     ports:
       - 3080:3080
-      - 3443:3443
     networks:
       - web_facebook_network
     logging:
