@@ -2,7 +2,7 @@
 JDK_URL="http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.tar.gz"
 MAVEN_URL="http://www-us.apache.org/dist/maven/maven-3/3.5.3/binaries/apache-maven-3.5.3-bin.tar.gz"
 
-JDK_FILE="jdk-8u172-linux-x64.tar.gz"
+JDK_FILE="jdk-8u181-linux-x64.tar.gz"
 JDK_NAME="jdk1.8.0_172"
 
 MAVEN_NAME="apache-maven-3.5.3"
