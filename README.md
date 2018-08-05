@@ -17,7 +17,8 @@ cd server_init/ && ./install.sh
 ```
 
 ```
-cd /home/wwwroot/ && wget https://wordpress.org/latest.zip && -
+cd /home/wwwroot/ && rm -rf latest.zip && wget https://wordpress.org/latest.zip && rm -rf /home/wwwroot/wordpress && unzip latest.zip -d /home/wwwroot/ 
+mv wordpress/* www.domain.com/
 ```
 
 
