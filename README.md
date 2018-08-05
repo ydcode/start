@@ -25,7 +25,16 @@ rm -rf www.domain.com/*
 mv wordpress/* www.domain.com/
 
 安装插件
-配置Conf
+配置Conf(before wordpress conf)
+
+        if ($http_x_request_role != 'cloudfront') {
+                return 404;
+        }
+
+        sub_filter $server_name $http_x_request_host;
+        sub_filter_once off;
+        
+        
 http https模拟访问/admin
 
 
