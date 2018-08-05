@@ -22,11 +22,12 @@ rm -rf www.domain.com/*
 mv wordpress/* www.domain.com/
 
 安装插件
-安装主题
-设置Perlink
 配置Conf
 http https模拟访问/admin
 
+
+安装主题
+设置Perlink
 ```
 
 
