@@ -16,6 +16,9 @@ cd server_init/ && ./install.sh
 
 ```
 
+```
+cd /home/wwwroot/ && wget https://wordpress.org/latest.zip && -
+```
 
 
 service network restart
