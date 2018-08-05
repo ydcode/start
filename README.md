@@ -25,6 +25,7 @@ rm -rf www.domain.com/*
 mv wordpress/* www.domain.com/
 
 安装插件
+Setting Domain 设置 C 
 配置Conf(before wordpress conf)
 
         if ($http_x_request_role != 'cloudfront') {
