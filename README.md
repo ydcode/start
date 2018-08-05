@@ -17,6 +17,9 @@ cd server_init/ && ./install.sh
 ```
 
 ```
+
+php.ini 
+
 cd /home/wwwroot/ && rm -rf latest.zip && wget https://wordpress.org/latest.zip && rm -rf /home/wwwroot/wordpress && unzip latest.zip -d /home/wwwroot/ 
 rm -rf www.domain.com/*
 mv wordpress/* www.domain.com/
