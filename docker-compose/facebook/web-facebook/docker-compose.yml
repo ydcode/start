@@ -247,9 +247,9 @@ services:
 
 
 
-  web-facebook-proxy:
-    image: ${registry:-docker.io}/ydcode/pack:web-facebook-proxy-1.0.0
-    container_name: web-facebook-proxy
+  web-facebook-safe:
+    image: ${registry:-docker.io}/ydcode/pack:web-facebook-safe-1.0.0
+    container_name: web-facebook-safe
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
