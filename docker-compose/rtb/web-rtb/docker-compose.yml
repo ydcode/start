@@ -17,7 +17,7 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
-      - web_facebook_network
+      - web_rtb_network
     logging:
       options:
         max-size: "200m"
@@ -36,7 +36,7 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
     networks:
-      - web_facebook_network
+      - web_rtb_network
     logging:
       options:
         max-size: "200m"
@@ -60,7 +60,7 @@ services:
       - MYSQL_USER=${DB_NAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
     networks:
-      - web_facebook_network
+      - web_rtb_network
     logging:
       options:
         max-size: "200m"
@@ -77,7 +77,7 @@ services:
     depends_on:
       - mysql
     networks:
-      - web_facebook_network
+      - web_rtb_network
     logging:
       options:
         max-size: "200m"
@@ -91,7 +91,7 @@ services:
     ports:
       - 9104:9104
     networks:
-      - web_facebook_network
+      - web_rtb_network
     command:
       - "--collect.info_schema.innodb_cmpmem"
     depends_on:
@@ -129,7 +129,7 @@ services:
     depends_on:
       - phpmyadmin
     networks:
-      - web_facebook_network
+      - web_rtb_network
     logging:
       options:
         max-size: "200m"
@@ -148,7 +148,7 @@ services:
       - nginx_conf_data:/etc/nginx/conf.d
       - nginx_temp_logs:/home/temp/logs
     networks:
-      - web_facebook_network
+      - web_rtb_network
     logging:
       options:
         max-size: "200m"
@@ -160,7 +160,7 @@ services:
       - 8099:8099
     restart: always
     networks:
-      - web_facebook_network
+      - web_rtb_network
     logging:
       options:
         max-size: "200m"
@@ -201,7 +201,7 @@ services:
     ports:
       - 1080:1080
     networks:
-      - web_facebook_network
+      - web_rtb_network
     logging:
       options:
         max-size: "200m"
@@ -240,14 +240,14 @@ services:
     ports:
       - 2080:2080
     networks:
-      - web_facebook_network
+      - web_rtb_network
     logging:
       options:
         max-size: "200m"
 
 
 networks:
-  web_facebook_network:
+  web_rtb_network:
 
 volumes:
   mysql_data:
