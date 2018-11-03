@@ -9,14 +9,17 @@ Install_JDK()
     fi
     cd ${CurrentDir}
     pwd
+    
+	rm -rf /usr/java
+	rm -rf /usr/local/bin/java
+	
     if [ ! -d "/usr/java/" ]; then
     	source ~/.bashrc
         if [ ! -e "${JDK_FILE}" ]; then
             wget --continue --no-check-certificate --header "Cookie: oraclelicense=a" ${JDK_URL}
         fi
 	
-	rm -rf /usr/java
-	rm -rf /usr/local/bin/java
+
     	mkdir /usr/java && tar xzvf jdk*.tar.gz --strip-components 1  -C /usr/java/
 	ln -s /usr/java/bin/java /usr/local/bin/java #必要
 
@@ -41,10 +44,10 @@ Install_JDK()
 }
 
 Install_MVN(){
+	rm -rf /usr/maven
         if [ ! -d "/usr/maven/" ]; then
             cd ${CurrentDir}
             wget ${MAVEN_URL}
-	    rm -rf /usr/maven
 	    mkdir /usr/maven && tar xzvf apache-maven*.tar.gz --strip-components 1  -C /usr/maven/
         fi
 }
