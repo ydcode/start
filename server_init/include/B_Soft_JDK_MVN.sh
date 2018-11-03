@@ -33,7 +33,7 @@ Install_JDK()
             source ~/.bashrc
 
 	    java -version
-            Echo_Yellow "Open new Terminal and once again './main.sh' and "
+            Echo_Yellow "manual 'source ~/.bashrc' "
             Echo_Green "Ctrl + C to exit"
         fi
 
