@@ -15,8 +15,10 @@ Install_JDK()
             wget --continue --no-check-certificate --header "Cookie: oraclelicense=a" ${JDK_URL}
         fi
 	
+	rm -rf /usr/java
+	rm -rf /usr/local/bin/java
     	mkdir /usr/java && tar xzvf jdk*.tar.gz --strip-components 1  -C /usr/java/
-        ln -s /usr/java/bin/java /usr/local/bin/java #必要
+	ln -s /usr/java/bin/java /usr/local/bin/java #必要
 
         if grep -q "/usr/java/jdk" "~/.bashrc"; then #条目已存在
             Echo_Green "JDK Item Exist."
@@ -42,6 +44,7 @@ Install_MVN(){
         if [ ! -d "/usr/maven/" ]; then
             cd ${CurrentDir}
             wget ${MAVEN_URL}
+	    rm -rf /usr/maven
 	    mkdir /usr/maven && tar xzvf apache-maven*.tar.gz --strip-components 1  -C /usr/maven/
         fi
 }
