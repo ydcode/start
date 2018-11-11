@@ -28,7 +28,6 @@ services:
       - /usr/bin/docker:/usr/bin/docker
       - temp_data:/home/temp
     restart: always
-    depends_on:
     ports:
       - 8080:8080
       - 8443:8443
