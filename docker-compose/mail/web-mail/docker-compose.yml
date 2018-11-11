@@ -160,7 +160,7 @@ services:
       - 8099:8099
     restart: always
     networks:
-      - web_facebook_network
+      - web_mail_network
     logging:
       options:
         max-size: "200m"
