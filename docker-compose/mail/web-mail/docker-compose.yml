@@ -17,7 +17,7 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
-      - web_facebook_network
+      - web_mail_network
     logging:
       options:
         max-size: "200m"
@@ -36,7 +36,7 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
     networks:
-      - web_facebook_network
+      - web_mail_network
     logging:
       options:
         max-size: "200m"
@@ -201,7 +201,7 @@ services:
     ports:
       - 1080:1080
     networks:
-      - web_facebook_network
+      - web_mail_network
     logging:
       options:
         max-size: "200m"
@@ -240,7 +240,7 @@ services:
     ports:
       - 2080:2080
     networks:
-      - web_facebook_network
+      - web_mail_network
     logging:
       options:
         max-size: "200m"
