@@ -273,8 +273,8 @@ Check_User_Right()
 		userRight="n"
 	;;
 	*)
-        echo "No input,Right, will add User: ${domain}"
-        domainRight="y"
+        echo "No input,Right, will add User: Email: ${username}@${domainPostfix} Password: ${password}"
+        userRight="y"
     esac
 
     if [ "${userRight}" = "y" ]; then
