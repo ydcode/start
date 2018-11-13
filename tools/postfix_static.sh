@@ -58,8 +58,61 @@ Postfix_Conf(){
 	chown -R vmail:vmail /var/mail
 	chown -R vmail:vmail /var/mail/*
 
+	postconf -e smtpd_sasl_type=dovecot
+	postconf -e smtpd_sasl_path=private/auth
+	postconf -e smtpd_sasl_auth_enable=yes
+	postconf -e smtpd_sasl_security_options=noanonymous
+	postconf -e smtpd_sasl_local_domain='$myhostname'
+	postconf -e smtpd_recipient_restrictions="permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination"
+
+	postconf bounce_queue_lifetime=300s
+	postconf broken_sasl_auth_clients=yes
+	postconf maximal_queue_lifetime=300s
+	postconf maximal_backoff_time=300s
+
 
 }
+
+
+Postfix_Conf()
+{
+	sed -i '/^mail_location =.*/s/^/#/g' /etc/dovecot/conf.d/10-mail.conf 
+	echo "mail_location = maildir:/var/mail/vhosts/%d/%n" >> /etc/dovecot/conf.d/10-mail.conf
+
+	touch /etc/dovecot/virtual_user_list
+	echo $username@$domain:{plain}firstpassword >> /etc/dovecot/virtual_user_list
+	
+	sed -i '/\!include auth-system\.conf\.ext/s/^/#/g' /etc/dovecot/conf.d/10-auth.conf
+	sed -i '/\!include auth-passwdfile\.conf\.ext/s/^#//g' /etc/dovecot/conf.d/10-auth.conf
+
+	sed -i '/^mail_privileged_group =.*/s/^/#/g' /etc/dovecot/conf.d/10-mail.conf
+	echo "mail_privileged_group = mail" >> /etc/dovecot/conf.d/10-mail.conf
+
+	sed -i '/^disable_plaintext_auth =.*/s/^/#/g' /etc/dovecot/conf.d/10-auth.conf
+	echo "disable_plaintext_auth = no" >> /etc/dovecot/conf.d/10-auth.conf
+
+	sed -i '/^auth_mechanisms =.*/s/^/#/g' /etc/dovecot/conf.d/10-auth.conf
+	echo "auth_mechanisms = plain login" >> /etc/dovecot/conf.d/10-auth.conf
+
+
+	auth10="
+	passdb {
+	  driver = passwd-file
+	  args = username_format=%u /etc/dovecot/virtual_user_list
+	}
+	userdb {
+	  driver = static
+	  args = uid=vmail gid=vmail home=/var/mail/vhosts/%d/%n
+	}
+	"
+	echo $auth10 > /etc/dovecot/conf.d/10-mail.conf
+
+}
+
+
+
+
+
 
 # SSH_DIR=$HOME
 SSH_DIR="/root"
