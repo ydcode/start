@@ -244,7 +244,6 @@ Init_Server()
 
 Input_Domain()
 {
-    username="bounce"
     domain="google.com"
     subDomain="mail"
 
