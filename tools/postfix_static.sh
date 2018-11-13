@@ -119,7 +119,7 @@ Input_Domain()
 
 Check_Domain_Right()
 {
-	echo "${domain}  Right ?"
+	echo "${subDomain}.${domain}  Right ?"
 	read -p "[Y/n]: Y " domainRight
 
 	case "${domainRight}" in
@@ -132,7 +132,7 @@ Check_Domain_Right()
 		domainRight="n"
 	;;
 	*)
-        echo "No input,Right, will add Domain: ${domain}."
+        echo "No input,Right, will add Domain: ${domain}"
         domainRight="y"
     esac
 
