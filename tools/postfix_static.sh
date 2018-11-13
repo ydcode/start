@@ -32,7 +32,9 @@ Dovecot_Conf()
 	sed -i '/^ssl =.*/s/^/#/g' /etc/dovecot/conf.d/10-ssl.conf
 	echo "ssl = no" >> /etc/dovecot/conf.d/10-ssl.conf
 
-
+	
+	sed -i '/^ssl =.*/s/^/#/g' /etc/dovecot/conf.d/10-logging.conf
+	echo "log_path = /var/log/dovecot.log" >> /etc/dovecot/conf.d/10-logging.conf
 }
 
 
