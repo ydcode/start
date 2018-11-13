@@ -41,7 +41,7 @@ Dovecot_Conf()
 cat >>"/etc/dovecot/conf.d/10-mail.conf"<<EOF
 	passdb {
 	  driver = passwd-file
-	  args = username_format=%u /etc/dovecot/virtual_user_list
+	  args = username_format=%u /etc/dovecot/users
 	}
 	userdb {
 	  driver = static
