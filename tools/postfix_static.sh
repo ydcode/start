@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # yum install -y wget && wget https://raw.githubusercontent.com/ydcode/start/master/tools/postfix_static.sh && chmod +x postfix_static.sh && ./postfix_static.sh
-
+# tail -f /var/log/maillog
+# tail -f /var/log/dovecot.log
 Dovecot_Conf()
 {
 	sed -i '/^mail_location =.*/s/^/#/g' /etc/dovecot/conf.d/10-mail.conf 
