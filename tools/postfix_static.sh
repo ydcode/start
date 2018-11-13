@@ -110,7 +110,7 @@ Input_Domain()
     read -p "Enter Sub Domain Name: " subDomain
     subDomain=`echo ${subDomain}|tr -d ' /'`
     
-    Init_Server
+    Check_Domain_Right
 }
 
 
@@ -137,9 +137,10 @@ Check_Domain_Right()
     esac
 
     if [ "${domainRight}" = "y" ]; then
-       echo "Right, will add Domain: ${domain}."
+	echo "Right, will add Domain: ${domain}."
+	Init_Server
     else
-        Input_Domain
+	Input_Domain
     fi
 }
 
