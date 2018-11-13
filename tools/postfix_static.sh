@@ -247,10 +247,10 @@ Input_Domain()
     domain="google.com"
     subDomain="mail"
 
-    read -p "Enter Domain Name: " domain
+    read -p "Enter Domain Name(google.com): " domain
     domain=`echo ${domain}|tr -d ' /'`
     
-    read -p "Enter Sub Domain Name: " subDomain
+    read -p "Enter Sub Domain Name(mail): " subDomain
     subDomain=`echo ${subDomain}|tr -d ' /'`
     
     Check_Domain_Right
