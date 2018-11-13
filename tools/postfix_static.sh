@@ -8,8 +8,8 @@ Dovecot_Conf()
 	sed -i '/^mail_location =.*/s/^/#/g' /etc/dovecot/conf.d/10-mail.conf 
 	echo "mail_location = maildir:/var/mail/vhosts/%d/%n" >> /etc/dovecot/conf.d/10-mail.conf
 
-	touch /etc/dovecot/virtual_user_list
-	echo $username@$domain:{plain}firstpassword >> /etc/dovecot/virtual_user_list
+	touch /etc/dovecot/users
+	echo $username@$domain:{plain}firstpassword >> /etc/dovecot/users
 	
 	sed -i '/\!include auth-system\.conf\.ext/s/^/#/g' /etc/dovecot/conf.d/10-auth.conf
 	sed -i '/\!include auth-passwdfile\.conf\.ext/s/^#//g' /etc/dovecot/conf.d/10-auth.conf
