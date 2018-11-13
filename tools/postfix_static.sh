@@ -8,8 +8,8 @@ Dovecot_Conf()
 	sed -i '/^mail_location =.*/s/^/#/g' /etc/dovecot/conf.d/10-mail.conf 
 	echo "mail_location = maildir:/var/mail/vhosts/%d/%n" >> /etc/dovecot/conf.d/10-mail.conf
 
+	mkdir -p /etc/dovecot
 	touch /etc/dovecot/users
-	echo $username@$domain:{plain}firstpassword >> /etc/dovecot/users
 	
 	sed -i '/\!include auth-system\.conf\.ext/s/^/#/g' /etc/dovecot/conf.d/10-auth.conf
 	sed -i '/\!include auth-passwdfile\.conf\.ext/s/^#//g' /etc/dovecot/conf.d/10-auth.conf
@@ -296,8 +296,5 @@ Input_Domain
 systemctl start postfix && systemctl enable postfix
 netstat -anlpt
 
-
-
-
-
-
+echo "-----------------Add New User: -----------------------------"
+echo "echo bounce@$domain:{plain}password >> /etc/dovecot/users"
