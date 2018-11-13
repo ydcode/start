@@ -258,6 +258,28 @@ Input_Domain()
 
 
 
+Add_New_User()
+{
+	echo "-----------------Add New User: -------------"
+    username=""
+	domainPostfix=""
+
+	read -p "Enter New UserName: " username
+	username=`echo ${username}|tr -d ' /'`
+	
+	read -p "Enter Password: " password
+	password=`echo ${password}|tr -d ' /'`
+
+	read -p "Enter Belong Domain: " domainPostfix
+	domainPostfix=`echo ${domainPostfix}|tr -d ' /'`
+	
+	mkdir -p  /var/mail/vhosts/$domainPostfix/$username
+	echo $username@$domainPostfix:{plain}$password >> /etc/dovecot/users
+    echo $username@$domainPostfix $domainPostfix/$username/ >> /etc/postfix/virtual_mailbox_map
+    chown -R vmail:vmail /var/mail/*
+}
+
+
 
 
 Check_Domain_Right()
@@ -289,24 +311,67 @@ Check_Domain_Right()
 
 
 
-Input_Domain
+Whether_Domain()
+{
+	echo "Add New Domain?"
+	read -p "[Y/n]: Y " addNewDomainChoose
+
+	case "${addNewDomainChoose}" in
+	[yY][eE][sS]|[yY])
+		echo "Add New Domain:: ${addNewDomainChoose} "
+		addNewDomainChoose="y"
+	;;
+	[nN][oO]|[nN])
+		echo "Not Add Domain"
+		addNewDomainChoose="n"
+	;;
+	*)
+	echo "No input, Add New Domain: Y"
+	addNewDomainChoose="y"
+	esac
+
+    if [ "${addNewDomainChoose}" = "y" ]; then
+		echo "add Domain: Y"
+		Input_Domain
+    fi
 
 
-systemctl start postfix && systemctl enable postfix
+}
+
+
+
+Whether_User()
+{
+	echo "Add New User?"
+	read -p "[Y/n]: Y " addNewUserChoose
+
+	case "${addNewDomainChoose}" in
+	[yY][eE][sS]|[yY])
+		echo "Add New User:: ${addNewUserChoose} "
+		addNewUserChoose="y"
+	;;
+	[nN][oO]|[nN])
+		echo "Not Add User"
+		addNewUserChoose="n"
+	;;
+	*)
+	echo "No input, Add New User: Y"
+	addNewUserChoose="y"
+	esac
+
+    if [ "${addNewUserChoose}" = "y" ]; then
+		echo "add New User: Y"
+		Add_New_User
+    fi
+
+
+}
+
+
+
+Whether_Domain
+Whether_User
+
+systemctl restart postfix && systemctl enable postfix
 netstat -anlpt
-
-//todo Add Mulit Domain
-echo "-----------------Add New User: ----------Start-------------------"
-
-	
-	
-	
-echo "mkdir -p  /var/mail/vhosts/$domain/username"
-
-echo "echo username@$domain:{plain}password >> /etc/dovecot/users"
-echo "echo username@$domain $domain/username/ >> /etc/postfix/virtual_mailbox_map"
-
-echo "chown -R vmail:vmail /var/mail/*"
-echo "systemctl restart postfix && systemctl restart dovecot"
-echo "-----------------Add New User: ----------End-------------------"
 
