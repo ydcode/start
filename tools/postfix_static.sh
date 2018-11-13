@@ -258,10 +258,42 @@ Input_Domain()
 
 
 
+Check_User_Right()
+{
+	echo "Email: ${username}@${domainPostfix} Password: ${password}  Right ?"
+	read -p "[Y/n]: Y " userRight
+
+	case "${userRight}" in
+	[yY][eE][sS]|[yY])
+		echo "You will Add User:: ${userRight} "
+		userRight="y"
+	;;
+	[nN][oO]|[nN])
+		echo "Not Right"
+		userRight="n"
+	;;
+	*)
+        echo "No input,Right, will add User: ${domain}"
+        domainRight="y"
+    esac
+
+    if [ "${userRight}" = "y" ]; then
+	echo "Right, will add User: Email: ${username}@${domainPostfix} Password: ${password}"
+	mkdir -p  /var/mail/vhosts/$domainPostfix/$username
+	echo $username@$domainPostfix:{plain}$password >> /etc/dovecot/users
+	echo $username@$domainPostfix $domainPostfix/$username/ >> /etc/postfix/virtual_mailbox_map
+	chown -R vmail:vmail /var/mail/*
+    else
+	Add_New_User
+    fi
+}
+
+
+
 Add_New_User()
 {
 	echo "-----------------Add New User: -------------"
-    username=""
+    	username=""
 	domainPostfix=""
 
 	read -p "Enter New UserName: " username
@@ -273,10 +305,8 @@ Add_New_User()
 	read -p "Enter Belong Domain: " domainPostfix
 	domainPostfix=`echo ${domainPostfix}|tr -d ' /'`
 	
-	mkdir -p  /var/mail/vhosts/$domainPostfix/$username
-	echo $username@$domainPostfix:{plain}$password >> /etc/dovecot/users
-    echo $username@$domainPostfix $domainPostfix/$username/ >> /etc/postfix/virtual_mailbox_map
-    chown -R vmail:vmail /var/mail/*
+	Check_User_Right
+
 }
 
 
@@ -337,6 +367,7 @@ Whether_Domain()
 
 
 }
+
 
 
 
