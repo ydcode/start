@@ -297,8 +297,16 @@ netstat -anlpt
 
 //todo Add Mulit Domain
 echo "-----------------Add New User: ----------Start-------------------"
+
+	
+	
+	
+echo "mkdir -p  /var/mail/vhosts/$domain/username"
+
 echo "echo username@$domain:{plain}password >> /etc/dovecot/users"
 echo "echo username@$domain $domain/username/ >> /etc/postfix/virtual_mailbox_map"
+
+echo "chown -R vmail:vmail /var/mail/*"
 echo "systemctl restart postfix && systemctl restart dovecot"
 echo "-----------------Add New User: ----------End-------------------"
 
