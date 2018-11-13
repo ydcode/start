@@ -27,22 +27,11 @@ Dovecot_Conf()
 
 	sed -i '/^listen =.*/s/^/#/g' /etc/dovecot/dovecot.conf
 	echo "listen = *" >> /etc/dovecot/dovecot.conf
-	
-	sed -i '/^disable_plaintext_auth =.*/s/^/#/g' /etc/dovecot/conf.d/10-auth.conf
-	echo "disable_plaintext_auth = no" >> /etc/dovecot/conf.d/10-auth.conf
 
 	
-	auth10="
-	passdb {
-	  driver = passwd-file
-	  args = username_format=%u /etc/dovecot/virtual_user_list
-	}
-	userdb {
-	  driver = static
-	  args = uid=vmail gid=vmail home=/var/mail/vhosts/%d/%n
-	}
-	"
-	echo $auth10 > /etc/dovecot/conf.d/10-mail.conf
+	sed -i '/^ssl =.*/s/^/#/g' /etc/dovecot/conf.d/10-ssl.conf
+	echo "ssl = no" >> /etc/dovecot/conf.d/10-ssl.conf
+
 
 }
 
