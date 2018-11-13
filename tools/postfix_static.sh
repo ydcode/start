@@ -24,7 +24,13 @@ Dovecot_Conf()
 
 	sed -i '/^protocols =.*/s/^/#/g' /etc/dovecot/dovecot.conf
 	echo "protocols = imap" >> /etc/dovecot/dovecot.conf
+
+	sed -i '/^listen =.*/s/^/#/g' /etc/dovecot/dovecot.conf
+	echo "listen = *" >> /etc/dovecot/dovecot.conf
 	
+	sed -i '/^disable_plaintext_auth =.*/s/^/#/g' /etc/dovecot/conf.d/10-auth.conf
+	echo "disable_plaintext_auth = no" >> /etc/dovecot/conf.d/10-auth.conf
+
 	
 	auth10="
 	passdb {
