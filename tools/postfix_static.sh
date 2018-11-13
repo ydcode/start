@@ -360,8 +360,8 @@ Whether_User()
 	esac
 
     if [ "${addNewUserChoose}" = "y" ]; then
-		echo "add New User: Y"
-		Add_New_User
+	echo "add New User: Y"
+	Add_New_User
     fi
 
 
@@ -372,6 +372,8 @@ Whether_User()
 Whether_Domain
 Whether_User
 
-systemctl restart postfix && systemctl enable postfix
+systemctl start postfix && systemctl enable postfix
+systemctl start dovecot && systemctl enable dovecot
+
 netstat -anlpt
 
