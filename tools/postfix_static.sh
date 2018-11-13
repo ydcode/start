@@ -296,5 +296,10 @@ Input_Domain
 systemctl start postfix && systemctl enable postfix
 netstat -anlpt
 
-echo "-----------------Add New User: -----------------------------"
-echo "echo bounce@$domain:{plain}password >> /etc/dovecot/users"
+//todo Add Mulit Domain
+echo "-----------------Add New User: ----------Start-------------------"
+echo "echo username@$domain:{plain}password >> /etc/dovecot/users"
+echo "echo username@$domain $domain/username/ >> /etc/postfix/virtual_mailbox_map"
+echo "systemctl restart postfix && systemctl restart dovecot"
+echo "-----------------Add New User: ----------End-------------------"
+
