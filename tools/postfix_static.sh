@@ -1,21 +1,65 @@
 #!/bin/bash
 
 
-Input_Repo_Name()
+Input_Domain()
 {
-    username="ydcode"
-    repoName="google.com"
-    read -p "Enter your repo name: " repoName
-    repoName=`echo ${repoName}|tr -d ' /'`
-    shortRepoName=`echo ${repoName}|tr -d ' '`
-    shortRepoName=`echo ${shortRepoName}|tr -d '.'`
+    username="bounce"
+    domain="google.com"
+    subDomain="mail"
 
-    Check_Repo_Name_Right
+    read -p "Enter Domain Name: " domain
+    domain=`echo ${domain}|tr -d ' /'`
+    
+    read -p "Enter Sub Domain Name: " subDomain
+    subDomain=`echo ${subDomain}|tr -d ' /'`
 }
 
 
+Init_Server()
+{
+	setenforce 0
+	getenforce
+	sed -i 's/enforcing/disabled/g' /etc/selinux/config
+	systemctl stop firewalld.service
+	systemctl disable firewalld.service
+	firewall-cmd --state
+	
+	yum remove sendmail
+	yum -y install epel-release postfix dovecot
+}
+
+Postfix_Conf(){
+	postconf -e myhostname=$subDomain.$domain
+	postconf -e mydomain=$domain
+	postconf -e myorigin='$mydomain'
+	postconf -e inet_protocols=ipv4
+	postconf -e inet_interfaces=all
+	postconf -e mydestination=localhost
+	
+	touch /etc/postfix/virtual_mailbox_map
+	echo $username@$domain $domain/$username/ >> /etc/postfix/virtual_mailbox_map
+	postmap /etc/postfix/virtual_mailbox_map
+	
+	mkdir -p /var/mail/vhosts
+
+	postconf virtual_mailbox_domains=$domain
+	postconf virtual_mailbox_base=/var/mail/vhosts
+	postconf virtual_mailbox_maps=hash:/etc/postfix/virtual_mailbox_map
+	postconf virtual_minimum_uid=100
+	postconf virtual_uid_maps=static:5000
+	postconf virtual_gid_maps=static:5000
 
 
+	groupadd -g 5000 vmail
+	useradd -g vmail -u 5000 vmail -d /var/mail
+
+	mkdir -p  /var/mail/vhosts/$domain/$username
+
+	chown -R vmail:vmail /var/mail
+	chown -R vmail:vmail /var/mail/*
+
+
+}
 
 # SSH_DIR=$HOME
 SSH_DIR="/root"
