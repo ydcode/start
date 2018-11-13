@@ -189,7 +189,7 @@ Postfix_Conf(){
 	postconf -e mydestination=localhost
 	
 	touch /etc/postfix/virtual_mailbox_map
-	echo $username@$domain $domain/$username/ >> /etc/postfix/virtual_mailbox_map
+	#echo $username@$domain $domain/$username/ >> /etc/postfix/virtual_mailbox_map
 	postmap /etc/postfix/virtual_mailbox_map
 	
 	mkdir -p /var/mail/vhosts
