@@ -312,6 +312,7 @@ Check_User_Right()
 	echo $username@$domainPostfix:{plain}$password >> /etc/dovecot/users
 	echo $username@$domainPostfix $domainPostfix/$username/ >> /etc/postfix/virtual_mailbox_map
 	chown -R vmail:vmail /var/mail/*
+	postmap /etc/postfix/virtual_mailbox_map
     else
 	Add_New_User
     fi
