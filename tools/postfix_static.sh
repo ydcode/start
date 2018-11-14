@@ -220,6 +220,9 @@ Postfix_Conf(){
 	#echo $username@$domain $domain/$username/ >> /etc/postfix/virtual_mailbox_map
 	postmap /etc/postfix/virtual_mailbox_map
 	
+	#forward email
+	postconf virtual_alias_maps=hash:/etc/postfix/virtual
+	
 	mkdir -p /var/mail/vhosts
 
 	postconf virtual_mailbox_domains=$domain
