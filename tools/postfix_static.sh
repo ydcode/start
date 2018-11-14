@@ -405,7 +405,7 @@ Whether_User()
 	echo "Add New User?"
 	read -p "[Y/n]: Y " addNewUserChoose
 
-	case "${addNewDomainChoose}" in
+	case "${addNewUserChoose}" in
 	[yY][eE][sS]|[yY])
 		echo "Add New User:: ${addNewUserChoose} "
 		addNewUserChoose="y"
