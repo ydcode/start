@@ -80,7 +80,6 @@ EOF
 
 	
 cat >"/etc/dovecot/conf.d/10-master.conf"<<EOF
-
 #default_process_limit = 100
 #default_client_limit = 1000
 
@@ -115,7 +114,7 @@ service imap-login {
   #process_min_avail = 0
 
   # If you set service_count=0, you probably need to grow this.
-  #vsz_limit = $default_vsz_limit
+  #vsz_limit = 
 }
 
 service pop3-login {
@@ -130,7 +129,9 @@ service pop3-login {
 
 service lmtp {
   unix_listener lmtp {
-    #mode = 0666
+    mode = 0666
+    user = postfix
+    group = postfix
   }
 
   # Create inet listener only if you can't use the above UNIX socket
@@ -144,7 +145,7 @@ service lmtp {
 service imap {
   # Most of the memory goes to mmap()ing files. You may need to increase this
   # limit if you have huge mailboxes.
-  #vsz_limit = $default_vsz_limit
+  #vsz_limit = 
 
   # Max. number of IMAP processes (connections)
   #process_limit = 1024
@@ -178,16 +179,18 @@ service auth {
   # Postfix smtp-auth
   unix_listener /var/spool/postfix/private/auth {
     mode = 0666
+    user = postfix
+    group = postfix
   }
 
   # Auth process is run as this user.
-  #user = $default_internal_user
+  #user = 
 }
 
 service auth-worker {
   # Auth worker process is run as root by default, so that it can access
   # /etc/shadow. If this isn't necessary, the user should be changed to
-  # $default_internal_user.
+  # .
   #user = root
 }
 
@@ -200,10 +203,6 @@ service dict {
     #group = 
   }
 }
-
-EOF
-
-
 
 
 }
