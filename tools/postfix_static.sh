@@ -13,6 +13,24 @@
 # virtual_alias_maps = hash:/etc/postfix/virtual
 #
 
+#  /etc/postfix/main.cf:
+#      virtual_mailbox_domains = example.com ...more domains...
+#      virtual_mailbox_base = /var/mail/vhosts
+#      virtual_mailbox_maps = hash:/etc/postfix/vmailbox
+#      virtual_minimum_uid = 100
+#      virtual_uid_maps = static:5000
+#      virtual_gid_maps = static:5000
+#      virtual_alias_maps = hash:/etc/postfix/virtual
+#  
+# /etc/postfix/vmailbox:
+#     info@example.com    example.com/info
+#     sales@example.com   example.com/sales/
+#     # Comment out the entry below to implement a catch-all.
+#     # @example.com      example.com/catchall
+# 
+# /etc/postfix/virtual:
+#     postmaster@example.com postmaster
+
 
 Dovecot_Conf()
 {
