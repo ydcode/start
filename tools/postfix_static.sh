@@ -430,7 +430,7 @@ Whether_User()
 
 
 Whether_Domain
-Whether_User
+# Whether_User
 
 systemctl start postfix && systemctl enable postfix
 systemctl start dovecot && systemctl enable dovecot
