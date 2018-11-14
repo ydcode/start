@@ -10,7 +10,7 @@
 #
 # virtual_mailbox_maps = hash:/etc/postfix/virtual_mailbox_map
 # args = username_format=%u /etc/dovecot/users
-
+# virtual_alias_maps = hash:/etc/postfix/virtual
 #
 
 
