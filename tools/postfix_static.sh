@@ -53,7 +53,7 @@ Dovecot_Conf()
 	echo "auth_mechanisms = plain login" >> /etc/dovecot/conf.d/10-auth.conf
 
 	sed -i '/^protocols =.*/s/^/#/g' /etc/dovecot/dovecot.conf
-	echo "protocols = imap" >> /etc/dovecot/dovecot.conf
+	echo "protocols = imap pop3 lmtp" >> /etc/dovecot/dovecot.conf
 
 	sed -i '/^listen =.*/s/^/#/g' /etc/dovecot/dovecot.conf
 	echo "listen = *" >> /etc/dovecot/dovecot.conf
