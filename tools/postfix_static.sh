@@ -203,7 +203,7 @@ service dict {
     #group = 
   }
 }
-
+EOF
 
 }
 
