@@ -1,0 +1,64 @@
+version: "3.4"
+services:
+  web-rouge:
+    image: ${registry:-docker.io}/ydcode/pack:web-rouge-1.0.0
+    container_name: web-rouge
+    environment:
+      - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
+      - DASHBOARD_DOMAIN_ALIAS=${DASHBOARD_DOMAIN_ALIAS}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - CDN_DOMAIN_CN=${CDN_DOMAIN_CN}
+      - SSL_EMAIL=${SSL_EMAIL}
+      - USER_AGENT_HOST=${USER_AGENT_HOST}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - AWS_ACCESS_KEY_MASTER=${AWS_ACCESS_KEY_MASTER}
+      - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
+      - SERVER_NAME=${SERVER_NAME}
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+      - temp_data:/home/temp
+      - nginx_wwwroot_data:/home/wwwroot
+      - nginx_ssl_data:/etc/letsencrypt
+      - nginx_conf_data:/etc/nginx/conf.d
+    restart: always
+    depends_on:
+      - nginx
+    ports:
+      - 1081:1080
+    networks:
+      - web_mail_network
+    logging:
+      options:
+        max-size: "200m"
+
+
+networks:
+  web_mail_network:
+
+volumes:
+  mysql_data:
+    name: mysql_data
+  rabbitmq_data:
+    name: rabbitmq_data
+  pika_data:
+    name: pika_data
+
+  nginx_conf_data:
+      name: nginx_conf_data
+  nginx_wwwroot_data:
+    name: nginx_wwwroot_data
+  nginx_ssl_data:
+    name: nginx_ssl_data
+  nginx_temp_logs:
+    name: nginx_temp_logs
+  temp_data:
+    name: temp_data
