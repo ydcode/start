@@ -4,16 +4,13 @@ services:
     image: ${registry:-docker.io}/ydcode/pack:web-rouge-1.0.0
     container_name: web-rouge
     environment:
-      - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
-      - DASHBOARD_DOMAIN_ALIAS=${DASHBOARD_DOMAIN_ALIAS}
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
       - DB_NAME=${DB_NAME}
+      - DB_PASSWORD=${DB_PASSWORD}
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PORT=${REDIS_PORT}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - CDN_DOMAIN_CN=${CDN_DOMAIN_CN}
       - SSL_EMAIL=${SSL_EMAIL}
       - USER_AGENT_HOST=${USER_AGENT_HOST}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
@@ -30,8 +27,6 @@ services:
       - nginx_ssl_data:/etc/letsencrypt
       - nginx_conf_data:/etc/nginx/conf.d
     restart: always
-    depends_on:
-      - nginx
     ports:
       - 1081:1080
     networks:
