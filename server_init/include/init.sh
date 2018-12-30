@@ -1,9 +1,11 @@
 #!/bin/bash
-JDK_URL="http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x64.tar.gz"
+JDK_URL="https://download.oracle.com/otn-pub/java/jdk/11.0.1+13/90cf5d8f270a4347a95050320eef3fb7/jdk-11.0.1_linux-x64_bin.tar.gz"
+
+
 MAVEN_URL="http://www-us.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz"
 
-JDK_FILE="jdk-8u191-linux-x64.tar.gz"
-JDK_NAME="jdk1.8.0_191"
+JDK_FILE="jdk-11.0.1_linux-x64_bin.tar.gz"
+JDK_NAME="jdk-11.0.1"
 
 MAVEN_NAME="apache-maven-3.6.0"
 
