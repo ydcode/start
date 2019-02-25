@@ -129,7 +129,7 @@ services:
         max-size: "200m"
 
   web-amazon:
-    image: ${registry:-docker.io}/ydcode/pack:web-amzon-1.0.0
+    image: ${registry:-docker.io}/ydcode/pack:web-amazon-1.0.0
     container_name: web-amazon
     environment:
       - DB_HOST=${DB_HOST}
