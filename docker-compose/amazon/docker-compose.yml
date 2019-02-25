@@ -128,48 +128,6 @@ services:
       options:
         max-size: "200m"
 
-
-  application-facebook-profile-spider-master:
-    image: ${registry:-docker.io}/ydcode/pack:application-facebook-profile-spider-master-1.0.0
-    container_name: application-facebook-profile-spider-master
-    environment:
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}   
-      - SSL_EMAIL=${SSL_EMAIL}
-      - USER_AGENT_HOST=${USER_AGENT_HOST}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-      - AWS_ACCESS_KEY_MASTER=${AWS_ACCESS_KEY_MASTER}
-      - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
-      - SERVER_NAME=${SERVER_NAME}
-
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/bin/docker:/usr/bin/docker
-      - wwwroot_data:/home/wwwroot
-      - nginx_ssl_data:/etc/letsencrypt
-      - nginx_conf_data:/etc/nginx/conf.d
-      - library_data:/home/library
-
-    restart: always
-    depends_on:
-      - phpmyadmin
-      - rabbitmq
-      - pika
-    networks:
-      - web_facebook_network
-    logging:
-      options:
-        max-size: "200m"
-    ulimits:
-      core: 0
-
-
   web-amazon:
     image: ${registry:-docker.io}/ydcode/pack:web-amzon-1.0.0
     container_name: web-amazon
@@ -223,7 +181,6 @@ volumes:
     name: rabbitmq_data
   pika_data:
     name: pika_data
-
   nginx_conf_data:
       name: nginx_conf_data
   wwwroot_data:
