@@ -175,6 +175,8 @@ networks:
 volumes:
   mysql_data:
     name: mysql_data
+  pika_data:
+    name: pika_data  
   nginx_conf_data:
       name: nginx_conf_data
   wwwroot_data:
