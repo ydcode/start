@@ -105,6 +105,7 @@ services:
       - 1688:1688
     volumes:
       - wwwroot_data:/home/wwwroot
+      - wwwlogs_data:/home/wwwlogs
       - ssl_data:/etc/letsencrypt
       - nginx_conf_data:/etc/nginx/conf.d
       - nginx_logs_data:/home/wwwlogs
@@ -181,6 +182,8 @@ volumes:
       name: nginx_conf_data
   wwwroot_data:
     name: wwwroot_data
+  wwwlogs_data:
+    name: wwwlogs_data
   ssl_data:
     name: ssl_data
   nginx_logs_data:
