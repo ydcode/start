@@ -1,0 +1,64 @@
+version: "3.4"
+services:
+  application-facebook-profile-spider-slave:
+    image: ${registry:-docker.io}/ydcode/pack:application-facebook-profile-spider-slave-1.0.0
+    container_name: application-facebook-profile-spider-slave
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}   
+      - SSL_EMAIL=${SSL_EMAIL}
+      - USER_AGENT_HOST=${USER_AGENT_HOST}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - AWS_ACCESS_KEY_MASTER=${AWS_ACCESS_KEY_MASTER}
+      - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
+      - SERVER_NAME=${SERVER_NAME}
+      - WEB_DRIVER_POOL_MAX_TOTAL=${WEB_DRIVER_POOL_MAX_TOTAL}
+      - WEB_DRIVER_POOL_MAX_TOTAL_PER_KEY=${WEB_DRIVER_POOL_MAX_TOTAL_PER_KEY}
+      - MIN_AVAILABLE_MEMORY=${MIN_AVAILABLE_MEMORY}
+
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+      - /dev/shm:/dev/shm
+      - wwwroot_data:/home/wwwroot
+      - nginx_ssl_data:/etc/letsencrypt
+      - nginx_conf_data:/etc/nginx/conf.d
+      - library_data:/home/library
+
+    restart: always
+    networks:
+      - web_facebook_network
+    logging:
+      options:
+        max-size: "200m"
+    ulimits:
+      core: 0
+
+networks:
+  web_facebook_network:
+
+volumes:
+  mysql_data:
+    name: mysql_data
+  rabbitmq_data:
+    name: rabbitmq_data
+  pika_data:
+    name: pika_data
+
+  nginx_conf_data:
+      name: nginx_conf_data
+  wwwroot_data:
+    name: wwwroot_data
+  nginx_ssl_data:
+    name: nginx_ssl_data
+  nginx_logs_data:
+    name: nginx_logs_data
+  library_data:
+    name: library_data
