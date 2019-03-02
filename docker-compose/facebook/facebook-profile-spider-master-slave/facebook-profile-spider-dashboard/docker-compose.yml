@@ -38,7 +38,7 @@ services:
     ports:
       - 1080:1080
     networks:
-      - facebook-profile-spider-base_web_facebook_network
+      - web_facebook_network
     logging:
       options:
         max-size: "200m"
