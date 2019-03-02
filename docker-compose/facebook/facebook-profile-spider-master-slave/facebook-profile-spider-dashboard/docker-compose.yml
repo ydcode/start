@@ -38,13 +38,15 @@ services:
     ports:
       - 1080:1080
     networks:
-      - web_facebook_network
+      - facebook-profile-spider-base_web_facebook_network
     logging:
       options:
         max-size: "200m"
 
 networks:
-  web_facebook_network:
+  default:
+    external:
+      name: facebook-profile-spider-base_web_facebook_network
 
 volumes:
   mysql_data:
