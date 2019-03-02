@@ -43,8 +43,9 @@ services:
       options:
         max-size: "200m"
 
+
 networks:
-  default:
+  web_facebook_network:
     external:
       name: facebook-profile-spider-base_web_facebook_network
 
