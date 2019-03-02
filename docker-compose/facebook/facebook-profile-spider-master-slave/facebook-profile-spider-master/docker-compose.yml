@@ -23,7 +23,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
       - wwwroot_data:/home/wwwroot
-      - nginx_ssl_data:/etc/letsencrypt
+      - ssl_data:/etc/letsencrypt
       - nginx_conf_data:/etc/nginx/conf.d
       - library_data:/home/library
 
@@ -51,8 +51,8 @@ volumes:
     name: nginx_conf_data
   wwwroot_data:
     name: wwwroot_data
-  nginx_ssl_data:
-    name: nginx_ssl_data
+  ssl_data:
+    name: ssl_data
   nginx_logs_data:
     name: nginx_logs_data
   library_data:

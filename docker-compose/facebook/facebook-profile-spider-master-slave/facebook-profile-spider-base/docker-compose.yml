@@ -41,8 +41,6 @@ services:
       options:
         max-size: "200m"
 
-
-
   mysql:
     image: mysql:5.7.20
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --innodb-buffer-pool-size=1024M --max_connections=2048
@@ -107,7 +105,7 @@ services:
       - 1688:1688
     volumes:
       - wwwroot_data:/home/wwwroot
-      - nginx_ssl_data:/etc/letsencrypt
+      - ssl_data:/etc/letsencrypt
       - nginx_conf_data:/etc/nginx/conf.d
       - nginx_logs_data:/home/wwwlogs
     networks:
@@ -143,8 +141,8 @@ volumes:
     name: nginx_conf_data
   wwwroot_data:
     name: wwwroot_data
-  nginx_ssl_data:
-    name: nginx_ssl_data
+  ssl_data:
+    name: ssl_data
   nginx_logs_data:
     name: nginx_logs_data
   library_data:
