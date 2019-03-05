@@ -1,8 +1,8 @@
 version: "3.4"
 services:
-  web-amazon:
-    image: ${registry:-docker.io}/ydcode/pack:web-amazon-1.0.0
-    container_name: web-amazon
+  web-amazon-dashboard:
+    image: ${registry:-docker.io}/ydcode/pack:web-amazon-dashboard-1.0.0
+    container_name: web-amazon-dashboard
     environment:
       - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
       - DASHBOARD_USERNAME=${DASHBOARD_USERNAME}
