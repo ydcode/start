@@ -14,8 +14,6 @@ services:
       - 25672:25672
       - 15671:15671
       - 15672:15672
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
     networks:
       - web_amazon_network
     logging:
