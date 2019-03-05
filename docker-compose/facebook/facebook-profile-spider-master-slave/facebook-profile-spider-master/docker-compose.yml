@@ -44,18 +44,15 @@ networks:
 volumes:
   mysql_data:
     name: mysql_data
-  rabbitmq_data:
-    name: rabbitmq_data
   pika_data:
     name: pika_data
-
   nginx_conf_data:
     name: nginx_conf_data
   wwwroot_data:
     name: wwwroot_data
+  wwwlogs_data:
+    name: wwwlogs_data
   ssl_data:
     name: ssl_data
-  nginx_logs_data:
-    name: nginx_logs_data
   library_data:
     name: library_data

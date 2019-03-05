@@ -57,8 +57,8 @@ services:
       - 443:443
     volumes:
       - wwwroot_data:/home/wwwroot
+      - wwwlogs_data:/home/wwwlogs
       - ssl_data:/etc/letsencrypt
-      - nginx_logs_data:/home/wwwlogs
       - nginx_conf_data:/etc/nginx/conf.d
     networks:
       - web_mail_network
@@ -106,15 +106,15 @@ networks:
 volumes:
   mysql_data:
     name: mysql_data
+  pika_data:
+    name: pika_data
   nginx_conf_data:
     name: nginx_conf_data
   wwwroot_data:
     name: wwwroot_data
+  wwwlogs_data:
+    name: wwwlogs_data
   ssl_data:
     name: ssl_data
-  nginx_logs_data:
-    name: nginx_logs_data
-  temp_data:
-    name: temp_data
   library_data:
     name: library_data
