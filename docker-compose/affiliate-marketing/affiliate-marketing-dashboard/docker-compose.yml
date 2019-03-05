@@ -49,7 +49,7 @@ services:
 networks:
   web_affiliate_marketing_network:
     external:
-      name: amazon-affiliate-base_web_affiliate_marketing_network
+      name: affiliate-marketing-base_web_affiliate_marketing_network
 
 volumes:
   mysql_data:
