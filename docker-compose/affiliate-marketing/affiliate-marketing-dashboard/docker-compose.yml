@@ -80,7 +80,7 @@ services:
       - rabbitmq
       - pika
     ports:
-      - 1080:1080
+      - 2080:2080
     networks:
       - web_affiliate_marketing_network
     logging:
