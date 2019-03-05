@@ -45,8 +45,11 @@ services:
       options:
         max-size: "200m"
 
+
 networks:
   web_amazon_network:
+    external:
+      name: amazon-affiliate-base_web_amazon_network
 
 volumes:
   mysql_data:
