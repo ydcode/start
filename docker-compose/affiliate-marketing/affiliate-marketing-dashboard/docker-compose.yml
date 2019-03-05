@@ -32,7 +32,7 @@ services:
       - nginx_conf_data:/etc/nginx/conf.d
       - library_data:/home/library
     restart: always
-    depends_on:
+    external_links:
       - nginx
       - useragent
       - rabbitmq
