@@ -2,7 +2,7 @@ version: "3.4"
 services:
   web-boot-dashboard-alpha:
     image: ${registry:-docker.io}/ydcode/pack:web-boot-dashboard-alpha-1.0.0
-    container_name: web-boot-dashboard-alpha
+    container_name: web-boot-dashboard
     environment:
       - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
       - DASHBOARD_USERNAME=${DASHBOARD_USERNAME}
