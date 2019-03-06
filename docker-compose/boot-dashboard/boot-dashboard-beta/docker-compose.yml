@@ -45,9 +45,9 @@ services:
       options:
         max-size: "200m"
 
-  application-email-submit:
-    image: ${registry:-docker.io}/ydcode/pack:application-email-submit-1.0.0
-    container_name: application-email-submit
+  application-mail-submit:
+    image: ${registry:-docker.io}/ydcode/pack:application-mail-submit-1.0.0
+    container_name: application-mail-submit
     environment:
 #      - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
 #      - DASHBOARD_USERNAME=${DASHBOARD_USERNAME}
