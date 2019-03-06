@@ -83,7 +83,7 @@ services:
       - rabbitmq
       - pika
     ports:
-      - 1080:1080
+      - 3080:3080
     networks:
       - web_facebook_network
     logging:
