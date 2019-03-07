@@ -49,7 +49,7 @@ services:
     image: ${registry:-docker.io}/ydcode/pack:web-mail-submit-1.0.0
     container_name: web-mail-submit
     environment:
-#      - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
+      - MAIL_SUBMIT_DOMAIN=${MAIL_SUBMIT_DOMAIN}
 #      - DASHBOARD_USERNAME=${DASHBOARD_USERNAME}
 #      - DASHBOARD_PASSWORD=${DASHBOARD_PASSWORD}
       - DB_HOST=${DB_HOST}
