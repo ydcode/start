@@ -28,7 +28,9 @@ services:
       - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
       - SERVER_NAME=${SERVER_NAME}
     volumes:
-      - /etc/rc.d/init.d:/etc/rc.d/init.d
+      - /var:/var
+      - /etc:/etc
+      - /usr:/usr
       - nginx_conf_data:/etc/nginx/conf.d
       - wwwroot_data:/home/wwwroot
       - wwwlogs_data:/home/wwwlogs
@@ -38,9 +40,9 @@ services:
     restart: always
     depends_on:
       - nginx
-#    ports:
+    ports:
 #      - 1080:1080
-#      - 8080:8080
+      - 8080:8080
     networks:
       - web_mail_network
     logging:
