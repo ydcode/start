@@ -10,7 +10,6 @@ services:
       - nginx_conf_data:/etc/nginx/conf.d
       - wwwroot_data:/home/wwwroot
       - wwwlogs_data:/home/wwwlogs
-      - pmta_data:/etc/pmta
     networks:
       - web_mail_network
     logging:
@@ -33,6 +32,7 @@ services:
       - nginx_conf_data:/etc/nginx/conf.d
       - wwwroot_data:/home/wwwroot
       - wwwlogs_data:/home/wwwlogs
+      - pmta_data:/etc/pmta
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
     restart: always
