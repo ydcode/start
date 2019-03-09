@@ -18,6 +18,7 @@ services:
     restart: always
     ports:
       - 1080:1080
+      - 8080:8080
     networks:
       - web_mail_network
     logging:
