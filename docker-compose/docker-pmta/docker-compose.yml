@@ -5,8 +5,7 @@ services:
     container_name: nginx
     restart: always
     ports:
-      - 80:80
-      - 443:443
+      - 1025:1025
     volumes:
       - nginx_conf_data:/etc/nginx/conf.d
       - wwwroot_data:/home/wwwroot
