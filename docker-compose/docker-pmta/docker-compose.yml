@@ -8,9 +8,9 @@ services:
       - 80:80
       - 443:443
     volumes:
+      - nginx_conf_data:/etc/nginx/conf.d
       - wwwroot_data:/home/wwwroot
       - wwwlogs_data:/home/wwwlogs
-      - nginx_conf_data:/etc/nginx/conf.d
     networks:
       - web_mail_network
     logging:
@@ -30,6 +30,7 @@ services:
       - SERVER_NAME=${SERVER_NAME}
 
     volumes:
+      - nginx_conf_data:/etc/nginx/conf.d
       - wwwroot_data:/home/wwwroot
       - wwwlogs_data:/home/wwwlogs
       - /var/run/docker.sock:/var/run/docker.sock
