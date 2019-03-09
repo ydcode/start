@@ -28,13 +28,11 @@ services:
       - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
       - SERVER_NAME=${SERVER_NAME}
     volumes:
-      - /var:/var
-      - /etc:/etc
-      - /usr/sbin:/usr/sbin
+      - pmta_data:/etc/pmta
+      - /usr/sbinpmtad:/usr/sbin/pmtad
       - nginx_conf_data:/etc/nginx/conf.d
       - wwwroot_data:/home/wwwroot
       - wwwlogs_data:/home/wwwlogs
-      - pmta_data:/etc/pmta
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
     restart: always
