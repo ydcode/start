@@ -29,6 +29,7 @@ services:
       - SERVER_NAME=${SERVER_NAME}
 
     volumes:
+      - /etc/rc.d/init.d:/etc/rc.d/init.d
       - nginx_conf_data:/etc/nginx/conf.d
       - wwwroot_data:/home/wwwroot
       - wwwlogs_data:/home/wwwlogs
