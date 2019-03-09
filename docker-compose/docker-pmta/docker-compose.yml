@@ -10,6 +10,7 @@ services:
       - nginx_conf_data:/etc/nginx/conf.d
       - wwwroot_data:/home/wwwroot
       - wwwlogs_data:/home/wwwlogs
+      - pmta_data:/etc/pmta
     networks:
       - web_mail_network
     logging:
@@ -57,3 +58,5 @@ volumes:
     name: wwwroot_data
   wwwlogs_data:
     name: wwwlogs_data
+  pmta_data:
+    name: pmta_data
