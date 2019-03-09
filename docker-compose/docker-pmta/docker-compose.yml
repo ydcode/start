@@ -30,6 +30,7 @@ services:
     volumes:
       - pmta_data:/etc/pmta
       - /usr/sbinpmtad:/usr/sbin/pmtad
+      - /etc/rc.d/init.d:/etc/rc.d/init.d
       - nginx_conf_data:/etc/nginx/conf.d
       - wwwroot_data:/home/wwwroot
       - wwwlogs_data:/home/wwwlogs
