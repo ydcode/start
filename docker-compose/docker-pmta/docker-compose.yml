@@ -27,7 +27,6 @@ services:
       - AWS_ACCESS_KEY_MASTER=${AWS_ACCESS_KEY_MASTER}
       - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
       - SERVER_NAME=${SERVER_NAME}
-
     volumes:
       - /etc/rc.d/init.d:/etc/rc.d/init.d
       - nginx_conf_data:/etc/nginx/conf.d
