@@ -13,6 +13,8 @@ services:
       - SERVER_NAME=${SERVER_NAME}
 
     volumes:
+      - wwwroot_data:/home/wwwroot
+      - wwwlogs_data:/home/wwwlogs
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
     restart: always
