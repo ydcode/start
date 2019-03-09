@@ -28,7 +28,10 @@ services:
       - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
       - SERVER_NAME=${SERVER_NAME}
     volumes:
-      - pmta_data:/
+      - pmta_etc_data:/etc
+      - pmta_opt_data:/opt
+      - pmta_usr_data:/usr
+      - pmta_var_data:/var
       - nginx_conf_data:/etc/nginx/conf.d
       - wwwroot_data:/home/wwwroot
       - wwwlogs_data:/home/wwwlogs
@@ -58,9 +61,11 @@ volumes:
   wwwlogs_data:
     name: wwwlogs_data
 
-  pmta_data:
-    name: pmta_data
-  pmta_sbin_data:
-    name: pmta_sbin_data
-  pmta_init_data:
-    name: pmta_init_data
+  pmta_etc_data:
+    name: pmta_etc_data
+  pmta_opt_data:
+    name: pmta_opt_data
+  pmta_usr_data:
+    name: pmta_usr_data
+  pmta_var_data:
+    name: pmta_var_data
