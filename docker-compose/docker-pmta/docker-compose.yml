@@ -5,7 +5,7 @@ services:
     container_name: nginx
     restart: always
     ports:
-      - 1025:1025
+      - "1025:1025"
     volumes:
       - nginx_conf_data:/etc/nginx/conf.d
       - wwwroot_data:/home/wwwroot
@@ -41,8 +41,7 @@ services:
     depends_on:
       - nginx
     ports:
-#      - 1080:1080
-      - 8080:8080
+      - "8080:8080"
     networks:
       - web_mail_network
     logging:
