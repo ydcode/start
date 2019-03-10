@@ -49,9 +49,9 @@ services:
         max-size: "200m"
 
 
-  docker-postfix:
-    image: ${registry:-docker.io}/ydcode/pack:docker-postfix-1.0.0
-    container_name: docker-postfix
+  docker-james:
+    image: ${registry:-docker.io}/ydcode/pack:docker-james-1.0.0
+    container_name: docker-james
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
