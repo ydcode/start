@@ -65,8 +65,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
     restart: always
-    depends_on:
-      - nginx
     ports:
       - 25:25
     networks:
