@@ -69,7 +69,6 @@ services:
       - nginx
     ports:
       - 25:25
-      - 110:110
     networks:
       - web_mail_network
     logging:
