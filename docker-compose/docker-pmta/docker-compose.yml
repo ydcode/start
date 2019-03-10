@@ -66,7 +66,7 @@ services:
       - /usr/bin/docker:/usr/bin/docker
     restart: always
     ports:
-      - 25:25
+      - "25:25"
     networks:
       - web_mail_network
     logging:
