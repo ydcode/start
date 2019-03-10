@@ -49,7 +49,6 @@ services:
       options:
         max-size: "200m"
 
-
   docker-postfix:
     image: ${registry:-docker.io}/ydcode/pack:docker-postfix-1.0.0
     container_name: docker-postfix
