@@ -38,7 +38,7 @@ services:
     depends_on:
       - docker-pmta
     ports:
-      - "8080:8080"
+      - "1080:1080"
     volumes:
       - nginx_conf_data:/etc/nginx/conf.d
       - wwwroot_data:/home/wwwroot
