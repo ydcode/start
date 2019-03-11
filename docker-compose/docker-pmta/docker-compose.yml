@@ -54,6 +54,7 @@ services:
     container_name: docker-linagora-james
     environment:
       - MAIL_DOMAIN=${MAIL_DOMAIN}
+      - MAIL_DOMAIN_PASSWORD=${MAIL_DOMAIN_PASSWORD}
       - SERVER_NAME=${SERVER_NAME}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
