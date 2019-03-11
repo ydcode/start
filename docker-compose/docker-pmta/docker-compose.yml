@@ -1,21 +1,5 @@
 version: "3.4"
 services:
-  nginx:
-    image: ${registry:-docker.io}/ydcode/pack:docker-nginx-1.0.0
-    container_name: nginx
-    restart: always
-    ports:
-      - "1025:1025"
-    volumes:
-      - nginx_conf_data:/etc/nginx/conf.d
-      - wwwroot_data:/home/wwwroot
-      - wwwlogs_data:/home/wwwlogs
-    networks:
-      - web_mail_network
-    logging:
-      options:
-        max-size: "200m"
-
   docker-pmta:
     image: ${registry:-docker.io}/ydcode/pack:docker-pmta-1.0.0
     container_name: docker-pmta
@@ -40,10 +24,25 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
     restart: always
+    ports:
+      - "2525:2525"
+    networks:
+      - web_mail_network
+    logging:
+      options:
+        max-size: "200m"
+  nginx:
+    image: ${registry:-docker.io}/ydcode/pack:docker-nginx-1.0.0
+    container_name: nginx
+    restart: always
     depends_on:
-      - nginx
+      - docker-pmta
     ports:
       - "8080:8080"
+    volumes:
+      - nginx_conf_data:/etc/nginx/conf.d
+      - wwwroot_data:/home/wwwroot
+      - wwwlogs_data:/home/wwwlogs
     networks:
       - web_mail_network
     logging:
