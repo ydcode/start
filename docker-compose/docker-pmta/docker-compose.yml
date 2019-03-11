@@ -49,9 +49,9 @@ services:
         max-size: "200m"
 
 
-  docker-james:
-    image: ${registry:-docker.io}/ydcode/pack:docker-james-1.0.0
-    container_name: docker-james
+  docker-linagora-james:
+    image: ${registry:-docker.io}/ydcode/pack:docker-linagora-james-1.0.0
+    container_name: docker-linagora-james
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
