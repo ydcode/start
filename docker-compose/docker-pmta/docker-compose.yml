@@ -66,6 +66,7 @@ services:
     restart: always
     ports:
       - "25:25"
+      - "143:143"
     networks:
       - web_mail_network
     logging:
