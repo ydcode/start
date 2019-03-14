@@ -91,7 +91,7 @@ services:
 networks:
   web_affiliate_marketing_network:
     external:
-      name: affiliate-marketing-base_web_affiliate_marketing_network
+      name: dashboard-base_web_affiliate_marketing_network
 
 volumes:
   mysql_data:

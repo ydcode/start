@@ -15,7 +15,7 @@ services:
       - 15671:15671
       - 15672:15672
     networks:
-      - web_facebook_network
+      - base_network
     logging:
       options:
         max-size: "200m"
@@ -34,7 +34,7 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
     networks:
-      - web_facebook_network
+      - base_network
     logging:
       options:
         max-size: "200m"
@@ -56,7 +56,7 @@ services:
       - MYSQL_USER=${DB_NAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
     networks:
-      - web_facebook_network
+      - base_network
     logging:
       options:
         max-size: "200m"
@@ -73,7 +73,7 @@ services:
     depends_on:
       - mysql
     networks:
-      - web_facebook_network
+      - base_network
     logging:
       options:
         max-size: "200m"
@@ -87,7 +87,7 @@ services:
     ports:
       - 9104:9104
     networks:
-      - web_facebook_network
+      - base_network
     command:
       - "--collect.info_schema.innodb_cmpmem"
     depends_on:
@@ -106,25 +106,13 @@ services:
       - ssl_data:/etc/letsencrypt
       - nginx_conf_data:/etc/nginx/conf.d
     networks:
-      - web_facebook_network
-    logging:
-      options:
-        max-size: "200m"
-
-  useragent:
-    image: ${registry:-docker.io}/ydcode/pack:image-user-agent-1.0.0
-    container_name: useragent
-    ports:
-      - 8099:8099
-    restart: always
-    networks:
-      - web_facebook_network
+      - base_network
     logging:
       options:
         max-size: "200m"
 
 networks:
-  web_facebook_network:
+  base_network:
 
 volumes:
   mysql_data:
