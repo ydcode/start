@@ -1,0 +1,61 @@
+version: "3.4"
+services:
+  web-top-video:
+    image: ${registry:-docker.io}/ydcode/pack:web-top-video-1.0.0
+    container_name: web-top-video
+    env_file:
+      - /root/env/web-top-video.env
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - SSL_EMAIL=${SSL_EMAIL}
+      - GMAIL_EMAIL=${GMAIL_EMAIL}
+      - GMAIL_PASSWORD=${GMAIL_PASSWORD}
+      - GMAIL_SEND_TO=${GMAIL_SEND_TO}
+      - USER_AGENT_HOST=${USER_AGENT_HOST}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - AWS_ACCESS_KEY_MASTER=${AWS_ACCESS_KEY_MASTER}
+      - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
+      - SERVER_NAME=${SERVER_NAME}
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+      - wwwroot_data:/home/wwwroot
+      - ssl_data:/etc/letsencrypt
+      - nginx_conf_data:/etc/nginx/conf.d
+      - library_data:/home/library
+
+    restart: always
+    networks:
+      - web_network
+    logging:
+      options:
+        max-size: "200m"
+    ulimits:
+      core: 0
+
+networks:
+  web_network:
+
+volumes:
+  mysql_data:
+    name: mysql_data
+  pika_data:
+    name: pika_data
+  nginx_conf_data:
+    name: nginx_conf_data
+  wwwroot_data:
+    name: wwwroot_data
+  wwwlogs_data:
+    name: wwwlogs_data
+  ssl_data:
+    name: ssl_data
+  library_data:
+    name: library_data
