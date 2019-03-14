@@ -40,7 +40,7 @@ services:
     ports:
       - 1080:1080
     networks:
-      - web_facebook_network
+      - web_network
     logging:
       options:
         max-size: "200m"
@@ -85,7 +85,7 @@ services:
     ports:
       - 3080:3080
     networks:
-      - web_facebook_network
+      - web_network
     logging:
       options:
         max-size: "200m"
