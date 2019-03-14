@@ -78,7 +78,6 @@ services:
       options:
         max-size: "200m"
 
-
   mysql_exporter:
     image: prom/mysqld-exporter:latest
     container_name: mysql_exporter
