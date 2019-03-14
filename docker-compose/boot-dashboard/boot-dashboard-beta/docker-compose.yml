@@ -92,9 +92,9 @@ services:
 
 
 networks:
-  web_facebook_network:
+  web_network:
     external:
-      name: facebook-profile-spider-base_web_facebook_network
+      name: boot-base_base_network
 
 volumes:
   mysql_data:

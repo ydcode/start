@@ -37,7 +37,7 @@ services:
 
     restart: always
     networks:
-      - web_facebook_network
+      - web_network
     logging:
       options:
         max-size: "200m"
@@ -45,7 +45,7 @@ services:
       core: 0
 
 networks:
-  web_facebook_network:
+  web_network:
 
 volumes:
   mysql_data:

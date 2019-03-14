@@ -40,7 +40,7 @@ services:
     ports:
       - 1080:1080
     networks:
-      - web_affiliate_marketing_network
+      - web_network
     logging:
       options:
         max-size: "200m"
@@ -82,16 +82,15 @@ services:
     ports:
       - 2080:2080
     networks:
-      - web_affiliate_marketing_network
+      - web_network
     logging:
       options:
         max-size: "200m"
 
-
 networks:
-  web_affiliate_marketing_network:
+  web_network:
     external:
-      name: dashboard-base_web_affiliate_marketing_network
+      name: boot-base_base_network
 
 volumes:
   mysql_data:
