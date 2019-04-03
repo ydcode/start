@@ -96,7 +96,7 @@ Add_Git_Key()
     echo "-----------------------------------------------------------"
 
     echo " 1.Add Above to repo: ${repoName}"
-    echo " 2.git clone git@github.com${shortRepoName}:${username}/${repoName}.git"
+    echo " 2.cd /root && git clone git@github.com${shortRepoName}:${username}/${repoName}.git && cd /root/${repoName}"
     echo "-----------------------------------------------------------"
 }
 

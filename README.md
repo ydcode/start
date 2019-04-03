@@ -16,6 +16,25 @@ cd server_init/ && ./install.sh
 
 
 
+# start-common
+
+# Mulit Repo
+```
+cd /root/ && git clone https://github.com/ydcode/start-common.git && cd start-common/toolkit/github && chmod +x muliti-repo-init-root.sh && ./muliti-repo-init-root.sh && cd /root
+
+```
+
+
+# ShadowSocks
+```
+yum install -y git && cd /root/ && git clone https://github.com/ydcode/start-common.git && cd start-common/toolkit/shadowsocks && chmod +x CentOS_ShadowSocks_Install.sh && ./CentOS_ShadowSocks_Install.sh
+
+
+apt install -y git && cd /root/ && git clone https://github.com/ydcode/start-common.git && cd start-common/toolkit/shadowsocks && chmod +x Debian_ShadowSocks_Install.sh && ./Debian_ShadowSocks_Install.sh
+```
+
+
+
 service network restart
 
 ```

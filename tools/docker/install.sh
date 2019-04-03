@@ -28,4 +28,3 @@ if [ ! -d "/home/backup/" ]; then
     mkdir /home/backup
 fi
 
-#安装Jemollo
