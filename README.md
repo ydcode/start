@@ -11,8 +11,9 @@ yum install -y git wget && cd /root && git clone https://github.com/ydcode/start
 
 ```
 vi ~/.bashrc  添加环境变量
-apt install -y git wget sudo && cd /root && git clone https://github.com/ydcode/start.git && cd start \
-&& cd tools/server_init/ && ./install.sh
+apt install -y git wget sudo \
+&& cd /root && git clone https://github.com/ydcode/start.git \
+&& cd /root/start/tools/server_init/ && ./install.sh
 ```
 
 
