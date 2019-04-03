@@ -4,7 +4,7 @@ services:
     image: rabbitmq:management
     container_name: rabbitmq
     env_file:
-      - /root/env/base.env
+      - /root/env/rabbitmq.env
     restart: always
     ports:
       - 5671:5671
@@ -24,7 +24,7 @@ services:
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --innodb-buffer-pool-size=1024M --max_connections=2048
     container_name: mysql
     env_file:
-      - /root/env/base.env
+      - /root/env/mysql.env
     restart: always
     ports:
       - 3306:3306

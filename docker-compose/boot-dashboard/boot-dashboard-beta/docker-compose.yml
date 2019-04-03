@@ -3,27 +3,8 @@ services:
   web-boot-dashboard-beta:
     image: ${registry:-docker.io}/ydcode/pack:web-boot-dashboard-beta-1.0.0
     container_name: web-boot-dashboard-beta
-    environment:
-      - DASHBOARD_DOMAIN=${DASHBOARD_DOMAIN}
-      - DASHBOARD_USERNAME=${DASHBOARD_USERNAME}
-      - DASHBOARD_PASSWORD=${DASHBOARD_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
-      - SSL_EMAIL=${SSL_EMAIL}
-      - GMAIL_EMAIL=${GMAIL_EMAIL}
-      - GMAIL_PASSWORD=${GMAIL_PASSWORD}
-      - USER_AGENT_HOST=${USER_AGENT_HOST}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-      - AWS_ACCESS_KEY_MASTER=${AWS_ACCESS_KEY_MASTER}
-      - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
-      - SERVER_NAME=${SERVER_NAME}
-
+    env_file:
+      - /root/env/web-boot-dashboard-beta.env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
@@ -48,26 +29,14 @@ services:
   web-mail-submit:
     image: ${registry:-docker.io}/ydcode/pack:web-mail-submit-1.0.0
     container_name: web-mail-submit
+    env_file:
+      - /root/env/web-mail-submit.env
+      - /root/env/mysql.env
     environment:
       - MAIL_SUBMIT_DOMAIN=${MAIL_SUBMIT_DOMAIN}
 #      - DASHBOARD_USERNAME=${DASHBOARD_USERNAME}
 #      - DASHBOARD_PASSWORD=${DASHBOARD_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
-      - SSL_EMAIL=${SSL_EMAIL}
-      - GMAIL_EMAIL=${GMAIL_EMAIL}
-      - GMAIL_PASSWORD=${GMAIL_PASSWORD}
-      - USER_AGENT_HOST=${USER_AGENT_HOST}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
-      - AWS_ACCESS_KEY_MASTER=${AWS_ACCESS_KEY_MASTER}
-      - AWS_SECRET_KEY_MASTER=${AWS_SECRET_KEY_MASTER}
-      - SERVER_NAME=${SERVER_NAME}
+
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
