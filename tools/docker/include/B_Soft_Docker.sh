@@ -86,6 +86,8 @@ docker run hello-world
 # docker login
 echo "docker login -u DOCKER_USERNAME -p DOCKER_PASSWORD DOCKER_REGISTRY"
 docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} ${DOCKER_REGISTRY}
-        
+docker login -u ${DOCKER_IO_USERNAME} -p ${DOCKER_IO_PASSWORD} ${DOCKER_IO_REGISTRY}
+
+
 
 
