@@ -5,17 +5,15 @@
 # Docker 安装 (Java & Maven)
 ```
 centos + docker bug: 重启无法连接ssh,未排查到具体原因
-yum install -y git wget \
+apt install -y git wget \
 && cd /root && git clone https://github.com/ydcode/start.git \
 && cd /root/start/tools/docker/ && chmod +x ./install.sh && ./install.sh
 ```
 
-# Nexus Pull
+# Nexus Init
 ```
-centos + docker bug: 重启无法连接ssh,未排查到具体原因
-yum install -y git wget \
-&& cd /root && git clone https://github.com/ydcode/start.git \
-&& cd /root/start/tools/docker/ && chmod +x ./install.sh && ./install.sh
+docker run -d --restart=always --name nexus-cli ydcode/nexus-cli:latest && docker logs -f nexus-cli
+
 ```
 
 # Nexus Push
