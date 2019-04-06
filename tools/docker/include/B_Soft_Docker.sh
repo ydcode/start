@@ -90,8 +90,8 @@ docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} ${DOCKER_REGISTRY}
 
 
 echo "------------------------------------------------------------------"
-echo "docker login -u ${DOCKER_IO_USERNAME} -p DOCKER_PASSWORD ${DOCKER_IO_REGISTRY}"
-docker login -u ${DOCKER_IO_USERNAME} -p ${DOCKER_IO_PASSWORD} ${DOCKER_IO_REGISTRY}
+echo "docker login -u ${DOCKER_ALIYUN_USERNAME} -p DOCKER_PASSWORD ${DOCKER_ALIYUN_REGISTRY}"
+docker login -u ${DOCKER_ALIYUN_USERNAME} -p ${DOCKER_ALIYUN_PASSWORD} ${DOCKER_ALIYUN_REGISTRY}
 
 
 

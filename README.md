@@ -1,13 +1,19 @@
 记得将该 setting.xml 拷贝到.m2目录
 
-
+# 编辑 ~/.bashrc
+```
+export DOCKER_ALIYUN_REGISTRY=registry.us-east-1.aliyuncs.com
+export DOCKER_ALIYUN_REPOSITORY=****
+export DOCKER_ALIYUN_USERNAME=****
+export DOCKER_ALIYUN_PASSWORD=****
+```
 
 # Docker 安装 (Java & Maven)
 ```
 centos + docker bug: 重启无法连接ssh,未排查到具体原因
 apt install -y git wget \
 && cd /root && git clone https://github.com/ydcode/start.git \
-&& cd /root/start/tools/docker/ && chmod +x ./install.sh && ./install.sh
+&& cd /root/start/tools/docker/ && chmod +x ./install.sh && ./install.sh && apt autoremove
 ```
 
 
@@ -16,7 +22,7 @@ apt install -y git wget \
 ```
 cd /root/boot/boot-project/docker-images/nexus-cli/ \
 && git pull origin dev \
-&&  mvn -DDOCKER_REGISTRY=docker.io -U -T 1C clean compile install deploy
+&&  mvn -DDOCKER_REGISTRY=${DOCKER_IO_REGISTRY} -DDOCKER_REPOSITORY=ydcode -DDOCKER_USERNAME=${DOCKER_IO_USERNAME} -DDOCKER_PASSWORD=${DOCKER_IO_PASSWORD}  -U -T 1C clean compile install deploy
 ```
 
 # Nexus Run
