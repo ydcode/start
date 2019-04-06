@@ -10,19 +10,22 @@ apt install -y git wget \
 && cd /root/start/tools/docker/ && chmod +x ./install.sh && ./install.sh
 ```
 
-# Nexus Init
-```
-docker run -d --restart=always --name nexus-cli ydcode/nexus-cli:latest && docker logs -f nexus-cli
 
-```
 
-# Nexus Push
+# Nexus Deploy
 ```
 cd /root/boot/boot-project/docker-images/nexus-cli/ \
 && git pull origin dev \
 &&  mvn -DDOCKER_REGISTRY=docker.io -U -T 1C clean compile install deploy
 ```
 
+# Nexus Run
+```
+docker rm -f nexus-cli \
+&& docker pull docker.io/ydcode/nexus-cli:latest \
+&& docker run -d --restart=always --name nexus-cli docker.io/ydcode/nexus-cli:latest && docker logs -f nexus-cli
+
+```
 
 ```
 vi ~/.bashrc  添加环境变量
