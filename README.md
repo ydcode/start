@@ -22,14 +22,14 @@ apt install -y git wget \
 ```
 cd /root/boot/boot-project/docker-images/nexus-cli/ \
 && git pull origin dev \
-&&  mvn -DDOCKER_REGISTRY=${DOCKER_ALIYUN_REGISTRY} -DDOCKER_REPOSITORY=ydcode -DDOCKER_USERNAME=${DOCKER_ALIYUN_USERNAME} -DDOCKER_PASSWORD=${DOCKER_ALIYUN_PASSWORD}  -U -T 1C clean compile install deploy
+&&  mvn -DDOCKER_REGISTRY=${DOCKER_ALIYUN_REGISTRY} -DDOCKER_REPOSITORY=${DOCKER_ALIYUN_REPOSITORY} -DDOCKER_USERNAME=${DOCKER_ALIYUN_USERNAME} -DDOCKER_PASSWORD=${DOCKER_ALIYUN_PASSWORD}  -U -T 1C clean compile install deploy
 ```
 
 # Nexus Run
 ```
 docker rm -f nexus-cli \
-&& docker pull docker.io/ydcode/nexus-cli:latest \
-&& docker run -d --restart=always --name nexus-cli docker.io/ydcode/nexus-cli:latest && docker logs -f nexus-cli
+&& docker pull ${DOCKER_ALIYUN_REGISTRY}/${DOCKER_ALIYUN_REPOSITORY}/nexus-cli:latest \
+&& docker run -d --restart=always --name nexus-cli ${DOCKER_ALIYUN_REGISTRY}/${DOCKER_ALIYUN_REPOSITORY}/nexus-cli:latest && docker logs -f nexus-cli
 
 ```
 
