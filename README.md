@@ -20,7 +20,7 @@ apt install -y git wget \
 
 # Nexus Deploy
 ```
-cd /root/boot/boot-project/docker-images/nexus-cli/ \
+cd /root/boot/boot-project/nexus-cli \
 && git pull origin dev \
 &&  mvn -DDOCKER_REGISTRY=${DOCKER_ALIYUN_REGISTRY} -DDOCKER_REPOSITORY=${DOCKER_ALIYUN_REPOSITORY} -DDOCKER_USERNAME=${DOCKER_ALIYUN_USERNAME} -DDOCKER_PASSWORD=${DOCKER_ALIYUN_PASSWORD}  -U -T 1C clean compile install deploy
 ```
