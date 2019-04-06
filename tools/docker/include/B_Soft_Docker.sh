@@ -84,14 +84,25 @@ sudo systemctl start docker
 docker run hello-world
 
 # docker login
-echo "------------------------------------------------------------------"
-echo "docker login -u ${DOCKER_USERNAME} -p DOCKER_PASSWORD ${DOCKER_REGISTRY}"
-docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} ${DOCKER_REGISTRY}
+
+if [ "${DOCKER_USERNAME}" = "" ]
+then
+    echo "DOCKER_USERNAME is not set!"
+else
+    echo "------------------------------------------------------------------"
+    echo "docker login -u ${DOCKER_USERNAME} -p DOCKER_PASSWORD ${DOCKER_REGISTRY}"
+    docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} ${DOCKER_REGISTRY}
+fi
 
 
-echo "------------------------------------------------------------------"
-echo "docker login -u ${DOCKER_ALIYUN_USERNAME} -p DOCKER_PASSWORD ${DOCKER_ALIYUN_REGISTRY}"
-docker login -u ${DOCKER_ALIYUN_USERNAME} -p ${DOCKER_ALIYUN_PASSWORD} ${DOCKER_ALIYUN_REGISTRY}
+if [ "${DOCKER_ALIYUN_USERNAME}" = "" ]
+then
+    echo "DOCKER_ALIYUN_USERNAME is not set!"
+else
+    echo "------------------------------------------------------------------"
+    echo "docker login -u ${DOCKER_ALIYUN_USERNAME} -p DOCKER_PASSWORD ${DOCKER_ALIYUN_REGISTRY}"
+    docker login -u ${DOCKER_ALIYUN_USERNAME} -p ${DOCKER_ALIYUN_PASSWORD} ${DOCKER_ALIYUN_REGISTRY}
+fi
 
 
 
