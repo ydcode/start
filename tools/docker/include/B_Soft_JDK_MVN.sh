@@ -20,7 +20,7 @@ Install_JDK()
         fi
 	
 
-    	mkdir /usr/java && tar xzvf jdk*.tar.gz --strip-components 1  -C /usr/java/
+    	mkdir /usr/java && tar xzvf openjdk*.tar.gz --strip-components 1  -C /usr/java/
 	ln -s /usr/java/bin/java /usr/local/bin/java #必要
 
         if grep -q "/usr/java/jdk" "~/.bashrc"; then #条目已存在
