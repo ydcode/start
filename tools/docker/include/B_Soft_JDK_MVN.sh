@@ -9,7 +9,22 @@ Install_JDK_DEBIAN()
 
 Install_MVN_DEBIAN()
 {
-	apt install -y maven
+	MAVEN_URL="http://www-us.apache.org/dist/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz"
+	MAVEN_NAME="apache-maven-3.6.1"
+	rm -rf /usr/maven
+        if [ ! -d "/usr/maven/" ]; then
+		cd ${CurrentDir}
+		wget ${MAVEN_URL}
+		mkdir /usr/maven && tar xzvf apache-maven*.tar.gz --strip-components 1  -C /usr/maven/
+	    
+		if grep -q "MAVEN_HOME" "~/.bashrc"; then #条目已存在
+		    Echo_Green "MAVEN Item Exist."
+		else
+		    echo "export MAVEN_HOME=/usr/maven" >> ~/.bashrc
+		    echo 'export PATH=$PATH:$MAVEN_HOME/bin:/usr/local/bin' >>  ~/.bashrc
+		    source ~/.bashrc
+		fi
+        fi
 }
 
 
