@@ -1,17 +1,4 @@
 #!/bin/bash
-JDK_URL="https://download.java.net/java/GA/jdk12.0.1/69cfe15208a647278a19ef0990eea691/12/GPL/openjdk-12.0.1_linux-x64_bin.tar.gz"
-
-
-MAVEN_URL="http://www-us.apache.org/dist/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz"
-
-JDK_FILE="openjdk-12.0.1_linux-x64_bin.tar.gz"
-JDK_NAME="openjdk-12.0.1"
-
-MAVEN_NAME="apache-maven-3.6.1"
-
-
-
-
 
 Set_Timezone()
 {
