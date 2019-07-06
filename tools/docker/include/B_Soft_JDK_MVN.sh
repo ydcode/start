@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-Install_JDK()
+Install_JDK_BAK()
 {
     files=`ls /usr/java/`
     if [ -z "$files" ]; then
@@ -42,6 +42,12 @@ Install_JDK()
 		Echo_Green "JDK already installed."
     fi
 }
+
+
+Install_JDK(){
+	apt install -y openjdk-11-jdk
+}
+
 
 Install_MVN(){
 	rm -rf /usr/maven
