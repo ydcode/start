@@ -21,6 +21,11 @@ apt install -y git wget \
 cd /root/ && git clone https://github.com/ydcode/start.git && cd start/tools/github && chmod +x muliti-repo-init-root.sh && ./muliti-repo-init-root.sh && cd /root
 ```
 
+# Maven 
+```
+cp settings.xml /root/.m2/
+```
+
 
 # ShadowSocks
 ```
