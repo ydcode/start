@@ -21,7 +21,7 @@ apt install -y git wget \
 cd /root/ && git clone https://github.com/ydcode/start.git && cd start/tools/github && chmod +x muliti-repo-init-root.sh && ./muliti-repo-init-root.sh && cd /root
 ```
 
-# Maven 
+# Maven 重要  Exception: Nexus 401
 ```
 cp settings.xml /root/.m2/
 ```
