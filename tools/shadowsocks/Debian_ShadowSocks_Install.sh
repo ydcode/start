@@ -29,42 +29,30 @@ Echo_Blue()
 
 Install_Shadowsocks()
 {
-    if [ -e "/usr/bin/ssserver" ] || [ -e "/usr/local/bin/ssserver" ]; then #已安装
-        Echo_Green "Shadowsocks Server already installed."
-        cat /etc/profile
-    else
 
     Echo_Yellow "Shadowsocks Installing....."
 
-    apt-get install python-pip
-    pip install git+https://github.com/shadowsocks/shadowsocks.git@master
+
+    sudo sh -c 'printf "deb http://deb.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/stretch-backports.list'
+    sudo apt update -y
+    sudo apt -t stretch-backports install -y shadowsocks-libev
 
     read -p "Set Shadowsocks Password: " ShadowsocksPassword
 
-    ssserver -s ${IP} -k ${ShadowsocksPassword} -d start
-    
-		if grep -q "ssserver" "/etc/profile"; then #条目已存在
-			  Echo_Green "/etc/profile  Shadowsocks Exist."
-		else
-			echo "sudo ssserver -p 666 -k ${ShadowsocksPassword} -m rc4-md5 --user nobody -d start" >> /etc/profile
-			source /etc/profile
-		fi
-    
-		Echo_Green "New Install_____Shadowsocks Server IP: ${IP}   Password: ${ShadowsocksPassword}"
-		
-		cat /etc/profile
-    fi
+    echo "sudo ss-server -p 443 -k ${ShadowsocksPassword} -m chacha20-ietf-poly1305" -f ss-server.pid >> ~/.bashrc
+
+    cat ~/.bashrc
 }
 
 
-	
-	
+
+
 Shadowsocks_Choice()
 {
 	Echo_Yellow "----------------------------------------------------"
 	Echo_Yellow "Add Shadowsocks ?"
     read -p "Default No,Enter your choice [y/N]: " ShadowsocksChoice
-	
+
 	case "${ShadowsocksChoice}" in
     [yY][eE][sS]|[yY])
         echo "You will Add Shadowsocks"
@@ -78,15 +66,15 @@ Shadowsocks_Choice()
         echo "No input,No  Shadowsocks"
         ShadowsocksChoice="n"
     esac
-	
-	
-	if [ "${ShadowsocksChoice}" = "y" ]; then		
+
+
+	if [ "${ShadowsocksChoice}" = "y" ]; then
 		Install_Shadowsocks
     else
 		Echo_Yellow "Choose No Shadowsocks"
     fi
-	
-	
+
+
 }
 
 Shadowsocks_Choice
