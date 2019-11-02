@@ -1,3 +1,7 @@
+```
+docker run -d centos /bin/sh -c "while true; do echo hello world; sleep 1; done"
+```
+
 记得将该 setting.xml 拷贝到.m2目录
 
 # 第一步: 添加环境变量
