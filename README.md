@@ -1,13 +1,13 @@
 记得将该 setting.xml 拷贝到.m2目录
 
-# 添加环境变量
+# 第一步: 添加环境变量
 ```
 vi ~/.bashrc
 参考有道笔记
 ```
 
 
-# Docker 安装 (Java & Maven)
+# 第二步: Docker 安装 (Java & Maven)
 ```
 centos + docker bug: 重启无法连接ssh,未排查到具体原因
 apt install -y git wget \
