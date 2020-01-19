@@ -1,5 +1,5 @@
 ```
-WSL 不要创建USER，直接使用root 。方便通过ROOT 和正确的Root路径管理多Repo 证书
+WSL 不要创建USER，初始化WSL时，直接取消，然后使用root 。方便通过ROOT 和正确的Root路径管理多Repo 证书
 ```
 
 ```
