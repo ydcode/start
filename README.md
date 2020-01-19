@@ -1,4 +1,8 @@
 ```
+WSL 不要创建USER，直接使用root 。方便通过ROOT 和正确的Root路径管理多Repo 证书
+```
+
+```
 docker run -d centos /bin/sh -c "while true; do echo hello world; sleep 1; done"
 ```
 
