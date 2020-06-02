@@ -6,7 +6,9 @@ WSL 不要创建USER，初始化WSL时，直接取消，然后使用root 。方�
 docker run -d centos /bin/sh -c "while true; do echo hello world; sleep 1; done"
 ```
 
-```记得将该 setting.xml 拷贝到.m2目录(boot-cli 已自动复制)```
+```
+记得将该 setting.xml 拷贝到.m2目录(boot-cli 已自动复制)
+```
 
 # 第0步: Nexus 80GB SSD DISK
 ```
