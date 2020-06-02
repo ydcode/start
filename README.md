@@ -33,6 +33,10 @@ apt install -y git wget \
 ----------------------------------------------------------------------------------------------------
 # Init Repo
 ```
+cd /root/start/tools/github && chmod +x muliti-repo-init-root.sh && ./muliti-repo-init-root.sh && cd /root
+```
+OR
+```
 cd /root/ && git clone https://github.com/ydcode/start.git && cd start/tools/github && chmod +x muliti-repo-init-root.sh && ./muliti-repo-init-root.sh && cd /root
 ```
 
