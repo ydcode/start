@@ -3,10 +3,10 @@
 
 Install_JDK_DEBIAN()
 {
-# 	apt install -y openjdk-11-jdk
-	wget https://cdn.azul.com/zulu/bin/zulu14.28.21-ca-jdk14.0.1-linux_amd64.deb
-	dpkg -i zulu*.deb
-	apt --fix-broken install -y
+ 	apt install -y openjdk-11-jdk
+#	wget https://cdn.azul.com/zulu/bin/zulu14.28.21-ca-jdk14.0.1-linux_amd64.deb
+#	dpkg -i zulu*.deb
+#	apt --fix-broken install -y
 }
 
 
