@@ -53,3 +53,11 @@ yum install -y git && cd /root/ && git clone https://github.com/ydcode/start.git
 
 apt install -y git && cd /root/ && git clone https://github.com/ydcode/start-common.git && cd start/tools/shadowsocks && chmod +x Debian_ShadowSocks_Install.sh && ./Debian_ShadowSocks_Install.sh
 ```
+
+
+
+
+# frp
+```
+apt install -y wget && cd /root/ && git clone https://github.com/ydcode/start-common.git && cd start/tools/frp && chmod +x frp.sh && ./frp.sh
+```
