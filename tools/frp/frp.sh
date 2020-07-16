@@ -8,3 +8,7 @@ echo "[common]" >> frps.ini
 echo "bind_port = 7000" >> frps.ini
 echo "vhost_http_port = 80" >> frps.ini
 
+
+cp frps /usr/bin/
+
+
