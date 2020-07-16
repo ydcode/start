@@ -5,9 +5,7 @@ tar -zxvf frp_0.33.0_linux_amd64.tar.gz --strip-components 1
 rm -rf frp_0.33.0_linux_amd64.tar.gz && rm -rf frpc*
 
 cp frps /usr/bin/
-
 mkdir -p /etc/frp
-
 cat > /etc/systemd/system/frps.service<<EOF
 [Unit]
 Description=Frp Server Service
@@ -30,3 +28,5 @@ bind_port = 7000
 vhost_http_port = 80
 EOF
 
+systemctl enable frps.service
+systemctl status frps.service
