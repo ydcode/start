@@ -57,12 +57,12 @@ apt install -y git && cd /root/ && git clone https://github.com/ydcode/start-com
 
 
 
-# frp Server
+# FRP Server
 ```
 apt install -y wget && cd /root/ && git clone https://github.com/ydcode/start-common.git && cd start/tools/frp && chmod +x frp-server.sh && ./frp-server.sh
 ```
 
-# frp Client
+# FRP Client
 ```
 apt install -y wget && cd /root/ && git clone https://github.com/ydcode/start-common.git && cd start/tools/frp && chmod +x frp-client.sh && ./frp-client.sh
 
