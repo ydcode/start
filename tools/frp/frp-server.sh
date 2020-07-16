@@ -34,3 +34,6 @@ EOF
 systemctl enable frps.service
 systemctl start frps.service
 systemctl status frps.service
+
+
+cat /etc/frp/frps.ini
