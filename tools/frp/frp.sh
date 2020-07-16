@@ -2,12 +2,13 @@
 
 apt install wget -y
 wget https://github.com/fatedier/frp/releases/download/v0.33.0/frp_0.33.0_linux_amd64.tar.gz
-tar -zxvf frp_0.33.0_linux_amd64.tar.gz --strip-components 1
+tar -zxvf frp_0.33.0_linux_amd64.tar.gz
+cd frp_0.33.0_linux_amd64 && rm -rf frpc*
 
-rm -rf frp_0.33.0_linux_amd64.tar.gz && rm -rf frpc*
+cp frps /usr/bin/ && mkdir -p /etc/frp
 
-cp frps /usr/bin/
-mkdir -p /etc/frp
+
+# if vhost_http_port port < 1024 , remove nobody line
 cat > /etc/systemd/system/frps.service<<EOF
 [Unit]
 Description=Frp Server Service
@@ -31,4 +32,5 @@ vhost_http_port = 80
 EOF
 
 systemctl enable frps.service
+systemctl start frps.service
 systemctl status frps.service
