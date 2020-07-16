@@ -8,8 +8,25 @@ cp frps /usr/bin/
 
 mkdir -p /etc/frp
 
-cat > /etc/frp/frpc.ini<<EOF
+cat > /etc/systemd/system/frps.service<<EOF
+[Unit]
+Description=Frp Server Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5s
+ExecStart=/usr/bin/frps -c /etc/frp/frps.ini
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+
+cat > /etc/frp/frps.ini<<EOF
 [common]
 bind_port = 7000
 vhost_http_port = 80
 EOF
+
