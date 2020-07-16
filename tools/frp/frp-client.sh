@@ -8,7 +8,7 @@ rm -rf frp_0.33.0_linux_amd64/frps*
 cp frp_0.33.0_linux_amd64/frpc /usr/bin/ && mkdir -p /etc/frp
 
 # if vhost_http_port port < 1024 , remove nobody line
-cat > /etc/systemd/system/frps.service<<EOF
+cat > /etc/systemd/system/frpc.service<<EOF
 [Unit]
 Description=Frp Server Service
 After=network.target
@@ -17,22 +17,22 @@ After=network.target
 Type=simple
 Restart=on-failure
 RestartSec=5s
-ExecStart=/usr/bin/frps -c /etc/frp/frps.ini
+ExecStart=/usr/bin/frpc -c /etc/frp/frpc.ini
 
 [Install]
 WantedBy=multi-user.target
 EOF
 
 
-cat > /etc/frp/frps.ini<<EOF
+cat > /etc/frp/frpc.ini<<EOF
 [common]
 bind_port = 7000
 vhost_http_port = 80
 EOF
 
-systemctl enable frps.service
-systemctl start frps.service
-systemctl status frps.service
+systemctl enable frpc.service
+systemctl start frpc.service
+systemctl status frpc.service
 
 
 cat /etc/frp/frps.ini
