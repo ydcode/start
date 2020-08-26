@@ -4,9 +4,7 @@
 Install_JDK_DEBIAN()
 {
 	wget https://cdn.azul.com/zulu/bin/zulu14.29.23-ca-jdk14.0.2-linux_x64.tar.gz
-	
-	tar -xzvf zulu* -C /usr/bin/java
-
+	mkdir /usr/java && tar -xzvf zulu* --strip-components 1  -C /usr/java
 }
 
 
@@ -24,7 +22,9 @@ Install_MVN_DEBIAN()
 		    Echo_Green "MAVEN Item Exist."
 		else
 		    echo "export MAVEN_HOME=/usr/maven" >> ~/.bashrc
-		    echo 'export PATH=$PATH:$MAVEN_HOME/bin:/usr/local/bin' >>  ~/.bashrc
+		    echo "export JDK_HOME=/usr/maven" >> ~/.bashrc
+
+		    echo 'export PATH=$PATH:$MAVEN_HOME/bin:$JDK_HOME/bin:/usr/local/bin' >>  ~/.bashrc
 		    source ~/.bashrc
 		fi
         fi
