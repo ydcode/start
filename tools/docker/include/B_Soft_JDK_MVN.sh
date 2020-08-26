@@ -22,7 +22,7 @@ Install_MVN_DEBIAN()
 		    Echo_Green "MAVEN Item Exist."
 		else
 		    echo "export MAVEN_HOME=/usr/maven" >> ~/.bashrc
-		    echo "export JDK_HOME=/usr/maven" >> ~/.bashrc
+		    echo "export JDK_HOME=/usr/java" >> ~/.bashrc
 
 		    echo 'export PATH=$PATH:$MAVEN_HOME/bin:$JDK_HOME/bin:/usr/local/bin' >>  ~/.bashrc
 		    source ~/.bashrc
