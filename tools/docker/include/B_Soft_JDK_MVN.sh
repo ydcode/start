@@ -4,7 +4,7 @@
 Install_JDK_DEBIAN()
 {
 	wget https://cdn.azul.com/zulu/bin/zulu14.29.23-ca-jdk14.0.2-linux_x64.tar.gz
-	mkdir /usr/java && tar -xzvf zulu* --strip-components 1  -C /usr/java
+	mkdir -p /usr/java && tar -xzvf zulu14.29.23-ca-jdk14.0.2-linux_x64.tar.gz --strip-components 1 -C /usr/java
 }
 
 
