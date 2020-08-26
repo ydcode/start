@@ -4,8 +4,9 @@
 Install_JDK_DEBIAN()
 {
 	wget https://cdn.azul.com/zulu/bin/zulu14.29.23-ca-jdk14.0.2-linux_x64.tar.gz
-	dpkg -i zulu*.deb
-	apt --fix-broken install -y
+	
+	tar -xzvf zulu* -C /usr/bin/java
+
 }
 
 
