@@ -32,9 +32,22 @@ Install_Shadowsocks()
 
     Echo_Yellow "Shadowsocks Installing....."
 
+
     apt-get update
+    
+    
     apt-get install python-pip
     pip install git+https://github.com/shadowsocks/shadowsocks.git@master
+
+apt-get install build-essential -y
+wget https://download.libsodium.org/libsodium/releases/LATEST.tar.gz
+tar xzvf LATEST.tar.gz
+cd libsodium*
+./configure && make -j8 && make install
+echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
+ldconfig
+
+
 
     read -p "Set Shadowsocks Password: " ShadowsocksPassword
 
