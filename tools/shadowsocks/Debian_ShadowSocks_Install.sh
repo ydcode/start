@@ -33,9 +33,12 @@ Install_Shadowsocks()
     Echo_Yellow "Shadowsocks Installing....."
 
 
-    sudo sh -c 'printf "deb http://deb.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/stretch-backports.list'
-    sudo apt update -y
-    sudo apt -t stretch-backports install -y shadowsocks-libev
+    #sudo sh -c 'printf "deb http://deb.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/stretch-backports.list'
+    #sudo apt update -y
+    #sudo apt -t stretch-backports install -y shadowsocks-libev
+
+    sudo apt update
+    sudo apt install shadowsocks-libev
 
     read -p "Set Shadowsocks Password: " ShadowsocksPassword
 
