@@ -14,6 +14,9 @@ Install_V2Ray()
     systemctl start v2ray
 
 
+    配置config.json
+
+    service v2ray restart
 }
 
 
