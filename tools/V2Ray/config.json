@@ -1,0 +1,21 @@
+{
+    "inbound": {
+        "port": 443,
+        "protocol": "vmess",
+        "settings": {
+            "clients": [
+                {
+                    "id": "cb1287d7-9981-5876-b58c-6659f3b26e76",
+                    "level": 1,
+                    "alterId": 100
+                }
+            ]
+        },
+        "streamSettings": {
+            "network": "kcp"
+        },
+        "detour": {
+            "to": "vmess-detour-522598"
+        }
+    },
+}
