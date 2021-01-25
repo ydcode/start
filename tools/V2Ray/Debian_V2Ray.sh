@@ -14,8 +14,10 @@ Install_V2Ray()
     systemctl start v2ray
 
 
-    配置config.json
-
+    mkdir /etc/v2ray && cd /etc/v2ray 
+    wget https://raw.githubusercontent.com/ydcode/start/master/tools/V2Ray/config.json
+    
+    vi config.json
     service v2ray restart
 }
 
