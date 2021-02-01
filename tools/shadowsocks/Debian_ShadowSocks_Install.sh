@@ -56,7 +56,7 @@ Shadowsocks_Choice()
 
 	Echo_Yellow "----------------------------------------------------"
 	Echo_Yellow "Add Shadowsocks ?"
-    read -p "Default No,Enter your choice [Y/n]: " ShadowsocksChoice
+    read -p "Default Yes,Enter your choice [Y/n]: " ShadowsocksChoice
 
 	case "${ShadowsocksChoice}" in
     [yY][eE][sS]|[yY])
