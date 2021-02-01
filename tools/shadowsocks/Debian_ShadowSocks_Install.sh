@@ -44,6 +44,7 @@ Install_Shadowsocks()
 
     echo "sudo ss-server -p 443 -k ${ShadowsocksPassword} -m chacha20-ietf-poly1305" -f ss-server.pid >> ~/.bashrc
 
+    source ~/.bashrc
     cat ~/.bashrc
 }
 
