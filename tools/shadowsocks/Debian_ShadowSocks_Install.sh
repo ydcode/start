@@ -37,8 +37,8 @@ Install_Shadowsocks()
     #sudo apt update -y
     #sudo apt -t stretch-backports install -y shadowsocks-libev
 
-    sudo apt update
-    sudo apt install shadowsocks-libev
+    sudo apt update -y
+    sudo apt install -y shadowsocks-libev
 
     read -p "Set Shadowsocks Password: " ShadowsocksPassword
 
@@ -52,9 +52,11 @@ Install_Shadowsocks()
 
 Shadowsocks_Choice()
 {
+        ShadowsocksChoice="y"
+
 	Echo_Yellow "----------------------------------------------------"
 	Echo_Yellow "Add Shadowsocks ?"
-    read -p "Default No,Enter your choice [y/N]: " ShadowsocksChoice
+    read -p "Default No,Enter your choice [Y/n]: " ShadowsocksChoice
 
 	case "${ShadowsocksChoice}" in
     [yY][eE][sS]|[yY])
