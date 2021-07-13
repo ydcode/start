@@ -14,8 +14,8 @@ Install_JDK_DEBIAN()
 
 Install_MVN_DEBIAN()
 {
-	MAVEN_URL="http://www-us.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz"
-	MAVEN_NAME="apache-maven-3.6.3"
+	MAVEN_URL="https://downloads.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz"
+	MAVEN_NAME="apache-maven-3.8.1"
 	rm -rf /usr/maven
         if [ ! -d "/usr/maven/" ]; then
 		cd ${CurrentDir}
