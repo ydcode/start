@@ -12,5 +12,3 @@ tar -zvcf ledger.tar.gz ledger-2
 mv ledger.tar.gz /home/temp/
 cd /home/temp
 http-server -p 9090
-
-
