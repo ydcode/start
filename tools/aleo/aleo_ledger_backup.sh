@@ -11,5 +11,9 @@ cd /root/.aleo/storage
 tar -zvcf ledger.tar.gz ledger-2
 mv ledger.tar.gz /home/temp/
 cd /home/temp
-http-server -p 9090
 
+ip=$(curl -s http://checkip.amazonaws.com)
+echo "--->   http://$ip:9090/ledger.tar.gz"
+
+ls -al
+http-server -p 9090
