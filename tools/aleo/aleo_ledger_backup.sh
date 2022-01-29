@@ -1,10 +1,19 @@
 #!/bin/bash
 
+Install_NodeJS()
+{
+  curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+  npm install --global http-server
+}
+
+
+if [ ! -e "/usr/bin/node" ]; then
+  Install_NodeJS
+fi
+
 mkdir -p /home/temp && cd /home/temp
 
-curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -
-sudo apt-get install -y nodejs
-npm install --global http-server
 
 cd /root/.aleo/storage
 
