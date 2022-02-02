@@ -9,3 +9,4 @@ mkdir -p /home/prover && cd /home/prover \
 && wget http://52.224.238.136:1989/aleo-prover \
 && chmod +x aleo-prover \
 && ./aleo-prover -a address -p 8.8.8.8:4132
+
