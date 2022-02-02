@@ -21,21 +21,15 @@ tar -zvcf ledger.tar.gz ledger-2
 mv ledger.tar.gz /home/temp/
 cd /home/temp
 
+date_suffix=$(date +%Y-%m-%d-%H)
+
 ip=$(curl -s http://checkip.amazonaws.com)
 echo ""
 echo ""
 echo ""
 echo ""
 echo "Nexus Server --->"
-echo "cd /home/gce/shared && wget http://$ip:9090/ledger.tar.gz"
-echo "cd /home/gce/shared && wget http://$ip:9090/ledger.tar.gz"
-echo "cd /home/gce/shared && wget http://$ip:9090/ledger.tar.gz"
-echo "cd /home/gce/shared && wget http://$ip:9090/ledger.tar.gz"
-echo "cd /home/gce/shared && wget http://$ip:9090/ledger.tar.gz"
-echo "cd /home/gce/shared && wget http://$ip:9090/ledger.tar.gz"
-echo "cd /home/gce/shared && wget http://$ip:9090/ledger.tar.gz"
-echo "cd /home/gce/shared && wget http://$ip:9090/ledger.tar.gz"
-echo "cd /home/gce/shared && wget http://$ip:9090/ledger.tar.gz"
+echo "cd /home/gce/shared && mv ledger.tar.gz ledger_BAK_$date_suffix.tar.gz && wget http://$ip:9090/ledger.tar.gz"
 echo ""
 echo ""
 echo ""
