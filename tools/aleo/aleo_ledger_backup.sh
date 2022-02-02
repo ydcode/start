@@ -21,7 +21,7 @@ tar -zvcf ledger.tar.gz ledger-2
 mv ledger.tar.gz /home/temp/
 cd /home/temp
 
-date_suffix=$(date +%Y-%m-%d-%H)
+date_suffix=$(date +%Y-%m-%d-%H-%M)
 
 ip=$(curl -s http://checkip.amazonaws.com)
 echo ""
