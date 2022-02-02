@@ -2,7 +2,7 @@
 ```
 先停止Aleo Screen 或者 Docker
 apt install -y git wget \
-&& cd /root && git clone https://github.com/ydcode/start.git \
+&& cd /root && rm -rf start && git clone https://github.com/ydcode/start.git \
 && cd /root/start/tools/aleo/ && chmod +x ./aleo_ledger_backup.sh && ./aleo_ledger_backup.sh
 
 ```
