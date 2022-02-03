@@ -20,7 +20,7 @@ fi
 
 
 . include/B_Soft_Docker.sh
-. include/B_Soft_JDK_MVN.sh
+#. include/B_Soft_JDK_MVN.sh
 
 
 
