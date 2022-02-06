@@ -15,7 +15,7 @@ fi
 mkdir -p /home/temp && cd /home/temp
 
 
-cd /root/.aleo/storage
+cd /var/lib/docker/volumes/aleo_data/_data/storage
 
 tar -zvcf ledger.tar.gz ledger-2
 mv ledger.tar.gz /home/temp/
