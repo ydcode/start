@@ -73,6 +73,11 @@ apt install -y wget git && cd /root/ && git clone https://github.com/ydcode/star
 # Clean Docker Container
 ```
 cd /home && wget https://raw.githubusercontent.com/ydcode/start/master/tools/docker/docker_container_clean.sh
+sudo rm -f tempcron && sudo touch tempcron && sudo chmod 777 tempcron
+sudo crontab tempcron
+sudo echo '*/3 * * * * /home/docker_container_clean.sh >> /var/log/docker_container_clean.log 2>&1' >> tempcron
+sudo crontab tempcron
+sudo rm -f tempcron
 
 ```
 
