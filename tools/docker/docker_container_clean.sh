@@ -11,9 +11,10 @@ if [ $(docker ps | grep "${CONTAINER_KEYWORD}" | awk 'END{print FNR}') -gt "${MA
   DOCKER_CONTAINER_LIST=$(docker ps | grep "${CONTAINER_KEYWORD}" | awk  '{print $10, $14}' | tail -"${DELETE_CONTAINER_NUMBER}" | awk '{printf $2 " " }')
   echo "${DOCKER_CONTAINER_LIST}"
 
+  echo "Container Count > ${MAX_CONTAINER_NUMBER}, will delete oldest ${DELETE_CONTAINER_NUMBER}"
+
   #不要双引号
   sudo docker rm -f ${DOCKER_CONTAINER_LIST}
-  echo "Container Count > ${MAX_CONTAINER_NUMBER}, will delete oldest ${DELETE_CONTAINER_NUMBER}"
 fi
 
 
