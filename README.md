@@ -67,3 +67,12 @@ apt install -y wget git && cd /root/ && git clone https://github.com/ydcode/star
 apt install -y wget git && cd /root/ && git clone https://github.com/ydcode/start.git && cd start/tools/frp && chmod +x frp-client.sh && ./frp-client.sh
 
 ```
+
+
+
+# Clean Docker Container
+```
+cd /home && wget https://raw.githubusercontent.com/ydcode/start/master/tools/docker/docker_container_clean.sh
+
+```
+
