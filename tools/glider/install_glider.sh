@@ -50,5 +50,6 @@ fi
 #获取本机公共IP
 PUBLIC_IP=$(curl -s https://checkip.amazonaws.com) || { echo "curl failed. Exiting."; exit 1; }
 
+
 #生成JSON输出
 echo -n "{\"type\":\"socks5\",\"IP\":\"${PUBLIC_IP}\",\"port\":10888,\"username\":\"admin\",\"password\":\"${RANDOM_STRING}\"}" | jq || { echo "jq failed. Exiting."; exit 1; }
