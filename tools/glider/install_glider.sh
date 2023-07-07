@@ -55,8 +55,14 @@ fi
 #获取本机公共IP
 PUBLIC_IP=$(curl -s https://checkip.amazonaws.com) || { echo "curl failed. Exiting."; exit 1; }
 
+# 输出分割符
+echo "====================================="
+
 #生成JSON输出
 echo -n "{\"type\":\"socks5\",\"IP\":\"${PUBLIC_IP}\",\"port\":10888,\"username\":\"admin\",\"password\":\"${RANDOM_STRING}\"}" | jq || { echo "jq failed. Exiting."; exit 1; }
+
+# 输出分割符
+echo "====================================="
 
 # 删除旧的安装包
 rm -f ${GLIDER_FILE}
