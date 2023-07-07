@@ -1,4 +1,9 @@
 #!/bin/bash
+# 安装jq
+if ! [ -x "$(command -v jq)" ]; then
+    sudo apt-get update -y
+    sudo apt-get install jq -y
+fi
 
 generate_random_string() {
     cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 20 | head -n 1
