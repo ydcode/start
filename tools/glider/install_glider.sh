@@ -29,6 +29,7 @@ then
     nohup ./glider -listen socks5://admin:${RANDOM_STRING}@:10888 >/dev/null 2>&1 &
 fi
 
+
 #获取本机公共IP
 PUBLIC_IP=$(curl -s https://checkip.amazonaws.com)
 
