@@ -1,9 +1,22 @@
 #!/bin/bash
-# 安装jq
-if ! [ -x "$(command -v jq)" ]; then
-    sudo apt-get update -y
-    sudo apt-get install jq -y
+
+# 选择合适的包管理器
+if [ -x "$(command -v apt-get)" ]; then
+    PKG_MANAGER="apt-get"
+elif [ -x "$(command -v yum)" ]; then
+    PKG_MANAGER="yum"
+else
+    echo "Neither apt-get nor yum found. Exiting."
+    exit 1
 fi
+
+# 安装必要的命令
+for cmd in jq wget curl; do
+    if ! [ -x "$(command -v $cmd)" ]; then
+        sudo $PKG_MANAGER update -y
+        sudo $PKG_MANAGER install $cmd -y
+    fi
+done
 
 generate_random_string() {
     cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 20 | head -n 1
@@ -19,12 +32,12 @@ GLIDER_URL="https://github.com/nadoo/glider/releases/download/v${GLIDER_VERSION}
 #检查glider是否存在
 if ! [ -x "$(command -v ./glider)" ]; then
   #glider不存在，下载和解压
-  wget ${GLIDER_URL}
+  wget --header="Cache-Control: no-cache" ${GLIDER_URL} || { echo "wget failed. Exiting."; exit 1; }
 
-  tar -xvf ${GLIDER_FILE}
+  tar -xvf ${GLIDER_FILE} || { echo "tar failed. Exiting."; exit 1; }
 
   #进入程序所在目录
-  cd ${GLIDER_DIR}
+  cd ${GLIDER_DIR} || { echo "cd failed. Exiting."; exit 1; }
 fi
 
 #检查glider是否正在运行
@@ -34,9 +47,8 @@ then
     nohup ./glider -listen socks5://admin:${RANDOM_STRING}@:10888 >/dev/null 2>&1 &
 fi
 
-
 #获取本机公共IP
-PUBLIC_IP=$(curl -s https://checkip.amazonaws.com)
+PUBLIC_IP=$(curl -s https://checkip.amazonaws.com) || { echo "curl failed. Exiting."; exit 1; }
 
 #生成JSON输出
-echo -n "{\"type\":\"socks5\",\"IP\":\"${PUBLIC_IP}\",\"port\":10888,\"username\":\"admin\",\"password\":\"${RANDOM_STRING}\"}" | jq
+echo -n "{\"type\":\"socks5\",\"IP\":\"${PUBLIC_IP}\",\"port\":10888,\"username\":\"admin\",\"password\":\"${RANDOM_STRING}\"}" | jq || { echo "jq failed. Exiting."; exit 1; }
