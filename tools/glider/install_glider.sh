@@ -29,6 +29,11 @@ GLIDER_DIR="glider_${GLIDER_VERSION}_linux_amd64"
 GLIDER_FILE="${GLIDER_DIR}.tar.gz"
 GLIDER_URL="https://github.com/nadoo/glider/releases/download/v${GLIDER_VERSION}/${GLIDER_FILE}"
 
+# 检查并删除已存在的旧安装包
+if [ -f "${GLIDER_FILE}" ]; then
+    rm -f ${GLIDER_FILE}
+fi
+
 #检查glider是否存在
 if ! [ -x "$(command -v ./glider)" ]; then
   #glider不存在，下载和解压
@@ -50,6 +55,8 @@ fi
 #获取本机公共IP
 PUBLIC_IP=$(curl -s https://checkip.amazonaws.com) || { echo "curl failed. Exiting."; exit 1; }
 
-
 #生成JSON输出
 echo -n "{\"type\":\"socks5\",\"IP\":\"${PUBLIC_IP}\",\"port\":10888,\"username\":\"admin\",\"password\":\"${RANDOM_STRING}\"}" | jq || { echo "jq failed. Exiting."; exit 1; }
+
+# 删除旧的安装包
+rm -f ${GLIDER_FILE}
