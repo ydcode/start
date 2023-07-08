@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 # 选择合适的包管理器
 if [ -x "$(command -v apt-get)" ]; then

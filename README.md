@@ -55,6 +55,14 @@ apt install -y git && cd /root/ && git clone https://github.com/ydcode/start.git
 ```
 
 
+# Glider SOCKS5
+```
+wget https://raw.githubusercontent.com/ydcode/start/master/tools/glider/install_glider.sh
+sudo chmod +x install_glider.sh
+sudo ./install_glider.sh
+```
+
+
 
 
 # FRP Server
