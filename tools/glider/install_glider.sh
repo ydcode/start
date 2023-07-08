@@ -12,7 +12,7 @@ else
 fi
 
 # 安装必要的命令
-for cmd in jq wget curl pgrep; do
+for cmd in jq wget curl lsof; do
     if ! [ -x "$(command -v $cmd)" ]; then
         sudo $PKG_MANAGER update -y
         sudo $PKG_MANAGER install $cmd -y
@@ -31,7 +31,7 @@ CONFIG_FILE="./glider_config.json"
 
 # 如果没有找到配置文件，结束所有的 glider 进程
 if ! [ -f "${CONFIG_FILE}" ]; then
-    pkill -f glider
+    kill $(lsof -t -i:10888)
 fi
 
 # 检查并删除已存在的旧安装包
@@ -57,7 +57,7 @@ if [ -f "$CONFIG_FILE" ]; then
     # Glider正在运行，读取配置文件并生成JSON
     cat ${CONFIG_FILE} | jq || { echo "jq failed. Exiting."; exit 1; }
 
-    if ! pgrep -x "glider" > /dev/null
+    if ! lsof -i :10888 > /dev/null
     then
         echo "Glider is not running. Starting..."
         PASSWORD=$(jq -r '.password' ${CONFIG_FILE})
@@ -82,7 +82,7 @@ else
 fi
 
 # 检查并输出 Glider 是否在运行
-if pgrep -x "glider" > /dev/null
+if lsof -i :10888 > /dev/null
 then
     echo "Glider is running."
 else
