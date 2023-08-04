@@ -38,13 +38,30 @@ Install_Docker_Debian()
         apt-get install -y docker-ce
 }
 
-
 Install_Docker_Compose()
 {
-        sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-        sudo chmod +x /usr/local/bin/docker-compose
-        docker-compose --version
+    # 获取最新版本号
+    COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/') || {
+        echo "无法获取Docker Compose的最新版本。请手动安装。"
+        return 1
+    }
+
+    # 下载最新版本并添加执行权限
+    sudo curl -L "https://github.com/docker/compose/releases/download/$COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
+        && sudo chmod +x /usr/local/bin/docker-compose || {
+        echo "Docker Compose安装失败。请手动安装。"
+        return 1
+    }
+
+    # 显示Docker Compose版本号以验证安装
+    docker-compose --version || {
+        echo "Docker Compose安装验证失败。请手动检查。"
+        return 1
+    }
+
+    echo "Docker Compose $COMPOSE_VERSION 安装成功。"
 }
+
     
 
 if [ ! -e "/usr/bin/docker" ]; then
