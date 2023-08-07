@@ -24,7 +24,7 @@ vi ~/.bashrc
 # 第二步: Docker 安装 (Java & Maven)
 ```
 centos + docker bug: 重启无法连接ssh,未排查到具体原因
-apt install -y git wget \
+apt install -y git wget sudo \
 && cd /root && git clone https://github.com/ydcode/start.git \
 && cd /root/start/tools/docker/ && chmod +x ./install.sh && ./install.sh && apt autoremove -y
 ```
