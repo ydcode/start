@@ -32,6 +32,14 @@ check_and_disable_swap() {
   else
     disable_swap
   fi
+
+  ulimit_value=$(ulimit -n)
+  print_green "当前 ulimit -n 的值是 ${ulimit_value}"
+
+  if [ "$ulimit_value" -lt 1000000 ]; then
+    print_red "ulimit -n less than 1000000，停止执行脚本。"
+    exit 1
+  fi
 }
 
 # 永久设置ulimit为指定值的函数
