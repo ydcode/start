@@ -6,13 +6,9 @@ WSL 不要创建USER，初始化WSL时，直接取消，然后使用root 。方�
 记得将该 setting.xml 拷贝到.m2目录(boot-cli 已自动复制)
 ```
 
-# 第一步: Nexus 80GB SSD DISK
-```
-```
 
-# 第二步: Docker 安装 (Java & Maven)
+# Docker 安装 (Docker Compose & JDK)
 ```
-centos + docker bug: 重启无法连接ssh,未排查到具体原因
 apt update && apt install -y git wget sudo \
 && cd /root && git clone https://github.com/ydcode/start.git \
 && cd /root/start/tools/docker/ && chmod +x ./install.sh && ./install.sh && apt autoremove -y
