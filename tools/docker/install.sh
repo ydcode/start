@@ -101,6 +101,5 @@ sudo systemctl start docker
 sudo systemctl enable docker #开机启动
 
 source ~/.bashrc
-
 docker run hello-world
 
