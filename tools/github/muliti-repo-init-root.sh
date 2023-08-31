@@ -1,110 +1,72 @@
 #!/bin/bash
 
+# Function to get the GitHub username from the user
+Input_Username() {
+    read -p "Enter your GitHub username [ydcode]: " username
+    username=${username:-ydcode}
+}
 
-Input_Repo_Name()
-{
-    username="ydcode"
-    repoName="google.com"
-    read -p "Enter your repo name: " repoName
-    repoName=`echo ${repoName}|tr -d ' /'`
-    shortRepoName=`echo ${repoName}|tr -d ' '`
-    shortRepoName=`echo ${shortRepoName}|tr -d '.'`
-
+# Function to get the repository name from the user
+Input_Repo_Name() {
+    read -p "Enter your repository name: " repoName
+    repoName=$(echo ${repoName} | tr -d ' /')
+    shortRepoName=$(echo ${repoName} | tr -d ' .')
     Check_Repo_Name_Right
 }
 
-
-
-
-
-# SSH_DIR=$HOME
-SSH_DIR="/root"
-
-#if [ -e "/usr/bin/sw_vers" ]; then #mac os
-#	SSH_DIR="/private/var/root"
-#else
-#	SSH_DIR="~"
-#fi
-
-    
-
-
-Check_Repo_Name_Right()
-{
-	echo "${repoName}  Right ?"
-	read -p "[Y/n]: Y " repoNameRight
-
-    case "${repoNameRight}" in
-    [yY][eE][sS]|[yY])
-        echo "You will Add Repo:: ${repoName} "
-        repoNameRight="y"
+# Function to confirm repository name
+Check_Repo_Name_Right() {
+    read -p "Is ${repoName} correct? [Y/n]: " repoNameRight
+    repoNameRight=${repoNameRight:-y}
+    case "$repoNameRight" in
+    [yY]|[yY][eE][sS])
         ;;
-    [nN][oO]|[nN])
-        echo "No Repo Param"
-        repoNameRight="n"
+    [nN]|[nN][oO])
+        Input_Repo_Name
         ;;
     *)
-        echo "No input,Right, will add Repo: ${repoName}."
-        repoNameRight="y"
+        echo "Defaulting to 'yes'"
+        ;;
     esac
-
-    if [ "${repoNameRight}" = "y" ]; then
-       echo "Right"
-    else
-        Input_Repo
-    fi
 }
 
-
-Init_Git_Config()
-{
-	if [ ! -d "$SSH_DIR/.ssh" ]; then
-	  mkdir "$SSH_DIR/.ssh"
-	fi
-
-	if [ ! -e "$SSH_DIR/.ssh/config" ]; then
-		touch $SSH_DIR/.ssh/config
-	fi
+# Initialize Git configuration
+Init_Git_Config() {
+    SSH_DIR="/root/.ssh"
+    [ ! -d $SSH_DIR ] && mkdir $SSH_DIR
+    [ ! -e "$SSH_DIR/config" ] && touch "$SSH_DIR/config"
 }
 
-Add_Git_Key()
-{
+# Function to add Git key
+Add_Git_Key() {
     Init_Git_Config
-
-    if [ -e "$SSH_DIR/.ssh/id_rsa_${shortRepoName}" ]; then
-        rm -rf $SSH_DIR/.ssh/id_rsa_${shortRepoName}*
+    if [ -e "$SSH_DIR/id_rsa_${shortRepoName}" ]; then
+        rm -rf $SSH_DIR/id_rsa_${shortRepoName}*
     fi
-    ssh-keygen -t rsa -P "" -C "abcdefghijklmnopqrstuvwxyz" -f $SSH_DIR/.ssh/id_rsa_${shortRepoName}
-
-    if grep -q "com${shortRepoName}" "$SSH_DIR/.ssh/config"; then #条目已存在
-        echo "Git config Item exists"
-    else
-        echo "Host github.com${shortRepoName}" >> $SSH_DIR/.ssh/config
-        echo "User git" >> $SSH_DIR/.ssh/config
-        echo "HostName github.com" >> $SSH_DIR/.ssh/config
-        echo "IdentityFile $SSH_DIR/.ssh/id_rsa_${shortRepoName}" >> $SSH_DIR/.ssh/config
-        echo " " >> $SSH_DIR/.ssh/config
+    ssh-keygen -t rsa -P "" -f $SSH_DIR/id_rsa_${shortRepoName}
+    if ! grep -q "Host github.com${shortRepoName}" $SSH_DIR/config; then
+        echo "Host github.com${shortRepoName}" >> $SSH_DIR/config
+        echo "User git" >> $SSH_DIR/config
+        echo "HostName github.com" >> $SSH_DIR/config
+        echo "IdentityFile $SSH_DIR/id_rsa_${shortRepoName}" >> $SSH_DIR/config
+        echo "" >> $SSH_DIR/config
     fi
+    chmod 644 $SSH_DIR/config
 
-	chown $USER ~/.ssh/config
-	chmod 644 ~/.ssh/config
-
-    cat $SSH_DIR/.ssh/config
-
+    # Print the generated SSH key for copying to GitHub
     echo "-----------------------------------------------------------"
-    cat $SSH_DIR/.ssh/id_rsa_${shortRepoName}.pub
-    echo "-----------------------------------------------------------"
-
-    echo " 1.Add Above to repo: ${repoName}"
-    echo " 2.cd /root && git clone git@github.com${shortRepoName}:${username}/${repoName}.git && cd /root/${repoName}"
+    echo "Copy the following SSH key and add it to your GitHub account:"
+    cat $SSH_DIR/id_rsa_${shortRepoName}.pub
     echo "-----------------------------------------------------------"
 }
 
-
+# Main program
+Input_Username
 Input_Repo_Name
 Add_Git_Key
 
-
-
-
-
+# Output the command for easy repo cloning
+echo "-----------------------------------------------------------"
+echo "To clone the repository, run the following command:"
+echo "git clone git@github.com${shortRepoName}:${username}/${repoName}.git"
+echo "-----------------------------------------------------------"
