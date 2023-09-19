@@ -61,8 +61,8 @@ set_ulimit_max_permanently() {
 }
 
 # 主要函数调用
-check_and_disable_swap
 set_ulimit_max_permanently
+check_and_disable_swap
 
 
 
