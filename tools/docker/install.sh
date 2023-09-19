@@ -73,7 +73,7 @@ Install_JDK_DEBIAN() {
 
 Install_Docker_Debian() {
   curl -fsSL https://get.docker.com -o get-docker.sh
-  sudo sh ./get-docker.sh --dry-run
+  sudo sh ./get-docker.sh
 }
 
 Install_Docker_Compose_Debian() {
