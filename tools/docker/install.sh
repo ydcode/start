@@ -67,8 +67,8 @@ check_and_disable_swap
 
 
 Install_JDK_DEBIAN() {
-  wget https://cdn.azul.com/zulu/bin/zulu17.30.15-ca-jdk17.0.1-linux_x64.tar.gz
-  mkdir -p /usr/java && tar -xzvf zulu17.30.15-ca-jdk17.0.1-linux_x64.tar.gz --strip-components 1 -C /usr/java
+  wget https://cdn.azul.com/zulu/bin/zulu21.30.15-ca-jdk21.0.1-linux_x64.tar.gz
+  mkdir -p /usr/java && tar -xzvf zulu21.30.15-ca-jdk21.0.1-linux_x64.tar.gz --strip-components 1 -C /usr/java
 }
 
 Install_Docker_Debian() {
