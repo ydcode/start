@@ -5,6 +5,9 @@ DOCKER_INNER_MOUNT_POINT="/home/backup/remote"
 HOST_MOUNT_POINT="/var/lib/docker/volumes/mysql_backup/_data/remote"
 REMOTE_DIR="/home/temp_transfer"
 
+FULL_BACKUP_PREFIX="full_"
+INCREMENTAL_BACKUP_PREFIX="incremental_"
+
 setup_sshfs() {
     if [ -f $CONFIG_FILE ]; then
         . $CONFIG_FILE
@@ -60,6 +63,14 @@ setup_sshfs() {
 
 }
 
+get_latest_full_backup() {
+    local latest_backup=$(ls -1d $BACKUP_BASE_DIR/${FULL_BACKUP_PREFIX}* 2>/dev/null | sort -r | head -n 1)
+    if [ -n "$latest_backup" ]; then
+        echo "$latest_backup"
+    else
+        return 1
+    fi
+}
 
 setup_database_password() {
     if [ -f $CONFIG_FILE ]; then
@@ -115,11 +126,17 @@ CURRENT_DATETIME=$(date +"%Y-%m-%d-%H-%M")
 case $BACKUP_METHOD in
     1)
         echo "Full backup selected."
-        BACKUP_DIR="full_$CURRENT_DATETIME"
+        BACKUP_DIR="${FULL_BACKUP_PREFIX}${CURRENT_DATETIME}"
         ;;
     2)
         echo "Incremental backup selected."
-        BACKUP_DIR="incremental_$CURRENT_DATETIME"
+        LATEST_FULL_BACKUP_DIR=$(get_latest_full_backup)
+
+        if [ $? -ne 0 ]; then
+            echo "No full backup found. Incremental backup requires a full backup. Aborting."
+            exit 1
+        fi
+        BACKUP_DIR="${INCREMENTAL_BACKUP_PREFIX}${CURRENT_DATETIME}"
         ;;
     *)
         echo "Invalid selection."
@@ -128,6 +145,13 @@ case $BACKUP_METHOD in
 esac
 
 XTRABACKUP_CMD="xtrabackup --backup --user=root --password=$DATABASE_PASSWORD --target-dir=$BACKUP_BASE_DIR/$BACKUP_DIR"
+
+XTRABACKUP_CMD+=" --tables-exclude='command_control.data_ebay_search2' --tables-exclude='command_control.logs_command_control_request_log'"
+
+if [ "$BACKUP_METHOD" = "2" ]; then
+    XTRABACKUP_CMD="$XTRABACKUP_CMD --incremental-basedir=$LATEST_FULL_BACKUP_DIR"
+fi
+
 echo "The following command will be executed:"
 echo $XTRABACKUP_CMD
 
