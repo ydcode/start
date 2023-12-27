@@ -2,11 +2,7 @@
 
 CONFIG_FILE="/tmp/backup_config.txt"
 
-echo "Do you want to use a remote server for backup storage? (y/n)"
-read MOUNT_CHOICE
-MOUNT_CHOICE=$(echo $MOUNT_CHOICE | xargs)
-
-if [ "$MOUNT_CHOICE" = "y" ]; then
+setup_sshfs() {
     if [ -f $CONFIG_FILE ]; then
         . $CONFIG_FILE
         echo "Current remote server IP: $REMOTE_SERVER_IP"
@@ -31,6 +27,14 @@ if [ "$MOUNT_CHOICE" = "y" ]; then
     sudo apt-get install -y sshfs
     mkdir -p $LOCAL_MOUNT_POINT
     sshfs root@$REMOTE_SERVER_IP:$REMOTE_DIR $LOCAL_MOUNT_POINT
+}
+
+echo "Do you want to use a remote server for backup storage? (y/n)"
+read MOUNT_CHOICE
+MOUNT_CHOICE=$(echo $MOUNT_CHOICE | xargs)
+
+if [ "$MOUNT_CHOICE" = "y" ]; then
+    setup_sshfs
     BACKUP_BASE_DIR=$LOCAL_MOUNT_POINT
 else
     BACKUP_BASE_DIR=/home/backup/mysql
@@ -82,16 +86,10 @@ echo $XTRABACKUP_CMD
 read -p "Are you sure you want to proceed with the backup? (y/n): " CONFIRM_BACKUP
 CONFIRM_BACKUP=$(echo $CONFIRM_BACKUP | xargs)
 
-
 if [ "$CONFIRM_BACKUP" = "y" ]; then
-    apt-get update
-    apt-get install -y wget curl sudo lsb-release
-    wget https://repo.percona.com/apt/percona-release_latest.$(lsb_release -sc)_all.deb
-    sudo dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb
-    sudo percona-release setup ps80
-    sudo apt-get update
-    sudo apt-get install -y percona-xtrabackup-80
-    eval $XTRABACKUP_CMD
+    docker exec -it mysql bash -c "apt-get update && apt-get install -y wget curl sudo lsb-release && wget https://repo.percona.com/apt/percona-release_latest.$(lsb_release -sc)_all.deb && sudo dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb && sudo percona-release setup ps80 && sudo apt-get update && sudo apt-get install -y percona-xtrabackup-80"
+    docker exec -it mysql bash -c "$XTRABACKUP_CMD"
+
 else
     echo "Backup aborted."
     exit 1
