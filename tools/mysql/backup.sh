@@ -2,7 +2,7 @@
 
 CONFIG_FILE="/tmp/backup_config.txt"
 
-setup_sshfs() {
+setup_sshfs() {    
     if [ -f $CONFIG_FILE ]; then
         . $CONFIG_FILE
         echo "Current remote server IP: $REMOTE_SERVER_IP"
@@ -13,20 +13,50 @@ setup_sshfs() {
             REMOTE_SERVER_IP=$NEW_REMOTE_SERVER_IP
         fi
         echo "REMOTE_SERVER_IP=$REMOTE_SERVER_IP" > $CONFIG_FILE
+    
+        if [ -z "$SSH_PASSWORD" ]; then
+            echo -n "Enter SSH password for root@$REMOTE_SERVER_IP: "
+            read -s SSH_PASSWORD
+            echo
+            echo "SSH_PASSWORD=$SSH_PASSWORD" >> $CONFIG_FILE
+        fi
     else
         read -p "Enter remote server IP: " REMOTE_SERVER_IP
         REMOTE_SERVER_IP=$(echo $REMOTE_SERVER_IP | xargs)
         REMOTE_DIR="/home/temp_transfer"
-        LOCAL_MOUNT_POINT="/var/lib/docker/volumes/mysql_backup/_data/remote"
-
+        LOCAL_MOUNT_POINT="/home/backup/remote"
+    
         echo "REMOTE_SERVER_IP=$REMOTE_SERVER_IP" > $CONFIG_FILE
         echo "REMOTE_DIR=$REMOTE_DIR" >> $CONFIG_FILE
         echo "LOCAL_MOUNT_POINT=$LOCAL_MOUNT_POINT" >> $CONFIG_FILE
+    
+        echo -n "Enter SSH password for root@$REMOTE_SERVER_IP: "
+        read -s SSH_PASSWORD
+        echo
+        echo "SSH_PASSWORD=$SSH_PASSWORD" >> $CONFIG_FILE
     fi
-
-    sudo apt-get install -y sshfs
+    
+    sudo apt-get install -y sshfs sshpass
     mkdir -p $LOCAL_MOUNT_POINT
-    sshfs root@$REMOTE_SERVER_IP:$REMOTE_DIR $LOCAL_MOUNT_POINT
+    
+    sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no root@$REMOTE_SERVER_IP "mkdir -p $REMOTE_DIR"
+    
+    MOUNT_CMD="sshfs root@$REMOTE_SERVER_IP:$REMOTE_DIR $LOCAL_MOUNT_POINT"
+    echo "About to run: $MOUNT_CMD"
+    echo "Press enter to continue..."
+    read
+    
+    eval $MOUNT_CMD
+
+    df -h
+    
+    if mount | grep -q "$LOCAL_MOUNT_POINT"; then
+        echo "Mount successful."
+    else
+        echo "Mount failed."
+    fi
+    
+
 }
 
 echo "Do you want to use a remote server for backup storage? (y/n)"
