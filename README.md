@@ -36,3 +36,13 @@ apt update && apt install -y git wget sudo
 wget https://raw.githubusercontent.com/ydcode/start/master/tools/glider/install_glider.sh
 sudo chmod +x install_glider.sh && sudo ./install_glider.sh
 ```
+
+
+
+# Docker MySQL Backup
+```
+docker exec -it mysql bash
+apt update && apt install -y git wget sudo
+wget https://raw.githubusercontent.com/ydcode/start/master/tools/mysql/backup.sh
+sudo chmod +x backup.sh.sh && sudo ./backup.sh
+```
