@@ -1,6 +1,9 @@
 #!/bin/bash
 
 CONFIG_FILE="/tmp/backup_config.txt"
+DOCKER_INNER_MOUNT_POINT="/home/backup/remote"
+HOST_MOUNT_POINT="/var/lib/docker/volumes/mysql_backup/_data/remote"
+REMOTE_DIR="/home/temp_transfer"
 
 setup_sshfs() {
     if [ -f $CONFIG_FILE ]; then
@@ -23,12 +26,10 @@ setup_sshfs() {
     else
         read -p "Enter remote server IP: " REMOTE_SERVER_IP
         REMOTE_SERVER_IP=$(echo $REMOTE_SERVER_IP | xargs)
-        REMOTE_DIR="/home/temp_transfer"
-        LOCAL_MOUNT_POINT="/home/backup/remote"
 
         echo "REMOTE_SERVER_IP=$REMOTE_SERVER_IP" > $CONFIG_FILE
         echo "REMOTE_DIR=$REMOTE_DIR" >> $CONFIG_FILE
-        echo "LOCAL_MOUNT_POINT=$LOCAL_MOUNT_POINT" >> $CONFIG_FILE
+        echo "DOCKER_INNER_MOUNT_POINT=$DOCKER_INNER_MOUNT_POINT" >> $CONFIG_FILE
 
         echo -n "Enter SSH password for root@$REMOTE_SERVER_IP: "
         read -s SSH_PASSWORD
@@ -37,11 +38,11 @@ setup_sshfs() {
     fi
 
     sudo apt-get install -y sshfs sshpass
-    mkdir -p $LOCAL_MOUNT_POINT
+    mkdir -p $DOCKER_INNER_MOUNT_POINT
 
     sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no root@$REMOTE_SERVER_IP "mkdir -p $REMOTE_DIR"
 
-    MOUNT_CMD="sshfs root@$REMOTE_SERVER_IP:$REMOTE_DIR $LOCAL_MOUNT_POINT"
+    MOUNT_CMD="sshfs root@$REMOTE_SERVER_IP:$REMOTE_DIR $HOST_MOUNT_POINT"
     echo "About to run: $MOUNT_CMD"
     echo "Press enter to continue..."
     read
@@ -50,7 +51,7 @@ setup_sshfs() {
 
     df -h
 
-    if mount | grep -q "$LOCAL_MOUNT_POINT"; then
+    if mount | grep -q "$DOCKER_INNER_MOUNT_POINT"; then
         echo "Mount successful."
     else
         echo "Mount failed."
@@ -63,18 +64,29 @@ setup_sshfs() {
 setup_database_password() {
     if [ -f $CONFIG_FILE ]; then
         . $CONFIG_FILE
-        echo "Current database password: $DATABASE_PASSWORD"
-        echo "Enter new DATABASE_PASSWORD or press enter to use current:"
-        read -s NEW_DATABASE_PASSWORD
-        NEW_DATABASE_PASSWORD=$(echo $NEW_DATABASE_PASSWORD | xargs)
-        if [ -n "$NEW_DATABASE_PASSWORD" ]; then
-            DATABASE_PASSWORD=$NEW_DATABASE_PASSWORD
+        if [ -n "$DATABASE_PASSWORD" ]; then
+            echo "Current DATABASE_PASSWORD: $DATABASE_PASSWORD"
+            echo "Do you want to use the current password? (y/n)"
+            read USE_CURRENT_PW_CHOICE
+            USE_CURRENT_PW_CHOICE=$(echo $USE_CURRENT_PW_CHOICE | xargs)
+
+            if [ "$USE_CURRENT_PW_CHOICE" != "y" ]; then
+                echo "Enter new DATABASE_PASSWORD:"
+                read -s DATABASE_PASSWORD
+                DATABASE_PASSWORD=$(echo $DATABASE_PASSWORD | xargs)
+                echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" > $CONFIG_FILE
+            fi
+        else
+            echo "Enter DATABASE_PASSWORD:"
+            read -s DATABASE_PASSWORD
+            DATABASE_PASSWORD=$(echo $DATABASE_PASSWORD | xargs)
+            echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" > $CONFIG_FILE
         fi
-        echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" > $CONFIG_FILE
     else
-        read -s -p "Enter DATABASE_PASSWORD: " DATABASE_PASSWORD
+        echo "Enter DATABASE_PASSWORD:"
+        read -s DATABASE_PASSWORD
         DATABASE_PASSWORD=$(echo $DATABASE_PASSWORD | xargs)
-        echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" >> $CONFIG_FILE
+        echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" > $CONFIG_FILE
     fi
 }
 
@@ -85,7 +97,7 @@ MOUNT_CHOICE=$(echo $MOUNT_CHOICE | xargs)
 
 if [ "$MOUNT_CHOICE" = "y" ]; then
     setup_sshfs
-    BACKUP_BASE_DIR=$LOCAL_MOUNT_POINT
+    BACKUP_BASE_DIR=$DOCKER_INNER_MOUNT_POINT
 else
     BACKUP_BASE_DIR=/home/backup/mysql
 fi
@@ -125,6 +137,11 @@ CONFIRM_BACKUP=$(echo $CONFIRM_BACKUP | xargs)
 if [ "$CONFIRM_BACKUP" = "y" ]; then
     docker exec -it mysql bash -c "apt-get update && apt-get install -y wget curl sudo lsb-release && wget https://repo.percona.com/apt/percona-release_latest.$(lsb_release -sc)_all.deb && sudo dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb && sudo percona-release setup ps80 && sudo apt-get update && sudo apt-get install -y percona-xtrabackup-80"
     docker exec -it mysql bash -c "$XTRABACKUP_CMD"
+
+    docker exec -it mysql bash -c "ls -al $BACKUP_BASE_DIR/$BACKUP_DIR"
+
+    docker exec -it mysql bash -c "echo 'Docker Inner Backup Directory: $BACKUP_BASE_DIR/$BACKUP_DIR'"
+    docker exec -it mysql bash -c "echo 'RemoteServer Backup Directory: $REMOTE_DIR'"
 
 else
     echo "Backup aborted."
