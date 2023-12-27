@@ -2,7 +2,7 @@
 
 CONFIG_FILE="/tmp/backup_config.txt"
 
-setup_sshfs() {    
+setup_sshfs() {
     if [ -f $CONFIG_FILE ]; then
         . $CONFIG_FILE
         echo "Current remote server IP: $REMOTE_SERVER_IP"
@@ -13,7 +13,7 @@ setup_sshfs() {
             REMOTE_SERVER_IP=$NEW_REMOTE_SERVER_IP
         fi
         echo "REMOTE_SERVER_IP=$REMOTE_SERVER_IP" > $CONFIG_FILE
-    
+
         if [ -z "$SSH_PASSWORD" ]; then
             echo -n "Enter SSH password for root@$REMOTE_SERVER_IP: "
             read -s SSH_PASSWORD
@@ -25,39 +25,59 @@ setup_sshfs() {
         REMOTE_SERVER_IP=$(echo $REMOTE_SERVER_IP | xargs)
         REMOTE_DIR="/home/temp_transfer"
         LOCAL_MOUNT_POINT="/home/backup/remote"
-    
+
         echo "REMOTE_SERVER_IP=$REMOTE_SERVER_IP" > $CONFIG_FILE
         echo "REMOTE_DIR=$REMOTE_DIR" >> $CONFIG_FILE
         echo "LOCAL_MOUNT_POINT=$LOCAL_MOUNT_POINT" >> $CONFIG_FILE
-    
+
         echo -n "Enter SSH password for root@$REMOTE_SERVER_IP: "
         read -s SSH_PASSWORD
         echo
         echo "SSH_PASSWORD=$SSH_PASSWORD" >> $CONFIG_FILE
     fi
-    
+
     sudo apt-get install -y sshfs sshpass
     mkdir -p $LOCAL_MOUNT_POINT
-    
+
     sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no root@$REMOTE_SERVER_IP "mkdir -p $REMOTE_DIR"
-    
+
     MOUNT_CMD="sshfs root@$REMOTE_SERVER_IP:$REMOTE_DIR $LOCAL_MOUNT_POINT"
     echo "About to run: $MOUNT_CMD"
     echo "Press enter to continue..."
     read
-    
+
     eval $MOUNT_CMD
 
     df -h
-    
+
     if mount | grep -q "$LOCAL_MOUNT_POINT"; then
         echo "Mount successful."
     else
         echo "Mount failed."
     fi
-    
+
 
 }
+
+
+setup_database_password() {
+    if [ -f $CONFIG_FILE ]; then
+        . $CONFIG_FILE
+        echo "Current database password: $DATABASE_PASSWORD"
+        echo "Enter new DATABASE_PASSWORD or press enter to use current:"
+        read -s NEW_DATABASE_PASSWORD
+        NEW_DATABASE_PASSWORD=$(echo $NEW_DATABASE_PASSWORD | xargs)
+        if [ -n "$NEW_DATABASE_PASSWORD" ]; then
+            DATABASE_PASSWORD=$NEW_DATABASE_PASSWORD
+        fi
+        echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" > $CONFIG_FILE
+    else
+        read -s -p "Enter DATABASE_PASSWORD: " DATABASE_PASSWORD
+        DATABASE_PASSWORD=$(echo $DATABASE_PASSWORD | xargs)
+        echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" >> $CONFIG_FILE
+    fi
+}
+
 
 echo "Do you want to use a remote server for backup storage? (y/n)"
 read MOUNT_CHOICE
@@ -76,21 +96,7 @@ echo "2) Incremental"
 read -p "Enter your choice (1 or 2): " BACKUP_METHOD
 BACKUP_METHOD=$(echo $BACKUP_METHOD | xargs)
 
-if [ -f $CONFIG_FILE ]; then
-    . $CONFIG_FILE
-    echo "Current database password."
-    echo "Enter new DATABASE_PASSWORD or press enter to use current:"
-    read -s NEW_DATABASE_PASSWORD
-    NEW_DATABASE_PASSWORD=$(echo $NEW_DATABASE_PASSWORD | xargs)
-    if [ -n "$NEW_DATABASE_PASSWORD" ]; then
-        DATABASE_PASSWORD=$NEW_DATABASE_PASSWORD
-    fi
-    echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" > $CONFIG_FILE
-else
-    read -s -p "Enter DATABASE_PASSWORD: " DATABASE_PASSWORD
-    DATABASE_PASSWORD=$(echo $DATABASE_PASSWORD | xargs)
-    echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" >> $CONFIG_FILE
-fi
+setup_database_password
 
 CURRENT_DATETIME=$(date +"%Y-%m-%d-%H-%M")
 
