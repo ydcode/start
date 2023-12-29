@@ -13,3 +13,5 @@ rm -rf /data/mysql_data/*
 
 #dataDir Realy Path, Not Docker Volume Path
 xtrabackup --copy-back --target-dir=/home/temp_transfer/full_2023-12-27-05-00 --datadir=/var/lib/docker/volumes/mysql_data/_data
+
+xtrabackup --copy-back --target-dir=/home/temp_transfer/full_2023-12-27-05-00 --datadir=/data/mysql_data
