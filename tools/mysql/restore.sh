@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#REMOTE_SERVER_IP=
+#rsync -avz --progress data_ebay_search2-2.sql root@$REMOTE_SERVER_IP:/home/transfer/
+
+
 docker rm -f mysql
 apt-get update && apt-get install -y wget curl sudo lsb-release && wget https://repo.percona.com/apt/percona-release_latest.$(lsb_release -sc)_all.deb && sudo dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb && sudo percona-release setup ps80 && sudo apt-get update && sudo apt-get install -y percona-xtrabackup-80
 
