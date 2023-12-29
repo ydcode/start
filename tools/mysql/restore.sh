@@ -9,6 +9,7 @@ apt-get update && apt-get install -y wget curl sudo lsb-release && wget https://
 
 xtrabackup --prepare --target-dir=/home/temp_transfer/full_2023-12-27-05-00
 rm -rf /var/lib/docker/volumes/mysql_data/_data/*
+rm -rf /data/mysql_data/*
 
 #dataDir Realy Path, Not Docker Volume Path
 xtrabackup --copy-back --target-dir=/home/temp_transfer/full_2023-12-27-05-00 --datadir=/var/lib/docker/volumes/mysql_data/_data
