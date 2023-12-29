@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #REMOTE_SERVER_IP=
-#rsync -avz --progress /home/temp_transfer root@$REMOTE_SERVER_IP:/home/temp_transfer
+#rsync -avz --progress /home/temp_transfer/ root@$REMOTE_SERVER_IP:/home/temp_transfer/
 
 
 docker rm -f mysql
