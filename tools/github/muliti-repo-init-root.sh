@@ -32,8 +32,8 @@ Check_Repo_Name_Right() {
 
 # Initialize Git configuration
 Init_Git_Config() {
-    SSH_DIR="$HOME/.ssh"
-    [ ! -d "$SSH_DIR" ] && mkdir -p "$SSH_DIR"
+    SSH_DIR="/root/.ssh"
+    [ ! -d $SSH_DIR ] && mkdir $SSH_DIR
     [ ! -e "$SSH_DIR/config" ] && touch "$SSH_DIR/config"
 }
 
@@ -41,22 +41,22 @@ Init_Git_Config() {
 Add_Git_Key() {
     Init_Git_Config
     if [ -e "$SSH_DIR/id_rsa_${shortRepoName}" ]; then
-        rm -rf "$SSH_DIR/id_rsa_${shortRepoName}"*
+        rm -rf $SSH_DIR/id_rsa_${shortRepoName}*
     fi
-    ssh-keygen -t rsa -P "" -f "$SSH_DIR/id_rsa_${shortRepoName}"
-    if ! grep -q "Host github.com-${shortRepoName}" "$SSH_DIR/config"; then
-        echo "Host github.com-${shortRepoName}" >> "$SSH_DIR/config"
-        echo "User git" >> "$SSH_DIR/config"
-        echo "HostName github.com" >> "$SSH_DIR/config"
-        echo "IdentityFile $SSH_DIR/id_rsa_${shortRepoName}" >> "$SSH_DIR/config"
-        echo "" >> "$SSH_DIR/config"
+    ssh-keygen -t rsa -P "" -f $SSH_DIR/id_rsa_${shortRepoName}
+    if ! grep -q "Host github.com${shortRepoName}" $SSH_DIR/config; then
+        echo "Host github.com${shortRepoName}" >> $SSH_DIR/config
+        echo "User git" >> $SSH_DIR/config
+        echo "HostName github.com" >> $SSH_DIR/config
+        echo "IdentityFile $SSH_DIR/id_rsa_${shortRepoName}" >> $SSH_DIR/config
+        echo "" >> $SSH_DIR/config
     fi
-    chmod 644 "$SSH_DIR/config"
+    chmod 644 $SSH_DIR/config
 
     # Print the generated SSH key for copying to GitHub
     echo "-----------------------------------------------------------"
     echo "Copy the following SSH key and add it to your GitHub account:"
-    cat "$SSH_DIR/id_rsa_${shortRepoName}.pub"
+    cat $SSH_DIR/id_rsa_${shortRepoName}.pub
     echo "-----------------------------------------------------------"
 }
 
