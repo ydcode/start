@@ -32,7 +32,7 @@ Check_Repo_Name_Right() {
 
 # Initialize Git configuration
 Init_Git_Config() {
-    SSH_DIR="/root/.ssh"
+    SSH_DIR="~/.ssh"
     [ ! -d $SSH_DIR ] && mkdir $SSH_DIR
     [ ! -e "$SSH_DIR/config" ] && touch "$SSH_DIR/config"
 }
