@@ -58,17 +58,15 @@ XTRABACKUP_CMD="xtrabackup --backup --user=root --password=$DATABASE_PASSWORD --
 
 XTRABACKUP_CMD+=" --tables-exclude='command_control.data_ebay_search2' --tables-exclude='command_control.logs_command_control_request_log'"
 
-echo "XTRABACKUP_CMD: $XTRABACKUP_CMD"
+echo "DOCKER INNER - XTRABACKUP_CMD - $XTRABACKUP_CMD"
 
 read -p "Are you sure you want to proceed with the backup? (y/n): " CONFIRM_BACKUP
 CONFIRM_BACKUP=$(echo $CONFIRM_BACKUP | xargs)
 
 if [ "$CONFIRM_BACKUP" = "y" ]; then
+    docker exec -it mysql bash -c "mkdir -p $BACKUP_BASE_DIR"
     docker exec -it mysql bash -c "apt-get update && apt-get install -y wget curl sudo lsb-release && wget https://repo.percona.com/apt/percona-release_latest.$(lsb_release -sc)_all.deb && sudo dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb && sudo percona-release setup ps80 && sudo apt-get update && sudo apt-get install -y percona-xtrabackup-80"
     docker exec -it mysql bash -c "$XTRABACKUP_CMD"
-
-    docker exec -it mysql bash -c "ls -al"
-    docker exec -it mysql bash -c "ls -al $BACKUP_BASE_DIR"
     docker exec -it mysql bash -c "ls -al $BACKUP_BASE_DIR/$BACKUP_DIR"
 
     docker exec -it mysql bash -c "echo 'Docker Inner Backup Directory: $BACKUP_BASE_DIR/$BACKUP_DIR'"
