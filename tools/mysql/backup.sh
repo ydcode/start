@@ -1,67 +1,10 @@
 #!/bin/bash
 
 CONFIG_FILE="/tmp/backup_config.txt"
-DOCKER_INNER_MOUNT_POINT="/home/backup/remote"
-HOST_MOUNT_POINT="/var/lib/docker/volumes/mysql_backup/_data/remote"
 REMOTE_DIR="/home/temp_transfer"
 
 FULL_BACKUP_PREFIX="full_"
 INCREMENTAL_BACKUP_PREFIX="incremental_"
-
-setup_sshfs() {
-    if [ -f $CONFIG_FILE ]; then
-        . $CONFIG_FILE
-        echo "Current remote server IP: $REMOTE_SERVER_IP"
-        echo "Enter new remote server IP or press enter to use current [$REMOTE_SERVER_IP]:"
-        read NEW_REMOTE_SERVER_IP
-        NEW_REMOTE_SERVER_IP=$(echo $NEW_REMOTE_SERVER_IP | xargs)
-        if [ -n "$NEW_REMOTE_SERVER_IP" ]; then
-            REMOTE_SERVER_IP=$NEW_REMOTE_SERVER_IP
-        fi
-        echo "REMOTE_SERVER_IP=$REMOTE_SERVER_IP" > $CONFIG_FILE
-
-        if [ -z "$SSH_PASSWORD" ]; then
-            echo -n "Enter SSH password for root@$REMOTE_SERVER_IP: "
-            read -s SSH_PASSWORD
-            echo
-            echo "SSH_PASSWORD=$SSH_PASSWORD" >> $CONFIG_FILE
-        fi
-    else
-        read -p "Enter remote server IP: " REMOTE_SERVER_IP
-        REMOTE_SERVER_IP=$(echo $REMOTE_SERVER_IP | xargs)
-
-        echo "REMOTE_SERVER_IP=$REMOTE_SERVER_IP" > $CONFIG_FILE
-        echo "REMOTE_DIR=$REMOTE_DIR" >> $CONFIG_FILE
-        echo "DOCKER_INNER_MOUNT_POINT=$DOCKER_INNER_MOUNT_POINT" >> $CONFIG_FILE
-
-        echo -n "Enter SSH password for root@$REMOTE_SERVER_IP: "
-        read -s SSH_PASSWORD
-        echo
-        echo "SSH_PASSWORD=$SSH_PASSWORD" >> $CONFIG_FILE
-    fi
-
-    sudo apt-get install -y sshfs sshpass
-    mkdir -p $DOCKER_INNER_MOUNT_POINT
-
-    sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no root@$REMOTE_SERVER_IP "mkdir -p $REMOTE_DIR"
-
-    MOUNT_CMD="sshfs root@$REMOTE_SERVER_IP:$REMOTE_DIR $HOST_MOUNT_POINT"
-    echo "About to run: $MOUNT_CMD"
-    echo "Press enter to continue..."
-    read
-
-    eval $MOUNT_CMD
-
-    df -h
-
-    if mount | grep -q "$DOCKER_INNER_MOUNT_POINT"; then
-        echo "Mount successful."
-    else
-        echo "Mount failed."
-    fi
-
-
-}
 
 get_latest_full_backup() {
     local latest_backup=$(ls -1d $BACKUP_BASE_DIR/${FULL_BACKUP_PREFIX}* 2>/dev/null | sort -r | head -n 1)
@@ -102,16 +45,7 @@ setup_database_password() {
 }
 
 
-echo "Do you want to use a remote server for backup storage? (y/n)"
-read MOUNT_CHOICE
-MOUNT_CHOICE=$(echo $MOUNT_CHOICE | xargs)
-
-if [ "$MOUNT_CHOICE" = "y" ]; then
-    setup_sshfs
-    BACKUP_BASE_DIR=$DOCKER_INNER_MOUNT_POINT
-else
-    BACKUP_BASE_DIR=/home/backup/mysql
-fi
+BACKUP_BASE_DIR=/home/backup/mysql
 
 echo "Select backup method:"
 echo "1) Full"
