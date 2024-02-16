@@ -98,6 +98,7 @@ if [ "$CONFIRM_BACKUP" = "y" ]; then
     docker exec -it mysql bash -c "apt-get update && apt-get install -y wget curl sudo lsb-release && wget https://repo.percona.com/apt/percona-release_latest.$(lsb_release -sc)_all.deb && sudo dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb && sudo percona-release setup ps80 && sudo apt-get update && sudo apt-get install -y percona-xtrabackup-80"
     docker exec -it mysql bash -c "$XTRABACKUP_CMD"
 
+    docker exec -it mysql bash -c "ls -al $BACKUP_BASE_DIR"
     docker exec -it mysql bash -c "ls -al $BACKUP_BASE_DIR/$BACKUP_DIR"
 
     docker exec -it mysql bash -c "echo 'Docker Inner Backup Directory: $BACKUP_BASE_DIR/$BACKUP_DIR'"
