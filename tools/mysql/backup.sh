@@ -144,6 +144,8 @@ case $BACKUP_METHOD in
         ;;
 esac
 
+mkdir -p $BACKUP_BASE_DIR/$BACKUP_DIR
+
 XTRABACKUP_CMD="xtrabackup --backup --user=root --password=$DATABASE_PASSWORD --target-dir=$BACKUP_BASE_DIR/$BACKUP_DIR"
 
 XTRABACKUP_CMD+=" --tables-exclude='command_control.data_ebay_search2' --tables-exclude='command_control.logs_command_control_request_log'"
