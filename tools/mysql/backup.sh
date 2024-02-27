@@ -1,14 +1,14 @@
 #!/bin/bash
 
 BACKUP_BASE_DIR=/home/backup/mysql
-FULL_BACKUP_PREFIX="full_"
+BACKUP_PREFIX="full_"
 
 CONFIG_FILE="/tmp/backup_config.txt"
 REMOTE_DIR="/home/temp_transfer"
 
 
 get_latest_full_backup() {
-    local latest_backup=$(ls -1d $BACKUP_BASE_DIR/${FULL_BACKUP_PREFIX}* 2>/dev/null | sort -r | head -n 1)
+    local latest_backup=$(ls -1d $BACKUP_BASE_DIR/${BACKUP_PREFIX}* 2>/dev/null | sort -r | head -n 1)
     if [ -n "$latest_backup" ]; then
         echo "$latest_backup"
     else
@@ -47,9 +47,17 @@ setup_database_password() {
 
 setup_database_password
 
+echo "Do you want to perform a mini backup? (y/n): "
+read MINI_BACKUP_CHOICE
+MINI_BACKUP_CHOICE=$(echo $MINI_BACKUP_CHOICE | xargs)
+
+if [ "$MINI_BACKUP_CHOICE" = "y" ]; then
+    BACKUP_PREFIX="mini_"
+fi
+
 CURRENT_DATETIME=$(date +"%Y-%m-%d-%H-%M")
 
-BACKUP_DIR="${FULL_BACKUP_PREFIX}${CURRENT_DATETIME}"
+BACKUP_DIR="${BACKUP_PREFIX}${CURRENT_DATETIME}"
 
 
 mkdir -p $BACKUP_BASE_DIR/$BACKUP_DIR
@@ -57,10 +65,6 @@ mkdir -p $BACKUP_BASE_DIR/$BACKUP_DIR
 XTRABACKUP_CMD="xtrabackup --backup --user=root --password=$DATABASE_PASSWORD --target-dir=$BACKUP_BASE_DIR/$BACKUP_DIR"
 
 XTRABACKUP_CMD+=" --tables-exclude='command_control.data_ebay_search2' --tables-exclude='command_control.logs_command_control_request_log'"
-
-echo "Do you want to perform a mini backup? (y/n): "
-read MINI_BACKUP_CHOICE
-MINI_BACKUP_CHOICE=$(echo $MINI_BACKUP_CHOICE | xargs)
 
 if [ "$MINI_BACKUP_CHOICE" = "y" ]; then
     XTRABACKUP_CMD+=" --tables-exclude='command_control.data_ebay_product'"
