@@ -58,7 +58,15 @@ XTRABACKUP_CMD="xtrabackup --backup --user=root --password=$DATABASE_PASSWORD --
 
 XTRABACKUP_CMD+=" --tables-exclude='command_control.data_ebay_search2' --tables-exclude='command_control.logs_command_control_request_log'"
 
-echo "DOCKER INNER - XTRABACKUP_CMD - $XTRABACKUP_CMD"
+echo "Do you want to perform a mini backup? (y/n): "
+read MINI_BACKUP_CHOICE
+MINI_BACKUP_CHOICE=$(echo $MINI_BACKUP_CHOICE | xargs)
+
+if [ "$MINI_BACKUP_CHOICE" = "y" ]; then
+    XTRABACKUP_CMD+=" --tables-exclude='command_control.data_ebay_product'"
+fi
+
+echo "DOCKER INNER - Final XTRABACKUP_CMD - $XTRABACKUP_CMD"
 
 read -p "Are you sure you want to proceed with the backup? (y/n): " CONFIRM_BACKUP
 CONFIRM_BACKUP=$(echo $CONFIRM_BACKUP | xargs)
