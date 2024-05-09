@@ -13,7 +13,12 @@ xtrabackup --prepare --target-dir=$BACKUP_DIR
 rm -rf /var/lib/docker/volumes/mysql_data/_data/*
 rm -rf /data/mysql_data/*
 
-#xtrabackup --copy-back --target-dir=$BACKUP_DIR --datadir=/data/mysql_data
-#DataDir Real Path, Not Docker Volume Path
-xtrabackup --copy-back --target-dir=$BACKUP_DIR --datadir=/var/lib/docker/volumes/mysql_data/_data
+#Copy files To Real Path, Not Docker Volume Path
+#xtrabackup --copy-back --target-dir=$BACKUP_DIR --datadir=/var/lib/docker/volumes/mysql_data/_data
+
+echo "Please enter the full path of the mysql_data directory (e.g., /data/mysql_data):"
+read input
+DATA_DIR=$(echo $input | xargs)
+xtrabackup --copy-back --target-dir=$BACKUP_DIR --datadir=$DATA_DIR
+
 
