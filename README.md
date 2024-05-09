@@ -44,3 +44,7 @@ sudo chmod +x install_glider.sh && sudo ./install_glider.sh
 wget https://raw.githubusercontent.com/ydcode/start/master/tools/mysql/backup.sh
 sudo chmod +x backup.sh && sudo ./backup.sh
 ```
+```
+wget https://raw.githubusercontent.com/ydcode/start/master/tools/mysql/restore.sh
+sudo chmod +x restore.sh && sudo ./restore.sh
+```
