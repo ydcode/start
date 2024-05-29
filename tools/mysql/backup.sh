@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#volume:[mysql_backup:/home/backup]
 BACKUP_BASE_DIR=/home/backup/mysql
 BACKUP_PREFIX="full_"
 
