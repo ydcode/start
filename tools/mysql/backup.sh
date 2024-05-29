@@ -5,7 +5,6 @@ BACKUP_BASE_DIR=/home/backup/mysql
 BACKUP_PREFIX="full_"
 
 CONFIG_FILE="/tmp/backup_config.txt"
-REMOTE_DIR="/home/temp_transfer"
 
 
 get_latest_full_backup() {
@@ -83,7 +82,6 @@ if [ "$CONFIRM_BACKUP" = "y" ]; then
     docker exec -it mysql bash -c "ls -al $BACKUP_BASE_DIR/$BACKUP_DIR"
 
     docker exec -it mysql bash -c "echo 'Docker Inner Backup Directory: $BACKUP_BASE_DIR/$BACKUP_DIR'"
-    docker exec -it mysql bash -c "echo 'RemoteServer Backup Directory: $REMOTE_DIR'"
 
 else
     echo "Backup aborted."
