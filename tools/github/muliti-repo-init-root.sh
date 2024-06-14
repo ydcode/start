@@ -34,7 +34,7 @@ Check_Repo_Name_Right() {
 Init_Git_Config() {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         SSH_DIR="/root/.ssh"
-    elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
+    elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
         SSH_DIR="$HOME/.ssh"
     else
         SSH_DIR="$HOME/.ssh"
