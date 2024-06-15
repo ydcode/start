@@ -76,8 +76,8 @@ Install_JDK_DEBIAN() {
 
 Install_GRADLE() {
   wget https://services.gradle.org/distributions/gradle-8.8-bin.zip
-  mkdir -p /usr/gradle && unzip -q gradle-8.8-bin.zip -d /usr/gradle && mv /usr/gradle/gradle-8.8/* /usr/gradle/
-  grep -q "export GRADLE_HOME=/usr/gradle" /etc/profile || echo "export GRADLE_HOME=/usr/gradle" >> /etc/profile
+  mkdir -p /usr/bin/gradle && unzip -q gradle-8.8-bin.zip -d /usr/bin/gradle && mv /usr/bin/gradle/gradle-8.8/* /usr/bin/gradle/
+  grep -q "export GRADLE_HOME=/usr/bin/gradle" /etc/profile || echo "export GRADLE_HOME=/usr/bin/gradle" >> /etc/profile
   grep -q "\$GRADLE_HOME/bin" /etc/profile || echo "export PATH=\$GRADLE_HOME/bin:\$PATH" >> /etc/profile
   source /etc/profile
 }
