@@ -20,6 +20,11 @@ New-NetFirewallRule -DisplayName 'RDPPORTLatest-UDP-In' -Profile 'Public' -Direc
 
 Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "PortNumber"
 
+# 添加IP白名单
+$WHITE_IP = 1.1.1.1
+New-NetFirewallRule -DisplayName "Allow RDP from 47.242.229.131" -Direction Inbound -Protocol TCP -LocalPort 26888 -RemoteAddress $WHITE_IP -Action Allow
+
+清除其他的通配的放行规则
 
 
 
