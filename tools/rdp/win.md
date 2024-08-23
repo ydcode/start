@@ -20,31 +20,30 @@ New-NetFirewallRule -DisplayName 'RDPPORTLatest-UDP-In' -Profile 'Public' -Direc
 
 Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "PortNumber"
 
-# 添加IP白名单
+# 防火墙添加IP白名单 只允许白名单IP访问
 $WHITE_IP = 1.1.1.1
 New-NetFirewallRule -DisplayName "Allow RDP from 47.242.229.131" -Direction Inbound -Protocol TCP -LocalPort 26888 -RemoteAddress $WHITE_IP -Action Allow
-
 清除其他的通配的放行规则
 
-
+配置两步验证 Duo.com 2FA (如有必要)
 
 1.更新系统
 0.更改密码
+```
 
-防火墙只允许白名单IP访问
-两步验证
 
-禁用 RDP 的多用户会话
+## 禁用 RDP 的多用户会话
+```
 Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server' -Name "fSingleSessionPerUser" -Value 1
+Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server' -Name "fSingleSessionPerUser"
+1 为禁用
+```
 
 
-
-
+## 其他
+```
 #清理磁盘 blkdiscard -f /dev/nvme0n1 && blkdiscard -f /dev/nvme1n1
 #确认 lsblk
 
-
-
-
-
 ```
+
