@@ -60,10 +60,15 @@ set_ulimit_max_permanently() {
   fi
 }
 
+
 # 主要函数调用
 set_ulimit_max_permanently
 check_and_disable_swap
 
+# Oceanbase
+sed -i '/^fs.aio-max-nr\s*=.*/d' /etc/sysctl.conf
+echo "fs.aio-max-nr = 1048576" >> /etc/sysctl.conf
+sysctl -p
 
 
 Install_JDK_DEBIAN() {
