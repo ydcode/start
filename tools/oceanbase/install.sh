@@ -31,4 +31,17 @@ Install_OBD() {
   apt install -y iputils-clockdiff rpm2cpio alien
 }
 
+CONFIG_FOR_OCEANBASE() {
+  echo "fs.user-max-processes = 655350" | sudo tee -a /etc/security/limits.conf
+  echo "* soft core unlimited" | sudo tee -a /etc/security/limits.conf
+  echo "* hard core unlimited" | sudo tee -a /etc/security/limits.conf
+
+  echo "* soft stack unlimited" | sudo tee -a /etc/security/limits.conf
+  echo "* hard stack unlimited" | sudo tee -a /etc/security/limits.conf
+
+  echo "fs.aio-max-nr = 1048576" | sudo tee -a /etc/sysctl.conf
+  echo "vm.max_map_count = 655360" | sudo tee -a /etc/sysctl.conf
+  sudo sysctl -p
+}
+
 Install_OBD
