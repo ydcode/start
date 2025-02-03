@@ -21,7 +21,6 @@ iface enp6s0.3600 inet static
   vlan-raw-device enp6s0
   mtu 1400
 EOF"
-
 }
 
 Install_ESSENTIAL__DEBIAN() {
