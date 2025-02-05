@@ -58,13 +58,6 @@ set_ulimit_max_permanently() {
 #sysctl -p
 
 
-Install_JDK_DEBIAN() {
-  wget https://cdn.azul.com/zulu/bin/zulu21.30.15-ca-jdk21.0.1-linux_x64.tar.gz
-  mkdir -p /usr/java && tar -xzvf zulu21.30.15-ca-jdk21.0.1-linux_x64.tar.gz --strip-components 1 -C /usr/java
-  grep -q "export JAVA_HOME=/usr/java" /etc/profile || echo "export JAVA_HOME=/usr/java" >> /etc/profile
-  grep -q "\$JAVA_HOME/bin" /etc/profile || echo "export PATH=\$JAVA_HOME/bin:\$PATH" >> /etc/profile
-  source /etc/profile
-}
 
 Install_GRADLE() {
   wget https://services.gradle.org/distributions/gradle-8.8-bin.zip
@@ -73,33 +66,6 @@ Install_GRADLE() {
   grep -q "\$GRADLE_HOME/bin" /etc/profile || echo "export PATH=\$GRADLE_HOME/bin:\$PATH" >> /etc/profile
   source /etc/profile
 }
-
-
-Install_Docker_Compose_Debian() {
-  # 获取最新版本号
-  COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/') || {
-    echo "无法获取Docker Compose的最新版本。请手动安装。"
-    return 1
-  }
-
-  # 下载最新版本并添加执行权限
-  sudo curl -L "https://github.com/docker/compose/releases/download/$COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose &&
-    sudo chmod +x /usr/local/bin/docker-compose || {
-    echo "Docker Compose安装失败。请手动安装。"
-    return 1
-  }
-
-  # 显示Docker Compose版本号以验证安装
-  docker-compose --version || {
-    echo "Docker Compose安装验证失败。请手动检查。"
-    return 1
-  }
-
-  echo "Docker Compose $COMPOSE_VERSION 安装成功。"
-}
-
-
-#Install_Docker_Compose_Debian
 
 install_docker() {
     if command -v docker >/dev/null 2>&1; then
