@@ -7,6 +7,7 @@ source "$(dirname "$0")/common/swap.sh"
 source "$(dirname "$0")/docker/docker.sh"
 source "$(dirname "$0")/docker/docker-compose.sh"
 source "$(dirname "$0")/java/jdk21.sh"
+source "$(dirname "$0")/java/gradle.sh"
 
 SHOW_TEMP_MESSAGE=true  # Toggle to control message visibility
 TEMP_MESSAGE=$(cat << 'EOF'
@@ -27,6 +28,7 @@ EOF
 100)  Install Docker              12) ***************
 101)  Install Docker Compose      12) Backup your node
 110)  Install JDK 21                 12) Backup your node
+111)  Install Gradle                12) Backup your node
 -----------------------------------------------------------------
 200)  Install SOCKS5 - GLIDER     11) Balance log
 301)  Install SOCKS5 - V2RAY      11) Balance log
@@ -71,6 +73,7 @@ main() {
             100) install_docker; press_any_key ;;
             101) install_docker_compose; press_any_key ;;
             110) install_jdk21; press_any_key ;;
+            111) install_gradle; press_any_key ;;
             10) start_node; press_any_key ;;
             [eE]) exit ;;
             *) echo "Invalid option, please try again."; press_any_key ;;

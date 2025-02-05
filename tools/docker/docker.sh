@@ -57,16 +57,6 @@ set_ulimit_max_permanently() {
 #echo "fs.aio-max-nr = 1048576" >> /etc/sysctl.conf
 #sysctl -p
 
-
-
-Install_GRADLE() {
-  wget https://services.gradle.org/distributions/gradle-8.8-bin.zip
-  mkdir -p /usr/gradle && unzip -q gradle-8.8-bin.zip -d /usr/gradle && mv /usr/gradle/gradle-8.8/* /usr/gradle/
-  grep -q "export GRADLE_HOME=/usr/gradle" /etc/profile || echo "export GRADLE_HOME=/usr/gradle" >> /etc/profile
-  grep -q "\$GRADLE_HOME/bin" /etc/profile || echo "export PATH=\$GRADLE_HOME/bin:\$PATH" >> /etc/profile
-  source /etc/profile
-}
-
 install_docker() {
     if command -v docker >/dev/null 2>&1; then
         version=$(docker --version)
