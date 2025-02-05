@@ -41,8 +41,7 @@ EOF
 502)  Install OBD                 11) Balance log
 503)  Install OCEANBASE           11) Balance log
 -----------------------------------------------------------------
-601)  Disable SWAP       11) Balance log
-601)  Install OCP                 11) Balance log
+601)  Disable SWAP                11) Balance log
 602)  Install OBD                 11) Balance log
 603)  Install OCEANBASE           11) Balance log
 -----------------------------------------------------------------

@@ -8,7 +8,6 @@ disable_swap__debian() {
   echo "Swap has been disabled and permanently turned off"
 }
 
-
 disable_swap() {
   echo
   echo "⌛️ Starting Disable SWAP..."
