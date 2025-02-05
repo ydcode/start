@@ -23,6 +23,7 @@ config_ulimit() {
 
   if [ -f "$ulimit_file" ]; then
     echo "✅ Config ulimit successfully: $ulimit_file exists."
+    cat "$ulimit_file"
   else
     echo "❌ Config ulimit failed: $ulimit_file does not exist."
     exit 1
