@@ -39,14 +39,14 @@ set_ulimit_max_permanently() {
 }
 
 
-# 主要函数调用
-set_ulimit_max_permanently
-check_and_disable_swap
-
-# Oceanbase
-sed -i '/^fs.aio-max-nr\s*=.*/d' /etc/sysctl.conf
-echo "fs.aio-max-nr = 1048576" >> /etc/sysctl.conf
-sysctl -p
+## 主要函数调用
+#set_ulimit_max_permanently
+#check_and_disable_swap
+#
+## Oceanbase
+#sed -i '/^fs.aio-max-nr\s*=.*/d' /etc/sysctl.conf
+#echo "fs.aio-max-nr = 1048576" >> /etc/sysctl.conf
+#sysctl -p
 
 
 Install_JDK_DEBIAN() {
@@ -94,15 +94,33 @@ Install_Docker_Compose_Debian() {
   echo "Docker Compose $COMPOSE_VERSION 安装成功。"
 }
 
-if [ ! -e "/usr/bin/docker" ]; then
-  Install_Docker_Debian
-fi
+#if [ ! -e "/usr/bin/docker" ]; then
+#  Install_Docker_Debian
+#fi
 
-Install_Docker_Compose_Debian
+#Install_Docker_Compose_Debian
 
-sudo systemctl start docker
-sudo systemctl enable docker #开机启动
+#sudo systemctl start docker
+#sudo systemctl enable docker #开机启动
 
-source ~/.bashrc
-docker run hello-world
+#source ~/.bashrc
+#docker run hello-world
+
+
+install_docker() {
+    if [ -e "/usr/bin/docker" ]; then
+      echo "$MISSING_SERVICE_MSG"
+      return 1
+    fi
+
+
+    Install_Docker_Debian
+
+    echo
+    echo "⌛️ Starting node service..."
+    echo
+    service $service_name start
+    echo "✅ Node started"
+    echo
+}
 

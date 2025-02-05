@@ -65,26 +65,12 @@ main() {
 
 
         case $choice in
+            100) install_docker; press_any_key ;;
             10) start_node; press_any_key ;;
             [eE]) exit ;;
             *) echo "Invalid option, please try again."; press_any_key ;;
         esac
     done
-}
-
-start_node() {
-    local service_name=$(get_active_service)
-    if [ $? -ne 0 ]; then
-        echo "$MISSING_SERVICE_MSG"
-        return 1
-    fi
-
-    echo
-    echo "⌛️ Starting node service..."
-    echo
-    service $service_name start
-    echo "✅ Node started"
-    echo
 }
 
 
