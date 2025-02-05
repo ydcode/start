@@ -2,6 +2,11 @@
 
 install_gradle__debian() {
   apt update && apt install -y unzip
+
+  if [ -d "/usr/gradle" ]; then
+    rm -rf /usr/gradle
+  fi
+
   wget https://services.gradle.org/distributions/gradle-8.8-bin.zip
   mkdir -p /usr/gradle && unzip -q gradle-8.8-bin.zip -d /usr/gradle && mv /usr/gradle/gradle-8.8/* /usr/gradle/
   grep -q "export GRADLE_HOME=/usr/gradle" /etc/profile || echo "export GRADLE_HOME=/usr/gradle" >>/etc/profile
