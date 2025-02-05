@@ -101,12 +101,6 @@ Install_Docker_Compose_Debian() {
 
 #Install_Docker_Compose_Debian
 
-
-
-#source ~/.bashrc
-#docker run hello-world
-
-
 install_docker() {
     if command -v docker >/dev/null 2>&1; then
         version=$(docker --version)
