@@ -41,7 +41,7 @@ EOF
 502)  Install OBD                 11) Balance log
 503)  Install OCEANBASE           11) Balance log
 -----------------------------------------------------------------
-601)  Prepare for OCEANBASE       11) Balance log
+601)  Disable SWAP       11) Balance log
 601)  Install OCP                 11) Balance log
 602)  Install OBD                 11) Balance log
 603)  Install OCEANBASE           11) Balance log
@@ -74,6 +74,7 @@ main() {
             101) install_docker_compose; press_any_key ;;
             110) install_jdk21; press_any_key ;;
             111) install_gradle; press_any_key ;;
+            601) disable_swap; press_any_key ;;
             10) start_node; press_any_key ;;
             [eE]) exit ;;
             *) echo "Invalid option, please try again."; press_any_key ;;

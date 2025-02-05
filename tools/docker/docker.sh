@@ -14,11 +14,6 @@ install_docker__debian() {
 # 检查swap状态并据此决定是否关闭swap的函数
 check_and_disable_swap() {
   # 检查是否 vm.swappiness 已设置为 0
-  if grep -q "vm.swappiness = 0" /etc/sysctl.conf; then
-    print_green "vm.swappiness 已设置为 0"
-  else
-    disable_swap
-  fi
 
   ulimit_value=$(ulimit -n)
   print_green "当前 ulimit -n 的值是 ${ulimit_value}"
