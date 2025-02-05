@@ -36,16 +36,13 @@ install_glider() {
   check_pkg_manager
   install_required_cmds
   echo "====== Starting glider installation/start ======"
-
   if [ ! -f "${CONFIG_FILE}" ]; then
     echo "Configuration file not found. Attempting to kill processes using port ${GLIDER_LISTEN_PORT}..."
     sudo kill $(lsof -t -i:${GLIDER_LISTEN_PORT}) 2>/dev/null
   fi
-
   if [ -f "${GLIDER_FILE}" ]; then
     rm -f "${GLIDER_FILE}"
   fi
-
   if [ ! -x "${GLIDER_DIR}/glider" ]; then
     echo "Glider binary not found. Downloading and extracting..."
     wget --header="Cache-Control: no-cache" -O "${GLIDER_FILE}" "${GLIDER_URL}" || {
@@ -57,12 +54,10 @@ install_glider() {
       exit 1
     }
   fi
-
   PUBLIC_IP=$(curl -s https://checkip.amazonaws.com) || {
     echo "Failed to obtain public IP via curl. Exiting."
     exit 1
   }
-
   if [ -f "${CONFIG_FILE}" ]; then
     echo "Configuration file found. Reading configuration:"
     cat "${CONFIG_FILE}" | jq || {
@@ -72,12 +67,12 @@ install_glider() {
     if ! lsof -i :${GLIDER_LISTEN_PORT} >/dev/null; then
       echo "Glider is not running. Starting glider..."
       PASSWORD=$(jq -r '.password' "${CONFIG_FILE}")
-      nohup "${GLIDER_DIR}/glider" -listen socks5://admin:${PASSWORD}@localhost:${GLIDER_LISTEN_PORT} >/dev/null 2>&1 &
+      nohup "${GLIDER_DIR}/glider" -listen socks5://admin:${PASSWORD}@:${GLIDER_LISTEN_PORT} >/dev/null 2>&1 &
     fi
   else
     echo "Configuration file not found. Starting glider for the first time..."
     RANDOM_STRING=$(generate_random_string)
-    nohup "${GLIDER_DIR}/glider" -listen socks5://admin:${RANDOM_STRING}@localhost:${GLIDER_LISTEN_PORT} >/dev/null 2>&1 &
+    nohup "${GLIDER_DIR}/glider" -listen socks5://admin:${RANDOM_STRING}@:${GLIDER_LISTEN_PORT} >/dev/null 2>&1 &
     echo -n "{\"type\":\"socks5\",\"IP\":\"${PUBLIC_IP}\",\"port\":${GLIDER_LISTEN_PORT},\"username\":\"admin\",\"password\":\"${RANDOM_STRING}\"}" >"${CONFIG_FILE}"
     echo "========================================================================"
     cat "${CONFIG_FILE}" | jq || {
@@ -86,15 +81,11 @@ install_glider() {
     }
     echo "========================================================================"
   fi
-
   if lsof -i :${GLIDER_LISTEN_PORT} >/dev/null; then
     echo "✅ Glider is running."
   else
     echo "❌ Glider failed to start."
   fi
-
   [ -f "${GLIDER_FILE}" ] && rm -f "${GLIDER_FILE}"
-
   echo "====== Glider installation/start finished ======"
 }
-
