@@ -4,6 +4,7 @@ SCRIPT_VERSION="2.8.5"
 
 source "$(dirname "$0")/common/common.sh"
 source "$(dirname "$0")/common/swap.sh"
+source "$(dirname "$0")/common/ulimit.sh"
 source "$(dirname "$0")/docker/docker.sh"
 source "$(dirname "$0")/docker/docker-compose.sh"
 source "$(dirname "$0")/java/jdk21.sh"
@@ -42,8 +43,7 @@ EOF
 503)  Install OCEANBASE           11) Balance log
 -----------------------------------------------------------------
 601)  Disable SWAP                11) Balance log
-602)  Install OBD                 11) Balance log
-603)  Install OCEANBASE           11) Balance log
+602)  Config ulimit                11) Balance log
 -----------------------------------------------------------------
 E) Exit
 
@@ -74,6 +74,7 @@ main() {
             110) install_jdk21; press_any_key ;;
             111) install_gradle; press_any_key ;;
             601) disable_swap; press_any_key ;;
+            602) config_ulimit; press_any_key ;;
             10) start_node; press_any_key ;;
             [eE]) exit ;;
             *) echo "Invalid option, please try again."; press_any_key ;;
