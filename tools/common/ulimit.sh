@@ -19,6 +19,8 @@ config_ulimit() {
 
   config_ulimit__debian
 
+  local ulimit_file="/etc/security/limits.d/ulimit.conf"
+
   if [ -f "$ulimit_file" ]; then
     echo "✅ Config ulimit successfully: $ulimit_file exists."
   else
