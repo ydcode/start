@@ -1,28 +1,6 @@
 #!/bin/bash
 
-# 定义红色打印函数
-print_red() {
-  local text="$1"
-  echo -e "\033[31m${text}\033[0m"
-}
-
-# 定义绿色打印函数
-print_green() {
-  local text="$1"
-  echo -e "\033[32m${text}\033[0m"
-}
-
 # 关闭并永久禁用swap的函数
-disable_swap() {
-  print_red "Swap已开启，正在关闭..."
-
-#  一起执行 swapoff -a 和 swapon -a 命令是为了刷新 swap，将 swap 里的数据转储回内存，并清空 swap 里的数据。不可省略 swappiness 设置而只执行 swapoff -a；否则，重启后 swap 会再次自动打开，使得操作失效。
-#  执行 sysctl -p 命令是为了在不重启的情况下使配置生效。
-  grep -q "vm.swappiness = 0" /etc/sysctl.conf || echo "vm.swappiness = 0" >> /etc/sysctl.conf
-  swapoff -a && swapon -a
-  sysctl -p
-  print_green "Swap已关闭并永久禁用"
-}
 
 # 检查swap状态并据此决定是否关闭swap的函数
 check_and_disable_swap() {
