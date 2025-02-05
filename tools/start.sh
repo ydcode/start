@@ -4,7 +4,7 @@ SCRIPT_VERSION="2.8.5"
 
 source "$(dirname "$0")/common/common.sh"
 source "$(dirname "$0")/common/swap.sh"
-source "$(dirname "$0")/docker/install.sh"
+source "$(dirname "$0")/docker/docker.sh"
 
 SHOW_TEMP_MESSAGE=true  # Toggle to control message visibility
 TEMP_MESSAGE=$(cat << 'EOF'

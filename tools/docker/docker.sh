@@ -108,13 +108,13 @@ Install_Docker_Compose_Debian() {
 
 
 install_docker() {
-    if [ -e "/usr/bin/docker" ]; then
-      echo "$MISSING_SERVICE_MSG"
-      return 1
-    fi
+#    if [ -e "/usr/bin/docker" ]; then
+#      echo "$MISSING_SERVICE_MSG"
+#      return 1
+#    fi
 
 
-    Install_Docker_Debian
+#    Install_Docker_Debian
 
     echo
     echo "⌛️ Starting node service..."
