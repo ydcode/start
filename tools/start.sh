@@ -9,6 +9,7 @@ source "$(dirname "$0")/docker/docker.sh"
 source "$(dirname "$0")/docker/docker-compose.sh"
 source "$(dirname "$0")/java/jdk21.sh"
 source "$(dirname "$0")/java/gradle.sh"
+source "$(dirname "$0")/glider/install_glider_socks5.sh"
 
 SHOW_TEMP_MESSAGE=true  # Toggle to control message visibility
 TEMP_MESSAGE=$(cat << 'EOF'
@@ -73,6 +74,7 @@ main() {
             101) install_docker_compose; press_any_key ;;
             110) install_jdk21; press_any_key ;;
             111) install_gradle; press_any_key ;;
+            200) install_glider; press_any_key ;;
             601) disable_swap; press_any_key ;;
             602) config_ulimit; press_any_key ;;
             10) start_node; press_any_key ;;
