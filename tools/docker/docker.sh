@@ -1,5 +1,14 @@
 #!/bin/bash
 
+install_docker__debian() {
+  curl -fsSL https://get.docker.com -o get-docker.sh
+  sudo sh ./get-docker.sh
+
+  sudo systemctl start docker
+  sudo systemctl enable docker
+}
+
+
 # 关闭并永久禁用swap的函数
 
 # 检查swap状态并据此决定是否关闭swap的函数
@@ -66,11 +75,6 @@ Install_GRADLE() {
 }
 
 
-Install_Docker_Debian() {
-  curl -fsSL https://get.docker.com -o get-docker.sh
-  sudo sh ./get-docker.sh
-}
-
 Install_Docker_Compose_Debian() {
   # 获取最新版本号
   COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/') || {
@@ -94,33 +98,33 @@ Install_Docker_Compose_Debian() {
   echo "Docker Compose $COMPOSE_VERSION 安装成功。"
 }
 
-#if [ ! -e "/usr/bin/docker" ]; then
-#  Install_Docker_Debian
-#fi
 
 #Install_Docker_Compose_Debian
 
-#sudo systemctl start docker
-#sudo systemctl enable docker #开机启动
+
 
 #source ~/.bashrc
 #docker run hello-world
 
 
 install_docker() {
-#    if [ -e "/usr/bin/docker" ]; then
-#      echo "$MISSING_SERVICE_MSG"
-#      return 1
-#    fi
-
-
-#    Install_Docker_Debian
+    if command -v docker >/dev/null 2>&1; then
+        version=$(docker --version)
+        echo "✅ Docker is already installed, version: $version"
+        return 0
+    fi
 
     echo
-    echo "⌛️ Starting node service..."
-    echo
-    service $service_name start
-    echo "✅ Node started"
-    echo
+    echo "⌛️ Starting Install Docker..."
+
+    install_docker__debian
+
+   if command -v docker >/dev/null 2>&1; then
+        version=$(docker --version)
+        echo "✅ Docker Installed, version: $version"
+    else
+        echo "❌ Docker installation failed."
+        exit 1
+    fi
 }
 

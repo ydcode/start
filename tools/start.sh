@@ -8,7 +8,7 @@ source "$(dirname "$0")/docker/docker.sh"
 
 SHOW_TEMP_MESSAGE=true  # Toggle to control message visibility
 TEMP_MESSAGE=$(cat << 'EOF'
-➤ Shortcut 123
+#➤ Shortcut 123
 EOF
 )
 
