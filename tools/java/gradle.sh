@@ -11,7 +11,8 @@ install_gradle__debian() {
 
 install_gradle() {
   if command -v gradle >/dev/null 2>&1; then
-    echo "✅ Gradle is already installed"
+    version=$(gradle --version | grep "Gradle" | awk '{print $2}')
+    echo "✅ Gradle is already installed, version: $version"
     return 0
   fi
 
@@ -21,7 +22,8 @@ install_gradle() {
   install_gradle__debian
 
   if command -v gradle >/dev/null 2>&1; then
-    echo "✅ Gradle installed successfully"
+    version=$(gradle --version | grep "Gradle" | awk '{print $2}')
+    echo "✅ Gradle installed successfully, version: $version"
   else
     echo "❌ Gradle installation failed. 'gradle' command not found."
     exit 1
