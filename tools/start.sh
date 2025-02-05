@@ -5,6 +5,7 @@ SCRIPT_VERSION="2.8.5"
 source "$(dirname "$0")/common/common.sh"
 source "$(dirname "$0")/common/swap.sh"
 source "$(dirname "$0")/docker/docker.sh"
+source "$(dirname "$0")/docker/docker-compose.sh"
 
 SHOW_TEMP_MESSAGE=true  # Toggle to control message visibility
 TEMP_MESSAGE=$(cat << 'EOF'
@@ -22,7 +23,8 @@ EOF
 
     cat << EOF
 -----------------------------------------------------------------
-100)  Install Docker              11) Balance log
+100)  Install Docker              12) ***************
+101)  Install Docker Compose      12) Backup your node
 101)  Install JDK                 12) Backup your node
 -----------------------------------------------------------------
 200)  Install SOCKS5 - GLIDER     11) Balance log
@@ -66,6 +68,7 @@ main() {
 
         case $choice in
             100) install_docker; press_any_key ;;
+            101) install_docker_compose; press_any_key ;;
             10) start_node; press_any_key ;;
             [eE]) exit ;;
             *) echo "Invalid option, please try again."; press_any_key ;;
