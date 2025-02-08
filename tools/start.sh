@@ -10,6 +10,7 @@ source "$(dirname "$0")/docker/docker-compose.sh"
 source "$(dirname "$0")/java/jdk21.sh"
 source "$(dirname "$0")/java/gradle.sh"
 source "$(dirname "$0")/glider/install_glider_socks5.sh"
+source "$(dirname "$0")/oceanbase/prepare.sh"
 
 SHOW_TEMP_MESSAGE=true  # Toggle to control message visibility
 TEMP_MESSAGE=$(cat << 'EOF'

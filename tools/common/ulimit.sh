@@ -1,10 +1,10 @@
 #!/bin/bash
 
 config_ulimit__debian() {
-  local ulimit_file="/etc/security/limits.d/ulimit.conf"
+  ulimit_file="/etc/security/limits.d/ulimit.conf"
 
   if [ -f "$ulimit_file" ]; then
-    local soft_limit=$(grep -m1 "soft nofile" $ulimit_file | awk '{ print $4 }')
+    soft_limit=$(grep -m1 "soft nofile" $ulimit_file | awk '{ print $4 }')
     echo "File $ulimit_file already exists. No modifications will be made. The current soft ulimit value is $soft_limit."
   else
     echo "root soft nofile 1048576" | sudo tee -a $ulimit_file
@@ -29,3 +29,5 @@ config_ulimit() {
     exit 1
   fi
 }
+
+#echo "vm.max_map_count=655360" >> /etc/sysctl.conf; sysctl -p

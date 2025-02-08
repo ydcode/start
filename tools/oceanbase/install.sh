@@ -23,6 +23,17 @@ iface enp6s0.3600 inet static
 EOF"
 }
 
+ENABLE_WLAN2() {# systemctl restart networking
+sudo bash -c "cat > /etc/network/interfaces.d/vlan1000 << 'EOF'
+auto enp6s0.3600
+iface enp6s0.3600 inet static
+  address 192.168.100.1
+  netmask 255.255.255.0
+  vlan-raw-device enp6s0
+  mtu 1400
+EOF"
+}
+
 Install_ESSENTIAL__DEBIAN() {
   apt install -y iputils-clockdiff rpm2cpio alien
 }
