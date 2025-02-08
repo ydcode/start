@@ -54,5 +54,4 @@ CONFIG_FOR_OCEANBASE() {
   echo "vm.max_map_count = 655360" | sudo tee -a /etc/sysctl.conf
   sudo sysctl -p
 }
-
 Install_OBD
