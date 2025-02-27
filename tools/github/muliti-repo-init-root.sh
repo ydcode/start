@@ -1,79 +1,74 @@
 #!/bin/bash
 
-# Function to get the GitHub username from the user
-Input_Username() {
-    read -p "Enter your GitHub username [ydcode]: " username
-    username=${username:-ydcode}
-}
-
-# Function to get the repository name from the user
 Input_Repo_Name() {
-    read -p "Enter your repository name: " repoName
-    repoName=$(echo ${repoName} | tr -d ' /')
-    shortRepoName=$(echo ${repoName} | tr -d ' .')
-    Check_Repo_Name_Right
+  while true; do
+    read -p "Enter repository name: " repo
+    repo=$(echo "${repo}" | tr -dc '[:alnum:]-_')
+    [ -n "$repo" ] && break
+    echo "Error: Repository name cannot be empty"
+  done
 }
 
-# Function to confirm repository name
-Check_Repo_Name_Right() {
-    read -p "Is ${repoName} correct? [Y/n]: " repoNameRight
-    repoNameRight=${repoNameRight:-y}
-    case "$repoNameRight" in
-    [yY]|[yY][eE][sS])
-        ;;
-    [nN]|[nN][oO])
-        Input_Repo_Name
-        ;;
-    *)
-        echo "Defaulting to 'yes'"
-        ;;
-    esac
+Input_Username() {
+  available_users=($(ls "$SSH_DIR"/id_rsa_* 2>/dev/null |
+    grep -v '\.pub$' |
+    sed 's|.*/id_rsa_||' |
+    awk -F'_' '{print $1}' |
+    sort -u))
+
+  if [ ${#available_users[@]} -gt 0 ]; then
+    username="${available_users[-1]}"
+    read -p "Enter your GitHub username [${username}]: " input_username
+    username="${input_username:-$username}"
+  else
+    read -p "Enter your GitHub username: " username
+  fi
+
+  while [[ ! "$username" =~ ^[a-zA-Z0-9_-]+$ ]]; do
+    echo "Error: Invalid characters detected"
+    read -p "Re-enter GitHub username: " username
+  done
 }
 
-# Initialize Git configuration
 Init_Git_Config() {
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        SSH_DIR="/root/.ssh"
-    elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
-        SSH_DIR="$HOME/.ssh"
-    else
-        SSH_DIR="$HOME/.ssh"
-    fi
-
-    [ ! -d $SSH_DIR ] && mkdir $SSH_DIR
-    [ ! -e "$SSH_DIR/config" ] && touch "$SSH_DIR/config"
+  case "$OSTYPE" in
+  linux-gnu*) SSH_DIR="/root/.ssh" ;;
+  msys | cygwin) SSH_DIR="$HOME/.ssh" ;;
+  *) SSH_DIR="$HOME/.ssh" ;;
+  esac
+  mkdir -p "$SSH_DIR"
+  chmod 700 "$SSH_DIR"
 }
 
-# Function to add Git key
 Add_Git_Key() {
-    Init_Git_Config
-    if [ -e "$SSH_DIR/id_rsa_${shortRepoName}" ]; then
-        rm -rf $SSH_DIR/id_rsa_${shortRepoName}*
-    fi
-    ssh-keygen -t rsa -P "" -f $SSH_DIR/id_rsa_${shortRepoName}
-    if ! grep -q "Host github.com${shortRepoName}" $SSH_DIR/config; then
-        echo "Host github.com${shortRepoName}" >> $SSH_DIR/config
-        echo "User git" >> $SSH_DIR/config
-        echo "HostName github.com" >> $SSH_DIR/config
-        echo "IdentityFile $SSH_DIR/id_rsa_${shortRepoName}" >> $SSH_DIR/config
-        echo "" >> $SSH_DIR/config
-    fi
-    chmod 644 $SSH_DIR/config
+  local keyfile="$SSH_DIR/id_rsa_${username}_${repo}"
 
-    # Print the generated SSH key for copying to GitHub
-    echo "-----------------------------------------------------------"
-    echo "Copy the following SSH key and add it to your GitHub account:"
-    cat $SSH_DIR/id_rsa_${shortRepoName}.pub
-    echo "-----------------------------------------------------------"
+  rm -f "${keyfile}" "${keyfile}.pub" 2>/dev/null
+
+  ssh-keygen -t rsa -b 4096 -P "" -f "$keyfile" -C "${repo}@${username}"
+
+  host_entry="github.com.${username}.${repo}"
+  if ! grep -q "Host ${host_entry}" "$SSH_DIR/config"; then
+    echo -e "\nHost ${host_entry}" >>"$SSH_DIR/config"
+    echo "  HostName github.com" >>"$SSH_DIR/config"
+    echo "  User git" >>"$SSH_DIR/config"
+    echo "  IdentityFile ${keyfile}" >>"$SSH_DIR/config"
+  fi
+
+  echo -e "\nPublic key for GitHub:"
+  cat "${keyfile}.pub"
 }
 
-# Main program
-Input_Username
-Input_Repo_Name
-Add_Git_Key
+main() {
+  Init_Git_Config
+  Input_Username
+  Input_Repo_Name
+  Add_Git_Key
 
-# Output the command for easy repo cloning
-echo "-----------------------------------------------------------"
-echo "To clone the repository, run the following command:"
-echo "git clone git@github.com${shortRepoName}:${username}/${repoName}.git"
-echo "-----------------------------------------------------------"
+  echo "-----------------------------------------------------------"
+  echo "To clone the repository, run the following command:"
+  echo "git clone git@${host_entry}:${username}/${repo}.git"
+  echo "-----------------------------------------------------------"
+}
+
+main "$@"
