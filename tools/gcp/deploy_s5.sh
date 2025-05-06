@@ -40,102 +40,97 @@ done
 mapfile -t SHUFFLED_ZONES < <(printf "%s\n" "${VALID_ZONES[@]}" | shuf)
 ZONES=("${SHUFFLED_ZONES[@]:0:3}")
 
-# ---- Billing & Projects preparation ----
-BILLING_ACCOUNT=$(gcloud beta billing accounts list --filter="OPEN" --format="value(NAME)" | head -n1)
-EXISTING=($(gcloud projects list --format="value(projectId)"))
-NEED=$((3 - ${#EXISTING[@]}))
-if [ $NEED -gt 0 ]; then
-  for i in $(seq 1 $NEED); do
-    NEW_PROJ=proj-$(openssl rand -hex 4)
-    retry gcloud projects create "$NEW_PROJ" --quiet
-    EXISTING+=("$NEW_PROJ")
-  done
+# ---- Billing & Project preparation ----
+PROJECT="${DEVSHELL_PROJECT_ID:-$(gcloud config get-value project 2>/dev/null)}"
+if [ -z "$PROJECT" ] || [ "$PROJECT" == "(unset)" ]; then
+  echo "ERROR: 未检测到项目ID，请通过 'gcloud config set project' 设置，或在 Cloud Shell 中运行。"
+  exit 1
 fi
-PROJECTS=("${EXISTING[@]:0:3}")
+echo ">> Using project: $PROJECT"
 
-# ---- Main loop per project ----
-for PROJECT in "${PROJECTS[@]}"; do
-  echo "===> Processing project: $PROJECT <==="
+# ---- Main for single project ----
+echo "===> Processing project: $PROJECT <==="
 
-  # 1. Link billing (idempotent)
+# 1. Link billing (idempotent)
+BILLING_ACCOUNT=$(gcloud beta billing accounts list --filter="OPEN" --format="value(NAME)" | head -n1 || true)
+if [ -z "$BILLING_ACCOUNT" ]; then
+  echo "WARNING: 未找到开放计费账户，跳过计费关联"
+else
   CURRENT_BILL=$(gcloud beta billing projects describe "$PROJECT" --format="value(billingAccountName)" --quiet || echo "")
   if [ "$CURRENT_BILL" != "$BILLING_ACCOUNT" ]; then
     retry gcloud beta billing projects link "$PROJECT" --billing-account="$BILLING_ACCOUNT" --quiet
   fi
+fi
 
-  # 2. Enable Compute API (idempotent)
-  if ! gcloud services list --enabled --filter="config.name=compute.googleapis.com" --project="$PROJECT" --format="value(config.name)" | grep -q compute.googleapis.com; then
-    retry gcloud services enable compute.googleapis.com --project="$PROJECT" --quiet
-  fi
+# 2. Enable Compute API (idempotent)
+if ! gcloud services list --enabled --filter="config.name=compute.googleapis.com" --project="$PROJECT" --format="value(config.name)" | grep -q compute.googleapis.com; then
+  retry gcloud services enable compute.googleapis.com --project="$PROJECT" --quiet
+fi
 
-  # 3. Add SSH key (idempotent)
-  METADATA=$(gcloud compute project-info describe --project="$PROJECT" --format="value(commonInstanceMetadata.items.ssh-keys)")
-  if ! grep -F "$PUBKEY" <<<"$METADATA"; then
-    retry gcloud compute project-info add-metadata --project="$PROJECT" --metadata "ssh-keys=gce:$PUBKEY gce" --quiet
-  fi
+# 3. Add SSH key (idempotent)
+METADATA=$(gcloud compute project-info describe --project="$PROJECT" --format="value(commonInstanceMetadata.items.ssh-keys)")
+if ! grep -F "$PUBKEY" <<<"$METADATA"; then
+  retry gcloud compute project-info add-metadata --project="$PROJECT" --metadata "ssh-keys=gce:$PUBKEY gce" --quiet
+fi
 
-  # 4. Create firewall rule (idempotent)
-  if ! gcloud compute firewall-rules list --filter="name=allow-all-to-sa AND network=default" --project="$PROJECT" --format="value(name)" | grep -q allow-all-to-sa; then
-    SA_EMAIL=$(gcloud iam service-accounts list --project="$PROJECT" --format="value(email)" | head -n1)
-    retry gcloud compute firewall-rules create allow-all-to-sa \
-      --project="$PROJECT" \
-      --network=default --direction=INGRESS --action=ALLOW --rules=all \
-      --source-ranges=0.0.0.0/0 --target-service-accounts="$SA_EMAIL" --quiet
-  fi
+# 4. Create firewall rule (idempotent)
+if ! gcloud compute firewall-rules list --filter="name=allow-all-to-sa" --project="$PROJECT" --format="value(name)" | grep -q allow-all-to-sa; then
+  SA_EMAIL=$(gcloud iam service-accounts list --project="$PROJECT" --format="value(email)" | head -n1)
+  retry gcloud compute firewall-rules create allow-all-to-sa \
+    --project="$PROJECT" \
+    --network=default --direction=INGRESS --action=ALLOW --rules=all \
+    --source-ranges=0.0.0.0/0 --target-service-accounts="$SA_EMAIL" --quiet
+fi
 
-  # 5. Create 4 instances per selected zone if none exist
-  for ZONE in "${ZONES[@]}"; do
-    existing_count=$(gcloud compute instances list --project="$PROJECT" --zones="$ZONE" \
-      --filter="name~'^${INSTANCE_PREFIX}-${ZONE}-.*'" --format="value(name)" | wc -l)
-    if [ "$existing_count" -eq 0 ]; then
-      retry gcloud compute instances create "${INSTANCE_PREFIX}-${ZONE}" \
-        --project="$PROJECT" --count=4 --zone="$ZONE" \
+# 5. Create 4 instances per selected zone if不足
+for ZONE in "${ZONES[@]}"; do
+  EXISTING_NAMES=$(gcloud compute instances list --project="$PROJECT" --zones="$ZONE" --format="value(name)")
+  EXISTING_COUNT=$(grep -c "^${INSTANCE_PREFIX}-${ZONE}-[0-9]\+$" <<<"$EXISTING_NAMES" || true)
+  if [ "$EXISTING_COUNT" -lt 4 ]; then
+    for i in $(seq $((EXISTING_COUNT+1)) 4); do
+      retry gcloud compute instances create "${INSTANCE_PREFIX}-${ZONE}-${i}" \
+        --project="$PROJECT" --zone="$ZONE" \
         --machine-type=n1-standard-1 --image-family=debian-12 --image-project=debian-cloud \
         --boot-disk-size=10GB --quiet
-    fi
-  done
-
-  # 6. Wait for all instances RUNNING
-  for ZONE in "${ZONES[@]}"; do
-    echo "Waiting for instances in $ZONE to be RUNNING..."
-    until [ "$(gcloud compute instances list --project="$PROJECT" --zones="$ZONE" \
-      --filter="name~'^${INSTANCE_PREFIX}-${ZONE}-.*' AND status=RUNNING" --format="value(name)" | wc -l)" -eq 4 ]; do
-      sleep 5
     done
-  done
+  fi
+done
 
-  # 7. Parallel install Docker & run gost on all VMs
-  ALL_VMS=()
-  for ZONE in "${ZONES[@]}"; do
-    mapfile -t vms < <(gcloud compute instances list --project="$PROJECT" --zones="$ZONE" \
-      --filter="name~'^${INSTANCE_PREFIX}-${ZONE}-.*'" --format="value(name)")
-    for VM in "${vms[@]}"; do
-      ALL_VMS+=("$VM,$ZONE")
-    done
+# 6. Wait for all instances RUNNING
+for ZONE in "${ZONES[@]}"; do
+  echo "Waiting for instances in $ZONE to be RUNNING..."
+  until [ "$(gcloud compute instances list --project="$PROJECT" --zones="$ZONE" --filter="status=RUNNING" --format="value(name)" | grep -c "^${INSTANCE_PREFIX}-${ZONE}-[0-9]\+$")" -eq 4 ]; do
+    sleep 5
   done
-  for entry in "${ALL_VMS[@]}"; do
-    VMNAME=${entry%,*}
-    VMZONE=${entry#*,}
+done
+
+# 7. Parallel install Docker & run gost on all VMs
+for ZONE in "${ZONES[@]}"; do
+  mapfile -t VMS < <(gcloud compute instances list --project="$PROJECT" --zones="$ZONE" --filter="status=RUNNING" --format="value(name)")
+  for VM in "${VMS[@]}"; do
     {
-      retry gcloud compute ssh gce@"$VMNAME" --project="$PROJECT" --zone="$VMZONE" --quiet --command \
-        "sudo apt-get update -y && sudo apt-get install -y docker.io && sudo systemctl enable docker && sudo systemctl start docker && docker run -d --name=gost -p ${GOST_PORT}:${GOST_PORT} gogost/gost -L socks5://admin:${GOST_PASSWORD}@:${GOST_PORT}"
-      echo "Setup done for $VMNAME"
+      retry gcloud compute ssh gce@"$VM" --project="$PROJECT" --zone="$ZONE" --quiet --command \
+        "sudo apt-get update -y && sudo apt-get install -y docker.io && sudo systemctl enable docker && sudo systemctl start docker && sudo docker run -d --name=gost -p ${GOST_PORT}:${GOST_PORT} gogost/gost -L socks5://admin:${GOST_PASSWORD}@:${GOST_PORT}"
+      echo "Setup done for $VM"
     } &
   done
-  wait
-
-  # 8. Collect IPs, print proxies & total
-  readarray -t IPS < <(
-    for ZONE in "${ZONES[@]}"; do
-      gcloud compute instances list --project="$PROJECT" --zones="$ZONE" \
-        --filter="name~'^${INSTANCE_PREFIX}-${ZONE}-.*'" \
-        --format='value(networkInterfaces[0].accessConfigs[0].natIP)'
-    done
-  )
-  echo "=================================="
-  for ip in "${IPS[@]}"; do
-    echo "GCP:SOCKS5:${ip}:${GOST_PORT}:admin:${GOST_PASSWORD}"
-  done
-  echo "=================================="
-  echo "Total proxies: ${#IPS[@]}"
 done
+wait
+
+# 8. Collect IPs, print proxies & total
+IPS=()
+for ZONE in "${ZONES[@]}"; do
+  mapfile -t IP_LIST < <(gcloud compute instances list --project="$PROJECT" --zones="$ZONE" \
+    --filter="status=RUNNING" \
+    --format="csv[no-heading](name,networkInterfaces[0].accessConfigs[0].natIP)" \
+    | grep "^${INSTANCE_PREFIX}-${ZONE}-" \
+    | cut -d',' -f2)
+  IPS+=("${IP_LIST[@]}")
+done
+
+echo "=================================="
+for ip in "${IPS[@]}"; do
+  echo "GCP:SOCKS5:${ip}:${GOST_PORT}:admin:${GOST_PASSWORD}"
+done
+echo "=================================="
+echo "Total proxies: ${#IPS[@]}"
