@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -Eeuo pipefail
+set -Euo pipefail   # 修改：去掉 -e，不要在错误时自动退出
 
 # ---- retry function ----
 retry(){
@@ -11,7 +11,7 @@ retry(){
     sleep $delay
   done
   echo "Command '$*' failed after $max attempts."
-  exit 1
+  return 1    # 修改：改为 return，避免退出整个脚本
 }
 
 # ---- SSH key setup ----
@@ -53,24 +53,24 @@ echo "===> Processing project: $PROJECT <==="
 
 # 1. Link billing (idempotent)
 BILLING_ACCOUNT=$(gcloud beta billing accounts list --filter="OPEN" --format="value(NAME)" | head -n1 || true)
-if [ -z "$BILLING_ACCOUNT" ]; then
-  echo "WARNING: 未找到开放计费账户，跳过计费关联"
-else
+if [ -n "$BILLING_ACCOUNT" ]; then
   CURRENT_BILL=$(gcloud beta billing projects describe "$PROJECT" --format="value(billingAccountName)" --quiet || echo "")
   if [ "$CURRENT_BILL" != "$BILLING_ACCOUNT" ]; then
-    retry gcloud beta billing projects link "$PROJECT" --billing-account="$BILLING_ACCOUNT" --quiet
+    retry gcloud beta billing projects link "$PROJECT" --billing-account="$BILLING_ACCOUNT" --quiet || true
   fi
+else
+  echo "WARNING: 未找到开放计费账户，跳过计费关联"
 fi
 
 # 2. Enable Compute API (idempotent)
 if ! gcloud services list --enabled --filter="config.name=compute.googleapis.com" --project="$PROJECT" --format="value(config.name)" | grep -q compute.googleapis.com; then
-  retry gcloud services enable compute.googleapis.com --project="$PROJECT" --quiet
+  retry gcloud services enable compute.googleapis.com --project="$PROJECT" --quiet || true
 fi
 
 # 3. Add SSH key (idempotent)
 METADATA=$(gcloud compute project-info describe --project="$PROJECT" --format="value(commonInstanceMetadata.items.ssh-keys)")
 if ! grep -F "$PUBKEY" <<<"$METADATA"; then
-  retry gcloud compute project-info add-metadata --project="$PROJECT" --metadata "ssh-keys=gce:$PUBKEY gce" --quiet
+  retry gcloud compute project-info add-metadata --project="$PROJECT" --metadata "ssh-keys=gce:$PUBKEY gce" --quiet || true
 fi
 
 # 4. Create firewall rule (idempotent)
@@ -79,47 +79,59 @@ if ! gcloud compute firewall-rules list --filter="name=allow-all-to-sa" --projec
   retry gcloud compute firewall-rules create allow-all-to-sa \
     --project="$PROJECT" \
     --network=default --direction=INGRESS --action=ALLOW --rules=all \
-    --source-ranges=0.0.0.0/0 --target-service-accounts="$SA_EMAIL" --quiet
+    --source-ranges=0.0.0.0/0 --target-service-accounts="$SA_EMAIL" --quiet || true
 fi
 
-# 5. Create 4 instances per selected zone if不足
+# ---- 5. Create up to 4 instances per zone,收集创建成功的 zone ----
+declare -a GOOD_ZONES=()
 for ZONE in "${ZONES[@]}"; do
-  EXISTING_NAMES=$(gcloud compute instances list --project="$PROJECT" --zones="$ZONE" --format="value(name)")
+  echo ">>> 尝试在区域 $ZONE 创建实例"
+  EXISTING_NAMES=$(gcloud compute instances list --project="$PROJECT" --zones="$ZONE" --format="value(name)" 2>/dev/null || true)
   EXISTING_COUNT=$(grep -c "^${INSTANCE_PREFIX}-${ZONE}-[0-9]\+$" <<<"$EXISTING_NAMES" || true)
+  # 如果已有的少于 4 个，就补足
   if [ "$EXISTING_COUNT" -lt 4 ]; then
+    success=true
     for i in $(seq $((EXISTING_COUNT+1)) 4); do
-      retry gcloud compute instances create "${INSTANCE_PREFIX}-${ZONE}-${i}" \
-        --project="$PROJECT" --zone="$ZONE" \
-        --machine-type=n1-standard-1 --image-family=debian-12 --image-project=debian-cloud \
-        --boot-disk-size=10GB --quiet
+      if ! retry gcloud compute instances create "${INSTANCE_PREFIX}-${ZONE}-${i}" \
+          --project="$PROJECT" --zone="$ZONE" \
+          --machine-type=n1-standard-1 --image-family=debian-12 --image-project=debian-cloud \
+          --boot-disk-size=10GB --quiet; then
+        echo "WARNING: 在区域 $ZONE 创建实例 ${INSTANCE_PREFIX}-${ZONE}-${i} 失败，跳过此区域的后续操作"
+        success=false
+        break
+      fi
     done
+    $success && GOOD_ZONES+=("$ZONE")
+  else
+    echo "区域 $ZONE 已有 $EXISTING_COUNT 个实例，跳过创建"
+    GOOD_ZONES+=("$ZONE")
   fi
 done
 
-# 6. Wait for all instances RUNNING
-for ZONE in "${ZONES[@]}"; do
+# ---- 6. Wait for RUNNING，仅针对创建成功的 zones ----
+for ZONE in "${GOOD_ZONES[@]}"; do
   echo "Waiting for instances in $ZONE to be RUNNING..."
   until [ "$(gcloud compute instances list --project="$PROJECT" --zones="$ZONE" --filter="status=RUNNING" --format="value(name)" | grep -c "^${INSTANCE_PREFIX}-${ZONE}-[0-9]\+$")" -eq 4 ]; do
     sleep 5
   done
 done
 
-# 7. Parallel install Docker & run gost on all VMs
-for ZONE in "${ZONES[@]}"; do
+# ---- 7. Parallel install Docker & run gost，仅针对创建成功的 zones ----
+for ZONE in "${GOOD_ZONES[@]}"; do
   mapfile -t VMS < <(gcloud compute instances list --project="$PROJECT" --zones="$ZONE" --filter="status=RUNNING" --format="value(name)")
   for VM in "${VMS[@]}"; do
     {
       retry gcloud compute ssh gce@"$VM" --project="$PROJECT" --zone="$ZONE" --quiet --command \
-        "sudo apt-get update -y && sudo apt-get install -y docker.io && sudo systemctl enable docker && sudo systemctl start docker && sudo docker run -d --name=gost -p ${GOST_PORT}:${GOST_PORT} gogost/gost -L socks5://admin:${GOST_PASSWORD}@:${GOST_PORT}"
-      echo "Setup done for $VM"
+        "sudo apt-get update -y && sudo apt-get install -y docker.io && sudo systemctl enable docker && sudo systemctl start docker && sudo docker run -d --name=gost -p ${GOST_PORT}:${GOST_PORT} gogost/gost -L socks5://admin:${GOST_PASSWORD}@:${GOST_PORT}" \
+        && echo "Setup done for $VM"
     } &
   done
 done
 wait
 
-# 8. Collect IPs, print proxies & total
+# ---- 8. Collect IPs, print proxies & total ----
 IPS=()
-for ZONE in "${ZONES[@]}"; do
+for ZONE in "${GOOD_ZONES[@]}"; do
   mapfile -t IP_LIST < <(gcloud compute instances list --project="$PROJECT" --zones="$ZONE" \
     --filter="status=RUNNING" \
     --format="csv[no-heading](name,networkInterfaces[0].accessConfigs[0].natIP)" \
