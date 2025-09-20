@@ -11,6 +11,7 @@ source "$(dirname "$0")/java/jdk21.sh"
 source "$(dirname "$0")/java/gradle.sh"
 source "$(dirname "$0")/glider/install_glider_socks5.sh"
 source "$(dirname "$0")/oceanbase/prepare.sh"
+source "$(dirname "$0")/java/jdk25.sh"
 
 SHOW_TEMP_MESSAGE=true  # Toggle to control message visibility
 TEMP_MESSAGE=$(cat << 'EOF'
@@ -31,6 +32,7 @@ EOF
 100)  Install Docker              12) ***************
 101)  Install Docker Compose      12) Backup your node
 110)  Install JDK 21                 12) Backup your node
+120)  Install JDK 25
 111)  Install Gradle                12) Backup your node
 -----------------------------------------------------------------
 200)  Install SOCKS5 - GLIDER     11) Balance log
@@ -74,6 +76,7 @@ main() {
             100) install_docker; press_any_key ;;
             101) install_docker_compose; press_any_key ;;
             110) install_jdk21; press_any_key ;;
+            120) install_jdk25; press_any_key ;;
             111) install_gradle; press_any_key ;;
             200) install_glider; press_any_key ;;
             601) disable_swap; press_any_key ;;
