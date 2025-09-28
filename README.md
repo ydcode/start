@@ -10,8 +10,7 @@ WSL 不要创建USER，初始化WSL时，直接取消，然后使用root 。方�
 # Start
 ```
 apt update && apt install -y git wget sudo \
-&& cd /root && git clone https://github.com/ydcode/start.git \
-&& cd /root/start/tools/ && chmod +x ./start.sh && ./start.sh
+&& wget -O /tmp/yo https://github.com/ydcode/start/raw/master/yo && sudo mv -f /tmp/yo /usr/local/bin/yo && sudo chmod +x /usr/local/bin/yo
 ```
 
 # Docker 安装 (Docker Compose & JDK)
